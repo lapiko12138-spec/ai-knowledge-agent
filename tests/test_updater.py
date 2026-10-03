@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 from ai_knowledge_agent.core import KnowledgeStore
 from ai_knowledge_agent.updater import (
+    configure_notification,
     load_update_status,
     next_scheduled_run,
     should_catch_up,
@@ -57,6 +58,62 @@ class DailyUpdaterTest(unittest.TestCase):
             1,
         )
         self.assertFalse(should_catch_up(self.store))
+
+    def test_configured_update_sends_learning_reminder(self):
+        payload = {
+            "source": "https://huggingface.co/papers",
+            "daily_date": "2026-10-03",
+            "fetched_at": "2026-10-03T08:00:00+00:00",
+            "papers": [],
+        }
+        configure_notification(self.store, "ou_test", identity="bot")
+        with patch(
+            "ai_knowledge_agent.updater.fetch_huggingface_daily",
+            return_value=payload,
+        ), patch(
+            "ai_knowledge_agent.updater.sync_github",
+            return_value={"status": "unchanged"},
+        ), patch(
+            "ai_knowledge_agent.updater.send_learning_reminder",
+            return_value={
+                "status": "success",
+                "identity": "bot",
+                "user_id": "ou_test",
+                "message_id": "om_test",
+            },
+        ) as send:
+            result = update_daily(self.store)
+
+        send.assert_called_once()
+        self.assertTrue(result["ok"])
+        self.assertEqual(
+            result["sources"]["feishu"]["message_id"], "om_test"
+        )
+
+    def test_feishu_failure_preserves_update_as_partial(self):
+        payload = {
+            "source": "https://huggingface.co/papers",
+            "daily_date": "2026-10-03",
+            "fetched_at": "2026-10-03T08:00:00+00:00",
+            "papers": [],
+        }
+        configure_notification(self.store, "ou_test", identity="bot")
+        with patch(
+            "ai_knowledge_agent.updater.fetch_huggingface_daily",
+            return_value=payload,
+        ), patch(
+            "ai_knowledge_agent.updater.sync_github",
+            return_value={"status": "unchanged"},
+        ), patch(
+            "ai_knowledge_agent.updater.send_learning_reminder",
+            side_effect=RuntimeError("send failed"),
+        ):
+            result = update_daily(self.store)
+
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["status"], "partial")
+        self.assertEqual(result["sources"]["feishu"]["status"], "failed")
+        self.assertTrue(result["digest_path"])
 
 
 if __name__ == "__main__":

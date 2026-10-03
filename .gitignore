@@ -10,6 +10,7 @@ __pycache__/
 knowledge/99 System/logs/
 knowledge/99 System/*.lock
 knowledge/99 System/*.tmp
+knowledge/99 System/notification-config.json
 
 *.log
 *.tmp

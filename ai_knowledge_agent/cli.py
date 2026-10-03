@@ -10,7 +10,14 @@ from typing import Any, Dict, Optional
 
 from .core import KnowledgeStore
 from .feishu import build_daily_card, send_card
-from .updater import install_schedule, schedule_info, update_daily
+from .updater import (
+    configure_notification,
+    install_schedule,
+    load_notification_config,
+    schedule_info,
+    send_learning_reminder,
+    update_daily,
+)
 from .web import serve
 
 
@@ -92,6 +99,23 @@ def build_parser() -> argparse.ArgumentParser:
     schedule.add_argument("action", choices=("install", "status"))
     schedule.add_argument("--hour", type=int, default=8)
     schedule.add_argument("--minute", type=int, default=0)
+
+    notification = subparsers.add_parser(
+        "notification", help="管理每日飞书学习提醒。"
+    )
+    notification.add_argument(
+        "action", choices=("configure", "status", "test", "disable")
+    )
+    notification.add_argument("--user-id")
+    notification.add_argument(
+        "--as", dest="identity", choices=("user", "bot"), default="bot"
+    )
+    notification.add_argument("--dry-run", action="store_true")
+    notification.add_argument(
+        "--confirm-send",
+        action="store_true",
+        help="真实发送测试提醒时必须显式确认。",
+    )
     return parser
 
 
@@ -148,6 +172,38 @@ def main(argv: Optional[list] = None) -> int:
                 )
             else:
                 result = {"ok": True, **schedule_info(store)}
+        elif args.command == "notification":
+            if args.action == "configure":
+                if not args.user_id:
+                    raise ValueError("notification configure 需要 --user-id")
+                result = {
+                    "ok": True,
+                    **configure_notification(
+                        store, args.user_id, identity=args.identity
+                    ),
+                }
+            elif args.action == "disable":
+                current = load_notification_config(store)
+                result = {
+                    "ok": True,
+                    **configure_notification(
+                        store,
+                        current["user_id"],
+                        identity=current["identity"],
+                        enabled=False,
+                    ),
+                }
+            elif args.action == "test":
+                if not args.dry_run and not args.confirm_send:
+                    raise ValueError("真实发送测试提醒需要 --confirm-send")
+                result = {
+                    "ok": True,
+                    **send_learning_reminder(
+                        store, date.today(), dry_run=args.dry_run
+                    ),
+                }
+            else:
+                result = {"ok": True, **load_notification_config(store)}
         else:
             raise ValueError("Unsupported command: " + args.command)
     except (OSError, ValueError, RuntimeError, json.JSONDecodeError) as error:

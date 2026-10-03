@@ -58,6 +58,21 @@ python3 -m ai_knowledge_agent schedule status
 `~/Library/Application Support/AI Knowledge Agent/Obsidian/AI Knowledge`，原 Obsidian
 路径保留符号链接，Obsidian 内的使用路径不变。
 
+启用每日飞书学习提醒：
+
+```bash
+python3 -m ai_knowledge_agent notification configure \
+  --user-id ou_xxx \
+  --as bot
+python3 -m ai_knowledge_agent notification test --dry-run
+python3 -m ai_knowledge_agent notification test --confirm-send
+python3 -m ai_knowledge_agent notification status
+```
+
+通知卡片包含今日 Deep Dive、论文列表、未读人物观点和下一张知识卡。配置保存在本机
+`AI Knowledge/99 System/notification-config.json`，不会进入 GitHub 知识快照；每天使用
+日期幂等键发送，避免同一天重复提醒。使用 `notification disable` 可暂停推送。
+
 Generate a card JSON:
 
 ```bash

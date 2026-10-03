@@ -17,6 +17,7 @@ from .feeds import (
     fetch_huggingface_daily,
     load_x_radar_snapshot,
 )
+from .feishu import build_learning_reminder_card, send_card
 
 
 SCHEDULE_LABEL = "com.ai-knowledge-agent.daily-update"
@@ -36,6 +37,85 @@ def _read_json(path: Path) -> Dict[str, Any]:
     except (OSError, json.JSONDecodeError):
         return {}
     return payload if isinstance(payload, dict) else {}
+
+
+def notification_config_path(store: KnowledgeStore) -> Path:
+    return store.system_dir / "notification-config.json"
+
+
+def load_notification_config(store: KnowledgeStore) -> Dict[str, Any]:
+    payload = _read_json(notification_config_path(store))
+    return {
+        "version": 1,
+        "enabled": bool(payload.get("enabled", False)),
+        "user_id": str(payload.get("user_id") or ""),
+        "identity": str(payload.get("identity") or "bot"),
+    }
+
+
+def configure_notification(
+    store: KnowledgeStore,
+    user_id: str,
+    identity: str = "bot",
+    enabled: bool = True,
+) -> Dict[str, Any]:
+    user_id = user_id.strip()
+    if enabled and not user_id:
+        raise ValueError("启用飞书提醒时必须提供 user_id")
+    if identity not in {"bot", "user"}:
+        raise ValueError("飞书发送身份必须是 bot 或 user")
+    config = {
+        "version": 1,
+        "enabled": enabled,
+        "user_id": user_id,
+        "identity": identity,
+        "updated_at": _now().isoformat(timespec="seconds"),
+    }
+    store.initialize()
+    _atomic_json(notification_config_path(store), config)
+    return config
+
+
+def _message_id(result: Dict[str, Any]) -> str:
+    candidates = [
+        result.get("message_id"),
+        result.get("data", {}).get("message_id")
+        if isinstance(result.get("data"), dict)
+        else None,
+        result.get("data", {}).get("message", {}).get("message_id")
+        if isinstance(result.get("data"), dict)
+        and isinstance(result.get("data", {}).get("message"), dict)
+        else None,
+    ]
+    return next((str(item) for item in candidates if item), "")
+
+
+def send_learning_reminder(
+    store: KnowledgeStore,
+    target: date,
+    dry_run: bool = False,
+) -> Dict[str, Any]:
+    config = load_notification_config(store)
+    if not config["enabled"]:
+        return {"status": "disabled", "message": "飞书学习提醒未启用"}
+    if not config["user_id"]:
+        return {"status": "not_configured", "message": "缺少飞书 user_id"}
+    card = build_learning_reminder_card(store, target)
+    result = send_card(
+        card,
+        user_id=config["user_id"],
+        identity=config["identity"],
+        dry_run=dry_run,
+        confirm_send=not dry_run,
+        cwd=PROJECT_ROOT,
+        idempotency_key="ai-learning-" + target.isoformat(),
+    )
+    return {
+        "status": "dry_run" if dry_run else "success",
+        "identity": config["identity"],
+        "user_id": config["user_id"],
+        "message_id": _message_id(result),
+    }
 
 
 def _editorial_model() -> Dict[str, Any]:
@@ -58,7 +138,12 @@ def _editorial_model() -> Dict[str, Any]:
 def _ignore_snapshot_files(directory: str, names: list) -> set:
     ignored = set()
     for name in names:
-        if name in {"logs", "daily-update.lock", "daily-update-status.json"}:
+        if name in {
+            "logs",
+            "daily-update.lock",
+            "daily-update-status.json",
+            "notification-config.json",
+        }:
             ignored.add(name)
         elif name.endswith((".tmp", ".log", ".lock")):
             ignored.add(name)
@@ -276,6 +361,13 @@ def update_daily(store: KnowledgeStore) -> Dict[str, Any]:
         _atomic_json(cache_path, intelligence)
 
         digest_path = store.daily_digest(date.today())
+        try:
+            feishu = send_learning_reminder(store, date.today())
+        except (OSError, ValueError, RuntimeError, json.JSONDecodeError) as error:
+            feishu = {"status": "failed", "message": str(error)}
+            status["errors"].append("Feishu: " + str(error))
+        status["sources"]["feishu"] = feishu
+
         github = sync_github(store)
         status["sources"]["github"] = github
         if github.get("status") == "failed":
@@ -285,7 +377,8 @@ def update_daily(store: KnowledgeStore) -> Dict[str, Any]:
         finished = _now()
         hf_success = status["sources"]["huggingface"]["status"] == "success"
         github_success = github.get("status") != "failed"
-        run_success = hf_success and github_success
+        feishu_success = feishu.get("status") != "failed"
+        run_success = hf_success and github_success and feishu_success
         status.update(
             {
                 "status": "success" if run_success else "partial",
@@ -395,6 +488,20 @@ def install_schedule(
         "StandardOutPath": str(logs_dir / "daily-update.out.log"),
         "StandardErrorPath": str(logs_dir / "daily-update.err.log"),
         "ProcessType": "Background",
+        "EnvironmentVariables": {
+            "PATH": (
+                str(
+                    Path.home()
+                    / ".trae-cn"
+                    / "plugins"
+                    / "trae-remote-official"
+                    / "lark"
+                    / "1.0.5"
+                    / "bin"
+                )
+                + ":/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+            )
+        },
     }
     temporary = path.with_suffix(".plist.tmp")
     with temporary.open("wb") as handle:
