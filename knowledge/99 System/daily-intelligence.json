@@ -3,7 +3,7 @@
   "huggingface": {
     "source": "https://huggingface.co/papers",
     "daily_date": "2026-10-02",
-    "fetched_at": "2026-10-03T15:16:40+00:00",
+    "fetched_at": "2026-10-03T15:27:30+00:00",
     "papers": [
       {
         "id": "2610.01762",
@@ -105,7 +105,7 @@
           "Anyi Rao"
         ],
         "organization": "Tencent",
-        "upvotes": 122,
+        "upvotes": 123,
         "comments": 2,
         "daily_date": "2026-10-02",
         "published_at": "2026-09-29T00:00:00.000Z",
@@ -221,6 +221,50 @@
         }
       },
       {
+        "id": "2609.38923",
+        "title": "GraphForge: Training Working Agents with Graph-Anchored Workspace Synthesis",
+        "summary": "Working agents need to read diverse files, coordinate tools, and produce deliverables. Training such agents requires tasks built on many real files with verifiable results, but few pipelines exist to synthesize this kind of data. Existing pipelines either generate files with models, which lack realism and diversity, or build tasks on real files without task-specific verifiers, leaving result quality unchecked. We introduce GraphForge, an evidence-graph based framework that grounds both the task and its verification in real files. Starting from occupation-grounded seeds for controlled diversity, GraphForge assembles a workspace of real files for each seed and builds an evidence graph over their relations. Since the task statement and rubrics are both derived from this graph, task requirements are backed by the workspace files and each criterion is anchored to the files needed to verify it. An initial rollout further tests executability, and a revision agent repairs the task and rubrics against the original files before trajectories are collected. Fine-tuning Qwen3.6-27B on 2,169 GraphForge trajectories brings GDPVal to 1445.7 (+65.7) under OpenHands, and Workspace-Bench-Lite and SpreadsheetBench II to 63.7 (+7.7) and 24.0 (+13.7) under Claude Code. Rejection fine-tuning on the SFT model's own rollouts, with candidates selected by the evidence-anchored rubrics, yields further improvements on all three benchmarks, suggesting that the rubrics provide a useful selection signal. The data and models are available.",
+        "authors": [
+          "Qisheng Su",
+          "Hanchen Wang",
+          "Guanru Zhu",
+          "Huicheng Jiang",
+          "Qiuyinzhe Zhang",
+          "Kou Shi",
+          "Zhen Fang",
+          "Ziao Zhang"
+        ],
+        "organization": "University of Science and Technology of China",
+        "upvotes": 76,
+        "comments": 2,
+        "daily_date": "2026-10-02",
+        "published_at": "2026-09-30T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2609.38923",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.38923.png",
+        "project_page": "",
+        "github_repo": "",
+        "teaching": {
+          "research_question": "Working agents need to read diverse files, coordinate tools, and produce deliverables. Training such agents requires tasks built on many real files with verifiable results, but few pipelines exist to synthesize this kind of data.",
+          "new_method": "We introduce GraphForge, an evidence-graph based framework that grounds both the task and its verification in real files.",
+          "evidence": "Rejection fine-tuning on the SFT model's own rollouts, with candidates selected by the evidence-anchored rubrics, yields further improvements on all three benchmarks, suggesting that the rubrics provide a useful selection signal.",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": [
+            "Agent",
+            "AI Evaluation"
+          ]
+        },
+        "rank": 6,
+        "editorial_tier": "scan",
+        "localized": {
+          "status": "curated",
+          "title_zh": "GraphForge：用证据图锚定的工作区合成训练可工作的智能体",
+          "research_question_zh": "工作型智能体需要读取多种真实文件、协调工具并交付可验证结果，但高质量训练任务很难规模化构造。",
+          "new_method_zh": "GraphForge 用 evidence graph 同时锚定任务生成与结果验证，使合成任务建立在真实文件之上。",
+          "evidence_zh": "使用证据锚定 rubric 筛选模型自身 rollout 做 rejection fine-tuning，在 3 个基准上继续提升。",
+          "editor_note": "连接 Agent Training、Synthetic Data、Evaluation Rubric 与 Workspace。"
+        }
+      },
+      {
         "id": "2610.01509",
         "title": "Sharpening Tax in Post-Training",
         "summary": "An emerging hypothesis about reinforcement learning (RL) post-training of large language models (LLMs) is that it merely sharpens existing behaviors of a base model, improving single-shot accuracy at the cost of solution coverage. Although this trade-off has been observed in math and coding tasks, it need not extend to agentic tasks, where multi-turn tool use and interaction may require capabilities newly acquired during post-training. Our surprising finding is that pre-trained LLMs, equipped with a light inference harness, can serve as capable agents. Despite far lower accuracy (pass@1), they often surpass their post-trained counterparts in solution coverage (pass@K) given a sufficient test-time budget. We further analyze the underlying mechanism and show that post-training pushes tasks toward two extremes, always solved or never solved, and thereby improves sampling efficiency and consistency at the cost of solution coverage. To measure this cost, we propose Sharpening Tax, a diagnostic metric that quantifies the loss in test-time scalability after post-training. Across 14 base/post-trained model pairs from four families and three agentic benchmarks (42 cases in total), the tax is prevalent in most settings, can be estimated from a few rollouts, and correlates well with other metrics. Finally, we present posterior-tempered group sampling (PTGS), a simple plug-and-play Bayesian sampler that adapts the sampling temperature per prompt to its estimated difficulty. Applied during RL training in two agentic environments, PTGS pays a smaller tax than the fixed-temperature baseline, solving more tasks under repeated sampling while also improving single-shot accuracy.",
@@ -255,7 +299,7 @@
             "AI Evaluation"
           ]
         },
-        "rank": 6,
+        "rank": 7,
         "editorial_tier": "scan",
         "localized": {
           "status": "curated",
@@ -298,7 +342,7 @@
             "Robotics"
           ]
         },
-        "rank": 7,
+        "rank": 8,
         "editorial_tier": "scan",
         "localized": {
           "status": "curated",
@@ -341,7 +385,7 @@
             "AI Evaluation"
           ]
         },
-        "rank": 8,
+        "rank": 9,
         "editorial_tier": "scan",
         "localized": {
           "status": "curated",
@@ -350,50 +394,6 @@
           "new_method_zh": "提出 Rhetorical Robustness，并构建包含 1,260 个全文版本的 RobustReview 基准，评估 30 种审稿配置。",
           "evidence_zh": "核心证据来自对内容保持改写的一致性与跨论文区分能力联合测试；具体结果仍需回看正文。",
           "editor_note": "应连接 AI Evaluation、Scientific Review 与 Robustness。"
-        }
-      },
-      {
-        "id": "2609.38923",
-        "title": "GraphForge: Training Working Agents with Graph-Anchored Workspace Synthesis",
-        "summary": "Working agents need to read diverse files, coordinate tools, and produce deliverables. Training such agents requires tasks built on many real files with verifiable results, but few pipelines exist to synthesize this kind of data. Existing pipelines either generate files with models, which lack realism and diversity, or build tasks on real files without task-specific verifiers, leaving result quality unchecked. We introduce GraphForge, an evidence-graph based framework that grounds both the task and its verification in real files. Starting from occupation-grounded seeds for controlled diversity, GraphForge assembles a workspace of real files for each seed and builds an evidence graph over their relations. Since the task statement and rubrics are both derived from this graph, task requirements are backed by the workspace files and each criterion is anchored to the files needed to verify it. An initial rollout further tests executability, and a revision agent repairs the task and rubrics against the original files before trajectories are collected. Fine-tuning Qwen3.6-27B on 2,169 GraphForge trajectories brings GDPVal to 1445.7 (+65.7) under OpenHands, and Workspace-Bench-Lite and SpreadsheetBench II to 63.7 (+7.7) and 24.0 (+13.7) under Claude Code. Rejection fine-tuning on the SFT model's own rollouts, with candidates selected by the evidence-anchored rubrics, yields further improvements on all three benchmarks, suggesting that the rubrics provide a useful selection signal. The data and models are available.",
-        "authors": [
-          "Qisheng Su",
-          "Hanchen Wang",
-          "Guanru Zhu",
-          "Huicheng Jiang",
-          "Qiuyinzhe Zhang",
-          "Kou Shi",
-          "Zhen Fang",
-          "Ziao Zhang"
-        ],
-        "organization": "University of Science and Technology of China",
-        "upvotes": 69,
-        "comments": 2,
-        "daily_date": "2026-10-02",
-        "published_at": "2026-09-30T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2609.38923",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.38923.png",
-        "project_page": "",
-        "github_repo": "",
-        "teaching": {
-          "research_question": "Working agents need to read diverse files, coordinate tools, and produce deliverables. Training such agents requires tasks built on many real files with verifiable results, but few pipelines exist to synthesize this kind of data.",
-          "new_method": "We introduce GraphForge, an evidence-graph based framework that grounds both the task and its verification in real files.",
-          "evidence": "Rejection fine-tuning on the SFT model's own rollouts, with candidates selected by the evidence-anchored rubrics, yields further improvements on all three benchmarks, suggesting that the rubrics provide a useful selection signal.",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Agent",
-            "AI Evaluation"
-          ]
-        },
-        "rank": 9,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "curated",
-          "title_zh": "GraphForge：用证据图锚定的工作区合成训练可工作的智能体",
-          "research_question_zh": "工作型智能体需要读取多种真实文件、协调工具并交付可验证结果，但高质量训练任务很难规模化构造。",
-          "new_method_zh": "GraphForge 用 evidence graph 同时锚定任务生成与结果验证，使合成任务建立在真实文件之上。",
-          "evidence_zh": "使用证据锚定 rubric 筛选模型自身 rollout 做 rejection fine-tuning，在 3 个基准上继续提升。",
-          "editor_note": "连接 Agent Training、Synthetic Data、Evaluation Rubric 与 Workspace。"
         }
       },
       {
@@ -828,5 +828,5 @@
       "概念入图"
     ]
   },
-  "updated_at": "2026-10-03T23:16:40+08:00"
+  "updated_at": "2026-10-03T23:27:30+08:00"
 }
