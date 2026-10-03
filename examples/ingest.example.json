@@ -1,0 +1,59 @@
+{
+  "source": {
+    "title": "Example: KV Cache and inference cost",
+    "type": "paper",
+    "url": "https://example.com/kv-cache",
+    "author": "Example Author",
+    "published_at": "2026-10-03",
+    "captured_at": "2026-10-03T09:00:00+08:00",
+    "credibility": "example-only"
+  },
+  "assessment": {
+    "classification": "A/C",
+    "rationale": "The source adds a reusable explanation of an inference mechanism.",
+    "evidence_boundary": "Mechanism is factual; future impact remains an interpretation."
+  },
+  "source_notes": "Example payload for validating the ingestion contract.",
+  "chunks": [
+    {
+      "title": "KV Cache avoids recomputing previous attention states",
+      "canonical_key": "kv-cache-reuse-attention-states",
+      "aliases": [
+        "KV Cache reuses key and value states"
+      ],
+      "category": "AI Infra",
+      "concept": "Autoregressive decoding repeatedly attends to earlier tokens. KV Cache stores the key and value tensors already computed for those tokens so each decoding step only computes the new token's states.",
+      "problem": "Without reuse, the model recomputes attention states for the entire prefix at every generation step.",
+      "mechanism": "Each transformer layer appends the new token's key and value tensors to a cache and reads the accumulated tensors during attention.",
+      "why_it_matters": "It substantially reduces repeated inference work, while introducing memory capacity and memory-bandwidth constraints.",
+      "example": "When generating token 101, the model reuses cached states for tokens 1–100 and computes only token 101's new key and value.",
+      "parents": [
+        "Transformer Inference"
+      ],
+      "connections": [
+        {
+          "target": "Long-context inference",
+          "type": "used_in",
+          "note": "Cache size grows with context length."
+        }
+      ],
+      "level": "L2",
+      "classification": "A",
+      "keywords": [
+        "KV Cache",
+        "Attention",
+        "Inference",
+        "Memory bandwidth"
+      ],
+      "priority": {
+        "relevance": 5,
+        "novelty": 4,
+        "connection": 5,
+        "impact": 5
+      }
+    }
+  ],
+  "open_questions": [
+    "How do paged attention and KV cache quantization change the memory bottleneck?"
+  ]
+}

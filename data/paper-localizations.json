@@ -1,0 +1,79 @@
+{
+  "2610.01762": {
+    "title_zh": "OneStreamer：统一流式视频交互中的感知、记忆与主动响应",
+    "research_question_zh": "流式视频大模型需要在尚不知道信息未来是否有用时保存证据，并在证据充分时及时响应。关键难点是在不损害实时感知的情况下形成可复用的事实记忆。",
+    "new_method_zh": "OneStreamer 用共享的主动生成过程同时学习与查询无关的证据记录和任务响应，并结合分层字幕记忆与主动状态转移学习。",
+    "evidence_zh": "4B 模型在 8 个流式视频理解基准上取得对比方法中的最佳结果；PSTL 只监督 27.5% 的状态 token，仍优于密集状态监督。",
+    "editor_note": "连接流式多模态、Agent Memory 与主动响应，适合作为当日 Deep Dive。"
+  },
+  "2609.35259": {
+    "title_zh": "在线还是离线学习？蒸馏动态的系统研究",
+    "research_question_zh": "过去对 SFT 与强化学习的比较同时改变了过多变量，难以判断 rollout policy 本身是否真的减少灾难性遗忘并改善泛化。",
+    "new_method_zh": "在强模型向弱模型蒸馏的受控环境中，独立改变 rollout policy、token 级 KL 方向与学习率，并跨 Llama3、Qwen2.5 和多类推理任务比较。",
+    "evidence_zh": "在线数据在两种 KL 方向下都改善了更难 Countdown 变体的泛化，但这种优势在后续 RLVR 后并不稳定。",
+    "editor_note": "适合用来校准“RL 优于 SFT”的宽泛叙事。"
+  },
+  "2609.37200": {
+    "title_zh": "自适应奖励路由：用前向过程强化学习动态优化联合音视频扩散",
+    "research_question_zh": "联合音视频扩散同时面对画质、音质、跨模态语义和时间同步等多个奖励，但训练过程中更新位置和奖励权重都会变化。",
+    "new_method_zh": "Adaptive Reward Routing 在 DiffusionNFT 的前向过程强化学习中，同时自适应选择奖励更新位置并协调多个奖励。",
+    "evidence_zh": "摘要没有给出足以独立核验的实验数字，需要进入实验章节确认收益和代价。",
+    "editor_note": "值得关注多奖励 RL 如何进入生成模型训练。"
+  },
+  "2610.02193": {
+    "title_zh": "分层连续扩散语言模型",
+    "research_question_zh": "离散扩散语言模型并行解码时，会独立采样每个 token 的边缘分布，从而切断同批 token 之间的统计依赖。",
+    "new_method_zh": "HC-DLM 在统一去噪过程中结合离散 token 生成与连续潜变量轨迹，并从 token 似然的变分下界推导训练目标。",
+    "evidence_zh": "在 Sudoku、Countdown 和 LM1B 上，相同模型规模下优于离散与连续扩散基线。",
+    "editor_note": "连接扩散语言模型、并行解码与全局约束推理。"
+  },
+  "2610.01415": {
+    "title_zh": "超越记忆：用显式信念状态支撑长时程智能体",
+    "research_question_zh": "Agent 即使保存了完整交互历史，也不一定形成对当前世界状态一致、可行动的理解。",
+    "new_method_zh": "PoS 在推理时持续构建和维护显式 belief state，并把它作为智能体的决策上下文。",
+    "evidence_zh": "在 4 个执行与诊断基准、3 个 LLM backbone 上都取得最高总体表现。",
+    "editor_note": "应挂到 Agent Memory → Belief State → Long-horizon Planning。"
+  },
+  "2610.01509": {
+    "title_zh": "后训练中的“锐化税”",
+    "research_question_zh": "RL 后训练可能提升单次成功率，却把概率质量集中到少数解法，牺牲多次采样时的解法覆盖率。",
+    "new_method_zh": "提出 Sharpening Tax 指标，衡量后训练导致的 test-time scaling 能力损失。",
+    "evidence_zh": "后训练会把任务推向“总能解决”或“永远不能解决”两端，提高一致性和采样效率，但降低解法覆盖。",
+    "editor_note": "连接 Post-training、Inference Scaling 与能力覆盖率。"
+  },
+  "2609.35690": {
+    "title_zh": "智能体先验引导的策略学习",
+    "research_question_zh": "少样本机器人策略既要重组技能解决新任务，又要让单个技能适应新情境，但组合层与技能层之间会丢失信息。",
+    "new_method_zh": "APPL 利用智能体先验保留组合调用与底层技能执行之间的接口信息。",
+    "evidence_zh": "在 MetaWorld 和 ManiSkill 长时程任务上改善分布外技能泛化，并实现训练中未见的技能组合。",
+    "editor_note": "属于 Robotics × Compositional Generalization。"
+  },
+  "2609.39027": {
+    "title_zh": "可信 AI 审稿人的缺失环节：从修辞鲁棒性到 SciCore Review",
+    "research_question_zh": "同一科学内容仅因表述方式不同就可能得到不同 AI 审稿结论，导致系统奖励修辞优化而非科学改进。",
+    "new_method_zh": "提出 Rhetorical Robustness，并构建包含 1,260 个全文版本的 RobustReview 基准，评估 30 种审稿配置。",
+    "evidence_zh": "核心证据来自对内容保持改写的一致性与跨论文区分能力联合测试；具体结果仍需回看正文。",
+    "editor_note": "应连接 AI Evaluation、Scientific Review 与 Robustness。"
+  },
+  "2610.02162": {
+    "title_zh": "World Observer：联合生成行动者与观察者的持久世界建模",
+    "research_question_zh": "现有视频世界模型以行动者视角为中心，无法持续观察当前视野之外仍在变化的区域。",
+    "new_method_zh": "World Observer 把观察与行动解耦，同时生成行动者第一视角和一个或多个监控指定区域的全景观察者。",
+    "evidence_zh": "论文增加世界空间指标和覆盖真实、合成场景的基准，用于评测视野外演化。",
+    "editor_note": "连接 World Models、Object Permanence 与 Persistent Simulation。"
+  },
+  "2609.36585": {
+    "title_zh": "Transformer 过早停止思考，而一个微型 LoRA 就能修复",
+    "research_question_zh": "预训练 Transformer 在上下文引用链任务中没有充分利用网络深度；13 个基础模型通常只能稳定跟随 1.4 至 3.6 行引用。",
+    "new_method_zh": "只在一个早期层训练 rank-8 LoRA，冻结其余模型参数，用极小的适配器延长模型内部计算。",
+    "evidence_zh": "Qwen3-8B 在 24 行引用链上的精确准确率从 15.5% 提升到 99%；训练更久的 LoRA 可处理 50 行。",
+    "editor_note": "连接模型深度利用、Test-time Computation 与参数高效微调。"
+  },
+  "2609.38923": {
+    "title_zh": "GraphForge：用证据图锚定的工作区合成训练可工作的智能体",
+    "research_question_zh": "工作型智能体需要读取多种真实文件、协调工具并交付可验证结果，但高质量训练任务很难规模化构造。",
+    "new_method_zh": "GraphForge 用 evidence graph 同时锚定任务生成与结果验证，使合成任务建立在真实文件之上。",
+    "evidence_zh": "使用证据锚定 rubric 筛选模型自身 rollout 做 rejection fine-tuning，在 3 个基准上继续提升。",
+    "editor_note": "连接 Agent Training、Synthetic Data、Evaluation Rubric 与 Workspace。"
+  }
+}

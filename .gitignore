@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.idea/
+.vscode/
+.env
+.env.*
+!.env.example
+
+knowledge/99 System/logs/
+knowledge/99 System/*.lock
+knowledge/99 System/*.tmp
+
+*.log
+*.tmp

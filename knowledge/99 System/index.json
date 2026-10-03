@@ -1,0 +1,289 @@
+{
+  "version": 1,
+  "chunks": {
+    "kc-5cb28673f3df": {
+      "id": "kc-5cb28673f3df",
+      "title": "AI 论文日报需要区分 Scan、Focus 与 Deep Dive",
+      "canonical_key": "ai论文日报需要区分scanfocus与deepdive",
+      "aliases": [],
+      "category": "AI Product",
+      "concept": "每日论文系统不应把所有内容压成同等长度的摘要。Scan 层保持覆盖面，Focus 层选择少量高价值论文，Deep Dive 层只承担当天最值得学习的一项。",
+      "problem": "等权展示十几篇论文会造成信息过载，也无法形成稳定学习节奏。",
+      "mechanism": "先扫描当日候选，再结合外部热度与个人优先级选出约两篇 Focus，最终选择一篇进入深度学习。",
+      "why_it_matters": "它把追踪信息与真正学习分开，既保留广度又控制认知负荷。",
+      "example": "播客日更列出约 15 篇论文，但标题只突出其中 2 篇；周更和月更再按累计信号重排。",
+      "connections": [
+        {
+          "target": "Learning Priority",
+          "type": "depends_on",
+          "note": "Focus 选择不能只依赖社区热度。"
+        }
+      ],
+      "parents": [
+        "AI Knowledge Workflow"
+      ],
+      "level": "L2",
+      "keywords": [
+        "Cognitive Load",
+        "Daily Papers",
+        "Deep Dive",
+        "Focus",
+        "Scan"
+      ],
+      "classification": "C",
+      "priority": {
+        "relevance": 5,
+        "novelty": 4,
+        "connection": 5,
+        "impact": 5
+      },
+      "priority_score": 500.0,
+      "sources": [
+        "src-b066f871247a"
+      ],
+      "relationship_refs": [
+        {
+          "source": "kc-5cb28673f3df",
+          "source_title": "AI 论文日报需要区分 Scan、Focus 与 Deep Dive",
+          "target": null,
+          "target_title": "Learning Priority",
+          "type": "depends_on",
+          "note": "Focus 选择不能只依赖社区热度。",
+          "date": "2026-10-03"
+        },
+        {
+          "source": "kc-5cb28673f3df",
+          "source_title": "AI 论文日报需要区分 Scan、Focus 与 Deep Dive",
+          "target": null,
+          "target_title": "AI Knowledge Workflow",
+          "type": "child_of",
+          "note": "",
+          "date": "2026-10-03"
+        }
+      ],
+      "created_at": "2026-10-03T22:49:38+08:00",
+      "updated_at": "2026-10-03T22:49:38+08:00"
+    },
+    "kc-dba6caadb605": {
+      "id": "kc-dba6caadb605",
+      "title": "论文教学拆解应分离问题、方法、证据与限制",
+      "canonical_key": "论文教学拆解应分离问题方法证据与限制",
+      "aliases": [],
+      "category": "AI Product",
+      "concept": "论文摘要只能支持初筛，教学理解需要把 Research Question、Previous Approach、New Method、Mechanism、Evidence、Limitation 和 Potential Impact 分开。每个字段承担不同的认知任务，不能用一段长摘要替代。",
+      "problem": "摘要式复述容易混淆作者主张、方法创新和实验事实，也常遗漏限制条件。",
+      "mechanism": "先明确研究问题，再提取方法与机制；实验结果单独作为证据；正文未提供的信息明确标记为待核验。",
+      "why_it_matters": "这种结构可以同时支持快速阅读、事实核验、概念抽取和后续深度学习。",
+      "example": "Daily Papers abstract 可以给出问题、方法和部分结果，但 Limitation 仍需进入论文正文确认。",
+      "connections": [
+        {
+          "target": "Knowledge Chunking",
+          "type": "enables",
+          "note": "拆解字段为后续知识原子化提供边界。"
+        }
+      ],
+      "parents": [
+        "Paper Reading"
+      ],
+      "level": "L2",
+      "keywords": [
+        "Evidence",
+        "Limitation",
+        "Paper Reading",
+        "Research Question"
+      ],
+      "classification": "A",
+      "priority": {
+        "relevance": 5,
+        "novelty": 4,
+        "connection": 5,
+        "impact": 5
+      },
+      "priority_score": 500.0,
+      "sources": [
+        "src-b066f871247a"
+      ],
+      "relationship_refs": [
+        {
+          "source": "kc-dba6caadb605",
+          "source_title": "论文教学拆解应分离问题、方法、证据与限制",
+          "target": null,
+          "target_title": "Knowledge Chunking",
+          "type": "enables",
+          "note": "拆解字段为后续知识原子化提供边界。",
+          "date": "2026-10-03"
+        },
+        {
+          "source": "kc-dba6caadb605",
+          "source_title": "论文教学拆解应分离问题、方法、证据与限制",
+          "target": null,
+          "target_title": "Paper Reading",
+          "type": "child_of",
+          "note": "",
+          "date": "2026-10-03"
+        }
+      ],
+      "created_at": "2026-10-03T22:49:38+08:00",
+      "updated_at": "2026-10-03T22:49:38+08:00"
+    },
+    "kc-3da3e419c389": {
+      "id": "kc-3da3e419c389",
+      "title": "重复出现的论文主题比单日热度更接近趋势",
+      "canonical_key": "重复出现的论文主题比单日热度更接近趋势",
+      "aliases": [],
+      "category": "AI Product",
+      "concept": "单日 upvotes 反映短期注意力，周度和月度重复出现的主题更能说明研究方向正在形成。趋势判断应同时保留时间窗口和主题聚类。",
+      "problem": "只看当天最热论文容易把偶发热度误判成长期趋势。",
+      "mechanism": "日更保留候选，周更统计重复主题与累计热度，月更观察知识链是否持续扩展。",
+      "why_it_matters": "它能区分新闻噪声与真正值得投入学习时间的方向。",
+      "example": "节目周末选 TOP5、月末选 TOP10，为同一批论文增加不同时间窗口的排序证据。",
+      "connections": [
+        {
+          "target": "Weekly AI Knowledge Review",
+          "type": "used_in",
+          "note": "周复盘应寻找重复主题，而不是拼接日报。"
+        }
+      ],
+      "parents": [
+        "AI Trend Detection"
+      ],
+      "level": "L2",
+      "keywords": [
+        "Monthly Review",
+        "Signal",
+        "Trend Detection",
+        "Weekly Review"
+      ],
+      "classification": "C",
+      "priority": {
+        "relevance": 5,
+        "novelty": 4,
+        "connection": 5,
+        "impact": 4
+      },
+      "priority_score": 400.0,
+      "sources": [
+        "src-b066f871247a"
+      ],
+      "relationship_refs": [
+        {
+          "source": "kc-3da3e419c389",
+          "source_title": "重复出现的论文主题比单日热度更接近趋势",
+          "target": null,
+          "target_title": "Weekly AI Knowledge Review",
+          "type": "used_in",
+          "note": "周复盘应寻找重复主题，而不是拼接日报。",
+          "date": "2026-10-03"
+        },
+        {
+          "source": "kc-3da3e419c389",
+          "source_title": "重复出现的论文主题比单日热度更接近趋势",
+          "target": null,
+          "target_title": "AI Trend Detection",
+          "type": "child_of",
+          "note": "",
+          "date": "2026-10-03"
+        }
+      ],
+      "created_at": "2026-10-03T22:49:38+08:00",
+      "updated_at": "2026-10-03T22:49:38+08:00"
+    }
+  },
+  "canonical": {
+    "ai论文日报需要区分scanfocus与deepdive": "kc-5cb28673f3df",
+    "论文教学拆解应分离问题方法证据与限制": "kc-dba6caadb605",
+    "重复出现的论文主题比单日热度更接近趋势": "kc-3da3e419c389"
+  },
+  "sources": {
+    "src-b066f871247a": {
+      "title": "HuggingFace 每日AI论文速递：论文编辑与拆解方法",
+      "type": "podcast",
+      "url": "https://www.xiaoyuzhoufm.com/podcast/667d1ecfc13b46d76c3f64b8",
+      "author": "HuggingFace 每日AI论文速递",
+      "published_at": "",
+      "captured_at": "2026-10-03T22:50:00+08:00",
+      "credibility": "节目目录与 Hugging Face Daily Papers 交叉核验",
+      "path": "AI Knowledge/10 Sources/2026-10-03 - HuggingFace 每日AI论文速递-论文编辑与拆解方法.md",
+      "chunks": [
+        "kc-5cb28673f3df",
+        "kc-dba6caadb605",
+        "kc-3da3e419c389"
+      ],
+      "assessment": {
+        "classification": "F/C",
+        "rationale": "节目提供了可复用的论文筛选、分层和周期性趋势识别案例。",
+        "evidence_boundary": "日更、周更、月更数量与标题选择来自节目公开目录；教学字段是基于该案例形成的产品方法。"
+      }
+    }
+  },
+  "relationships": [
+    {
+      "source": "kc-5cb28673f3df",
+      "source_title": "AI 论文日报需要区分 Scan、Focus 与 Deep Dive",
+      "target": null,
+      "target_title": "Learning Priority",
+      "type": "depends_on",
+      "note": "Focus 选择不能只依赖社区热度。",
+      "date": "2026-10-03"
+    },
+    {
+      "source": "kc-5cb28673f3df",
+      "source_title": "AI 论文日报需要区分 Scan、Focus 与 Deep Dive",
+      "target": null,
+      "target_title": "AI Knowledge Workflow",
+      "type": "child_of",
+      "note": "",
+      "date": "2026-10-03"
+    },
+    {
+      "source": "kc-dba6caadb605",
+      "source_title": "论文教学拆解应分离问题、方法、证据与限制",
+      "target": null,
+      "target_title": "Knowledge Chunking",
+      "type": "enables",
+      "note": "拆解字段为后续知识原子化提供边界。",
+      "date": "2026-10-03"
+    },
+    {
+      "source": "kc-dba6caadb605",
+      "source_title": "论文教学拆解应分离问题、方法、证据与限制",
+      "target": null,
+      "target_title": "Paper Reading",
+      "type": "child_of",
+      "note": "",
+      "date": "2026-10-03"
+    },
+    {
+      "source": "kc-3da3e419c389",
+      "source_title": "重复出现的论文主题比单日热度更接近趋势",
+      "target": null,
+      "target_title": "Weekly AI Knowledge Review",
+      "type": "used_in",
+      "note": "周复盘应寻找重复主题，而不是拼接日报。",
+      "date": "2026-10-03"
+    },
+    {
+      "source": "kc-3da3e419c389",
+      "source_title": "重复出现的论文主题比单日热度更接近趋势",
+      "target": null,
+      "target_title": "AI Trend Detection",
+      "type": "child_of",
+      "note": "",
+      "date": "2026-10-03"
+    }
+  ],
+  "open_questions": [
+    {
+      "question": "Hugging Face upvotes 与个人学习价值之间应该如何校准？",
+      "source_id": "src-b066f871247a",
+      "date": "2026-10-03",
+      "status": "open"
+    },
+    {
+      "question": "X 多人物同时讨论同一概念时，多少独立来源才算趋势信号？",
+      "source_id": "src-b066f871247a",
+      "date": "2026-10-03",
+      "status": "open"
+    }
+  ]
+}

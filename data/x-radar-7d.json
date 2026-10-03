@@ -1,0 +1,181 @@
+{
+  "window_start": "2026-09-26",
+  "window_end": "2026-10-03",
+  "captured_at": "2026-10-03T23:05:00+08:00",
+  "source_type": "public_x_profile_snapshot",
+  "people": [
+    {
+      "handle": "karpathy",
+      "name": "Andrej Karpathy",
+      "role": "研究者 / 工程师",
+      "focus": ["LLM", "AI Coding", "模型教育"],
+      "viewpoints": [
+        {
+          "id": "x-2105909609487872075",
+          "published_at": "2026-10-02",
+          "type": "Interpretation",
+          "title": "LLM 已经压缩并内化了相当丰富的世界地理知识",
+          "summary": "只把经纬度以文本形式交给模型并询问“陆地还是水域”，重复 16,200 次即可还原地图轮廓。这说明语言模型通过压缩互联网文本获得了隐含的世界知识，可用非常规评测显现出来。",
+          "original_excerpt": "Simply ask an LLM “Land or Water?” and give it a latitude and longitude coordinate as text. Ask 16,200 times, plot as image.",
+          "url": "https://x.com/karpathy/status/2105909609487872075"
+        },
+        {
+          "id": "x-2105819303471976479",
+          "published_at": "2026-10-02",
+          "type": "Practice",
+          "title": "理解模型输出会成为越来越重要的工作",
+          "summary": "与其只追求生成结果，应投入更多时间理解模型为什么这样输出。他推荐用 ASD-STE100 这类受控语言规范要求模型解释复杂内容，以降低表达歧义。",
+          "original_excerpt": "We'll be spending a lot more time trying to understand the outputs of language models.",
+          "url": "https://x.com/karpathy/status/2105819303471976479"
+        }
+      ]
+    },
+    {
+      "handle": "simonw",
+      "name": "Simon Willison",
+      "role": "独立开发者",
+      "focus": ["LLM Tools", "Agent", "AI Engineering"],
+      "viewpoints": [
+        {
+          "id": "x-2104978193946124370",
+          "published_at": "2026-09-30",
+          "type": "Fact",
+          "title": "持续记录发布会比事后转述更能保留产品变化细节",
+          "summary": "他继续用 live blog 方式记录 OpenAI DevDay，把模型、API 和开发者产品变化按时间线保留下来，强调一手观察和可追溯记录。",
+          "original_excerpt": "I'm running a live blog where I'll be posting updates during the keynote.",
+          "url": "https://x.com/simonw/status/2104978193946124370"
+        },
+        {
+          "id": "x-2104682232522944909",
+          "published_at": "2026-09-29",
+          "type": "Interpretation",
+          "title": "强模型进入免费层会显著扩大真实能力的可获得性",
+          "summary": "Sonnet 5.5 的关键不只是基准提升，而是成为 claude.ai 免费层模型，使更多用户能直接获得高级生成和编程能力。",
+          "original_excerpt": "The most important thing about Sonnet 5.5 is that it's now the model that powers the free tier.",
+          "url": "https://x.com/simonw/status/2104682232522944909"
+        },
+        {
+          "id": "x-2104630129528037415",
+          "published_at": "2026-09-29",
+          "type": "Synthesis",
+          "title": "理解 2026 年 LLM 与 Agent 需要时间线式复盘",
+          "summary": "他发布带注释逐字稿的年度回顾，把模型、工具调用和 Agent 的关键事件串成时间线，避免把趋势理解成孤立新闻。",
+          "original_excerpt": "Here's my rundown of everything that's happened with LLMs and agents in 2026 so far.",
+          "url": "https://x.com/simonw/status/2104630129528037415"
+        }
+      ]
+    },
+    {
+      "handle": "DrJimFan",
+      "name": "Jim Fan",
+      "role": "Research Lead",
+      "focus": ["Robotics", "World Models", "Embodied AI"],
+      "viewpoints": []
+    },
+    {
+      "handle": "AndrewYNg",
+      "name": "Andrew Ng",
+      "role": "研究者 / 教育者",
+      "focus": ["AI Education", "AI Product", "Industry"],
+      "viewpoints": [
+        {
+          "id": "x-2104967263757713432",
+          "published_at": "2026-09-30",
+          "type": "Interpretation",
+          "title": "AI 时代需要更精确、持续的技能测量",
+          "summary": "Workera 被 Pearson 收购被他视为技能测量走向主流的信号：AI 加速岗位变化后，教育和企业需要像优秀教师一样精确理解个人能力差距。",
+          "original_excerpt": "Rigorous skills measurements would be important. With recent advances in AI, this is now more true.",
+          "url": "https://x.com/AndrewYNg/status/2104967263757713432"
+        },
+        {
+          "id": "x-2104660347730969087",
+          "published_at": "2026-09-29",
+          "type": "Fact",
+          "title": "Agent 安全首先需要更强的沙箱基础设施",
+          "summary": "OpenAI-Hugging Face 攻击暴露了弱沙箱问题；他支持 NVIDIA 开源 Agent 沙箱工具，并强调 Agent harness 必须限制文件、网络和执行权限。",
+          "original_excerpt": "The OpenAI-Hugging Face hack was enabled by weak sandboxing.",
+          "url": "https://x.com/AndrewYNg/status/2104660347730969087"
+        }
+      ]
+    },
+    {
+      "handle": "emollick",
+      "name": "Ethan Mollick",
+      "role": "研究者 / 教育者",
+      "focus": ["AI Adoption", "AI Product", "Work"],
+      "viewpoints": [
+        {
+          "id": "x-2106187293501411755",
+          "published_at": "2026-10-03",
+          "type": "Evidence",
+          "title": "AI 对就业的现有证据只支持有限结论",
+          "summary": "目前较可信的结论是：AI 可能已影响最暴露的初级白领岗位边际招聘，但因果归因仍有争议，整体劳动力市场尚未出现可确认的大规模扰动。",
+          "original_excerpt": "AI may already be affecting the hiring margin for junior white-collar roles most exposed to AI, but this attribution is contested.",
+          "url": "https://x.com/emollick/status/2106187293501411755"
+        },
+        {
+          "id": "x-2105618164944146786",
+          "published_at": "2026-10-01",
+          "type": "Interpretation",
+          "title": "AI 进步中最容易被低估的是任务自组织能力",
+          "summary": "模型不仅在单步能力上增强，还能自行组织步骤、工具和子任务完成目标；这再次体现 Bitter Lesson：通用可扩展方法往往超过手工规则。",
+          "original_excerpt": "The thing I underestimated most about progress in AI: its ability to self-organize to accomplish tasks.",
+          "url": "https://x.com/emollick/status/2105618164944146786"
+        },
+        {
+          "id": "x-2106097018129227918",
+          "published_at": "2026-10-03",
+          "type": "Opinion",
+          "title": "企业对 AI 的认知已不早期，但组织改变仍然缓慢",
+          "summary": "许多企业高管已经理解并使用 AI，真正的瓶颈不是认知，而是流程、组织和激励的改变需要更长时间。",
+          "original_excerpt": "Many senior leaders ... are absolutely getting AI. But changing a company is a longer process.",
+          "url": "https://x.com/emollick/status/2106097018129227918"
+        },
+        {
+          "id": "x-2105842740533596201",
+          "published_at": "2026-10-02",
+          "type": "Evidence",
+          "title": "前沿模型已在部分中等长度会计任务上超过初级从业者",
+          "summary": "在定义明确的中等长度会计任务上，前沿模型比研究中的初级会计更快且更准确；这一变化发生在约 18 个月内，但不能外推到所有会计工作。",
+          "original_excerpt": "On medium-length, well-defined accounting tasks, frontier AI models are now faster and more accurate than junior accountants.",
+          "url": "https://x.com/emollick/status/2105842740533596201"
+        }
+      ]
+    },
+    {
+      "handle": "swyx",
+      "name": "swyx",
+      "role": "开发者 / 社区",
+      "focus": ["AI Engineering", "Agent", "Developer Tools"],
+      "viewpoints": [
+        {
+          "id": "x-2106103958657958298",
+          "published_at": "2026-10-03",
+          "type": "Prediction",
+          "title": "Always-on Agent 正在成为新的产品形态",
+          "summary": "他把 OpenAI dots 视为值得关注的“one more thing”：Agent 从按需聊天转向持续在线、主动执行和长期状态维护。",
+          "original_excerpt": "They've been working on dots for a while now.",
+          "url": "https://x.com/swyx/status/2106103958657958298"
+        },
+        {
+          "id": "x-2106042773510177256",
+          "published_at": "2026-10-03",
+          "type": "Opinion",
+          "title": "AI Engineering 必须把安全提升为一级主题",
+          "summary": "随着 Agent 权限和执行能力扩大，安全不能只是会后的附加检查，需要形成独立实践、会议和工具生态。",
+          "original_excerpt": "It's time to get serious about Security x AI.",
+          "url": "https://x.com/swyx/status/2106042773510177256"
+        },
+        {
+          "id": "x-2105348724331606411",
+          "published_at": "2026-10-01",
+          "type": "Analogy",
+          "title": "硬件工程需要类似 Git 与 GitHub 的协作基础设施",
+          "summary": "复杂硬件流程涉及大量利益相关者、不可逆变更和高价值交付；统一协作平台可能像 Git/GitHub 改变软件工程一样加速硬件工程。",
+          "original_excerpt": "Flow is doing for hardware engineering what Git+GitHub did for software engineering.",
+          "url": "https://x.com/swyx/status/2105348724331606411"
+        }
+      ]
+    }
+  ]
+}

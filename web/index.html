@@ -1,0 +1,2040 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>AI Knowledge 学习台</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: oklch(97% 0.008 205);
+      --surface: oklch(100% 0 0);
+      --surface-2: oklch(95% 0.012 205);
+      --surface-3: oklch(92% 0.018 205);
+      --text: oklch(22% 0.025 220);
+      --text-2: oklch(44% 0.025 220);
+      --text-3: oklch(58% 0.018 220);
+      --line: oklch(88% 0.016 205);
+      --brand: oklch(52% 0.105 188);
+      --brand-strong: oklch(40% 0.095 188);
+      --brand-soft: oklch(94% 0.035 188);
+      --blue: oklch(57% 0.14 248);
+      --blue-soft: oklch(95% 0.025 248);
+      --coral: oklch(61% 0.15 35);
+      --coral-soft: oklch(95% 0.032 35);
+      --yellow: oklch(71% 0.12 86);
+      --yellow-soft: oklch(96% 0.032 86);
+      --success: oklch(54% 0.13 150);
+      --danger: oklch(56% 0.18 25);
+      --focus: oklch(60% 0.14 225);
+      --shadow-sm: 0 1px 2px oklch(20% 0.02 220 / 0.06);
+      --shadow-md: 0 12px 32px oklch(20% 0.02 220 / 0.10);
+      --radius-sm: 4px;
+      --radius: 8px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --space-7: 48px;
+      --nav-width: 224px;
+      --aside-width: 320px;
+      --top-height: 60px;
+      --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: oklch(15% 0.016 220);
+      --surface: oklch(19% 0.018 220);
+      --surface-2: oklch(23% 0.018 220);
+      --surface-3: oklch(28% 0.022 220);
+      --text: oklch(92% 0.012 205);
+      --text-2: oklch(75% 0.018 205);
+      --text-3: oklch(62% 0.018 205);
+      --line: oklch(32% 0.02 220);
+      --brand: oklch(70% 0.11 188);
+      --brand-strong: oklch(80% 0.09 188);
+      --brand-soft: oklch(27% 0.045 188);
+      --blue: oklch(72% 0.12 248);
+      --blue-soft: oklch(25% 0.04 248);
+      --coral: oklch(72% 0.13 35);
+      --coral-soft: oklch(26% 0.045 35);
+      --yellow: oklch(78% 0.11 86);
+      --yellow-soft: oklch(27% 0.04 86);
+      --success: oklch(72% 0.12 150);
+      --danger: oklch(70% 0.16 25);
+      --focus: oklch(75% 0.12 225);
+      --shadow-sm: none;
+      --shadow-md: none;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-width: 320px; background: var(--bg); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      line-height: 1.5;
+      letter-spacing: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input, textarea, select { font: inherit; letter-spacing: 0; }
+    button { color: inherit; }
+    a { color: var(--brand-strong); text-underline-offset: 3px; }
+    :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .skip-link {
+      position: fixed;
+      top: var(--space-2);
+      left: var(--space-2);
+      z-index: 60;
+      transform: translateY(-160%);
+      background: var(--text);
+      color: var(--surface);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: var(--nav-width) minmax(0, 1fr) var(--aside-width);
+      grid-template-rows: var(--top-height) minmax(0, 1fr);
+      grid-template-areas:
+        "top top top"
+        "nav main aside";
+    }
+    .topbar {
+      grid-area: top;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: grid;
+      grid-template-columns: var(--nav-width) minmax(220px, 560px) 1fr;
+      align-items: center;
+      gap: var(--space-5);
+      min-height: var(--top-height);
+      padding: 0 var(--space-4);
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      min-width: 0;
+      font-weight: 700;
+    }
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: var(--surface);
+      background: var(--brand-strong);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .brand span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .search {
+      position: relative;
+      min-width: 0;
+    }
+    .search svg {
+      position: absolute;
+      left: var(--space-3);
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      color: var(--text-3);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .search input {
+      width: 100%;
+      height: 38px;
+      padding: 0 var(--space-4) 0 40px;
+      color: var(--text);
+      background: var(--surface-2);
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+    }
+    .search input::placeholder { color: var(--text-3); opacity: 1; }
+    .search input:focus {
+      background: var(--surface);
+      border-color: var(--brand);
+      outline: none;
+      box-shadow: 0 0 0 2px var(--brand-soft);
+    }
+    .top-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .sync-state {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--text-2);
+      font-size: 0.875rem;
+    }
+    .sync-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+    .sync-dot.is-warning { background: var(--yellow); }
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      cursor: pointer;
+    }
+    .icon-btn:hover { background: var(--surface-2); }
+    .icon-btn:active { background: var(--surface-3); transform: translateY(1px); }
+    .icon-btn svg { width: 19px; height: 19px; }
+
+    .sidebar {
+      grid-area: nav;
+      position: sticky;
+      top: var(--top-height);
+      height: calc(100vh - var(--top-height));
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      padding: var(--space-4) var(--space-3);
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--line);
+    }
+    .nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .nav-label {
+      padding: 0 var(--space-3);
+      color: var(--text-3);
+      font-size: 0.75rem;
+      font-weight: 650;
+    }
+    .nav-item {
+      width: 100%;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      color: var(--text-2);
+      background: transparent;
+      border: 0;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: left;
+    }
+    .nav-item:hover { color: var(--text); background: var(--surface-2); }
+    .nav-item[aria-current="page"] {
+      color: var(--brand-strong);
+      background: var(--brand-soft);
+      font-weight: 650;
+    }
+    .nav-item svg { width: 18px; height: 18px; flex: 0 0 auto; }
+    .nav-count {
+      margin-left: auto;
+      color: var(--text-3);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .category-list { display: flex; flex-direction: column; gap: var(--space-1); }
+    .category-btn {
+      width: 100%;
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      color: var(--text-2);
+      background: transparent;
+      border: 0;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+    }
+    .category-btn:hover, .category-btn.is-active { background: var(--surface-2); color: var(--text); }
+    .category-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+    .category-btn:nth-child(3n + 2) .category-dot { background: var(--blue); }
+    .category-btn:nth-child(3n + 3) .category-dot { background: var(--coral); }
+    .vault-path {
+      margin-top: auto;
+      padding: var(--space-3);
+      color: var(--text-3);
+      background: var(--surface-2);
+      border-radius: var(--radius);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      overflow-wrap: anywhere;
+    }
+
+    main {
+      grid-area: main;
+      min-width: 0;
+      padding: var(--space-6);
+      overflow: auto;
+    }
+    .view { display: none; max-width: 1120px; margin: 0 auto; }
+    .view.is-active { display: block; }
+    .page-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    .page-heading h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+    .page-heading p { margin: var(--space-1) 0 0; color: var(--text-2); }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px var(--space-2);
+      color: var(--text-2);
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .tag.level { color: var(--blue); background: var(--blue-soft); border-color: transparent; }
+    .tag.priority { color: var(--coral); background: var(--coral-soft); border-color: transparent; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4);
+      padding: var(--space-4) 0 var(--space-6);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .metric { min-width: 0; }
+    .metric-value {
+      display: block;
+      margin-bottom: var(--space-1);
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 650;
+      font-variant-numeric: tabular-nums;
+    }
+    .metric-label { color: var(--text-2); font-size: 0.875rem; }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+      gap: var(--space-7);
+      padding-top: var(--space-7);
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    .section-head h2, .section-title {
+      margin: 0;
+      font-size: 1.125rem;
+      line-height: 1.4;
+    }
+    .text-btn {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-2);
+      color: var(--brand-strong);
+      background: transparent;
+      border: 0;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 650;
+    }
+    .text-btn:hover { background: var(--brand-soft); }
+    .text-btn svg { width: 16px; height: 16px; }
+    .learning-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--line);
+    }
+    .learning-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4) 0;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      text-align: left;
+    }
+    .learning-row:hover .row-title { color: var(--brand-strong); }
+    .row-index {
+      color: var(--text-3);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+    }
+    .row-title {
+      display: block;
+      margin-bottom: var(--space-1);
+      color: var(--text);
+      font-weight: 650;
+      overflow-wrap: anywhere;
+    }
+    .row-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      color: var(--text-3);
+      font-size: 0.8125rem;
+    }
+    .row-action { color: var(--text-3); }
+    .row-action svg { width: 18px; height: 18px; }
+    .question-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .question {
+      padding-left: var(--space-3);
+      border-left: 2px solid var(--yellow);
+    }
+    .question p { margin: 0; color: var(--text-2); }
+    .category-bars { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-6); }
+    .bar-row { display: grid; grid-template-columns: 108px minmax(0, 1fr) 28px; align-items: center; gap: var(--space-3); font-size: 0.8125rem; }
+    .bar-label { color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bar-track { height: 6px; background: var(--surface-3); border-radius: var(--radius-full, 999px); overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--brand); border-radius: inherit; }
+    .bar-value { color: var(--text-3); font-family: var(--font-mono); text-align: right; }
+
+    .editorial-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin: var(--space-5) 0 var(--space-7);
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .editorial-step {
+      min-width: 0;
+      padding: var(--space-4);
+      background: var(--surface);
+    }
+    .editorial-step strong { display: block; margin-bottom: var(--space-1); font-size: 0.875rem; }
+    .editorial-step span { color: var(--text-3); font-size: 0.75rem; }
+    .editorial-step.is-focus { background: var(--brand-soft); }
+    .intelligence-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+      gap: var(--space-7);
+      align-items: start;
+    }
+    .paper-feed {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--line);
+    }
+    .paper-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr) auto;
+      gap: var(--space-3);
+      align-items: start;
+      padding: var(--space-4) 0;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      text-align: left;
+    }
+    .paper-row:hover .paper-title { color: var(--brand-strong); }
+    .paper-rank {
+      color: var(--text-3);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .paper-title {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--text);
+      font-weight: 650;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+    .paper-original {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--text-3);
+      font-size: 0.75rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+    .paper-summary {
+      display: -webkit-box;
+      margin-bottom: var(--space-2);
+      color: var(--text-2);
+      font-size: 0.875rem;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+    .paper-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      color: var(--text-3);
+      font-size: 0.75rem;
+    }
+    .heat {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      color: var(--coral);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+    }
+    .signal-stack { display: flex; flex-direction: column; gap: var(--space-7); }
+    .source-radar {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--line);
+    }
+    .source-person {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      text-align: left;
+    }
+    .source-person:hover strong { color: var(--brand-strong); }
+    .source-person strong { display: block; font-size: 0.875rem; }
+    .source-person span { color: var(--text-3); font-size: 0.75rem; }
+    .source-status {
+      align-self: center;
+      color: var(--yellow);
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .concept-candidates { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .concept-chip {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      color: var(--text-2);
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+    }
+    .concept-chip .count {
+      color: var(--brand-strong);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .source-note {
+      margin: var(--space-3) 0 0;
+      color: var(--text-3);
+      font-size: 0.8125rem;
+      line-height: 1.6;
+    }
+    .paper-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-5);
+    }
+    .paper-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-4);
+    }
+    .paper-card {
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      text-align: left;
+    }
+    .paper-card:hover { border-color: var(--brand); transform: translateY(-1px); }
+    .paper-card h3 {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+    .paper-card p {
+      margin: 0;
+      color: var(--text-2);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      overflow: hidden;
+    }
+    .paper-card footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-top: auto;
+      color: var(--text-3);
+      font-size: 0.75rem;
+    }
+    .detail-field { display: flex; flex-direction: column; gap: var(--space-2); padding-top: var(--space-4); border-top: 1px solid var(--line); }
+    .detail-field h3 { margin: 0; color: var(--text-3); font-size: 0.75rem; }
+    .detail-field p { margin: 0; color: var(--text-2); line-height: 1.65; }
+    .people-layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: var(--space-6);
+      align-items: start;
+    }
+    .people-list {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--line);
+      padding-right: var(--space-4);
+    }
+    .person-tab {
+      width: 100%;
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      color: var(--text-2);
+      background: transparent;
+      border: 0;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: left;
+    }
+    .person-tab:hover, .person-tab.is-active { color: var(--brand-strong); background: var(--brand-soft); }
+    .person-tab strong { display: block; color: inherit; font-size: 0.875rem; }
+    .person-tab span { color: var(--text-3); font-size: 0.75rem; }
+    .person-tab .nav-count { color: inherit; }
+    .person-summary { margin-bottom: var(--space-5); }
+    .person-summary h2 { margin: 0 0 var(--space-1); font-size: 1.25rem; }
+    .person-summary p { margin: 0; color: var(--text-2); }
+    .viewpoint-list { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+    .viewpoint-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-4);
+      padding: var(--space-5) 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .viewpoint-item.is-read { opacity: 0.62; }
+    .viewpoint-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); }
+    .viewpoint-item h3 { margin: 0 0 var(--space-2); font-size: 1rem; line-height: 1.45; }
+    .viewpoint-item p { margin: 0; color: var(--text-2); line-height: 1.7; }
+    .viewpoint-item details { margin-top: var(--space-3); color: var(--text-3); font-size: 0.8125rem; }
+    .viewpoint-item summary { cursor: pointer; color: var(--brand-strong); }
+    .viewpoint-actions { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-2); }
+    .read-btn {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      color: var(--brand-strong);
+      background: var(--surface);
+      border: 1px solid var(--brand);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .read-btn.is-read { color: var(--text-3); border-color: var(--line); }
+    .read-btn svg { width: 16px; height: 16px; }
+
+    .filters {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-5);
+    }
+    .filter-btn, .seg-btn {
+      min-height: 36px;
+      padding: var(--space-1) var(--space-3);
+      color: var(--text-2);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .filter-btn:hover, .filter-btn.is-active, .seg-btn.is-active {
+      color: var(--brand-strong);
+      background: var(--brand-soft);
+      border-color: var(--brand);
+    }
+    .library-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+    .chunk-card {
+      min-width: 0;
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      text-align: left;
+    }
+    .chunk-card:hover { border-color: var(--brand); transform: translateY(-1px); }
+    .chunk-card:active { transform: translateY(0); }
+    .chunk-card-head { display: flex; justify-content: space-between; gap: var(--space-3); }
+    .chunk-card h3 { margin: 0; font-size: 1rem; line-height: 1.45; overflow-wrap: anywhere; }
+    .chunk-card p {
+      margin: 0;
+      color: var(--text-2);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .chunk-card-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-top: auto; color: var(--text-3); font-size: 0.8125rem; }
+    .status-mark { display: inline-flex; align-items: center; gap: var(--space-2); }
+    .status-mark::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--text-3); }
+    .status-mark.learning::before { background: var(--yellow); }
+    .status-mark.mastered::before { background: var(--success); }
+
+    .study-layout { display: grid; grid-template-columns: minmax(0, 1fr) 244px; gap: var(--space-6); }
+    .study-main { min-width: 0; }
+    .study-kicker { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
+    .study-title { margin: 0 0 var(--space-5); max-width: 28ch; font-size: 1.75rem; line-height: 1.3; overflow-wrap: anywhere; }
+    .concept-lead {
+      margin: 0 0 var(--space-6);
+      max-width: 68ch;
+      color: var(--text-2);
+      font-size: 1.0625rem;
+      line-height: 1.7;
+    }
+    .learn-section { padding: var(--space-5) 0; border-top: 1px solid var(--line); }
+    .learn-section h2 { margin: 0 0 var(--space-3); font-size: 1rem; }
+    .learn-section p { margin: 0; max-width: 72ch; color: var(--text-2); line-height: 1.75; white-space: pre-wrap; }
+    .connection-pills { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .connection-pill {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      color: var(--text-2);
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .connection-pill:hover { color: var(--brand-strong); border-color: var(--brand); }
+    .study-controls {
+      position: sticky;
+      top: calc(var(--top-height) + var(--space-5));
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      padding-left: var(--space-5);
+      border-left: 1px solid var(--line);
+    }
+    .control-block { display: flex; flex-direction: column; gap: var(--space-2); }
+    .control-label { color: var(--text-2); font-size: 0.8125rem; font-weight: 650; }
+    .segment { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-1); }
+    .seg-btn { padding-inline: var(--space-1); font-size: 0.75rem; }
+    .confidence { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-1); }
+    .confidence button {
+      aspect-ratio: 1;
+      min-width: 0;
+      padding: 0;
+      color: var(--text-2);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: var(--font-mono);
+    }
+    .confidence button.is-active { color: var(--surface); background: var(--brand-strong); border-color: var(--brand-strong); }
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+      padding: var(--space-3);
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      line-height: 1.5;
+    }
+    textarea:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 2px var(--brand-soft); }
+    .primary-btn {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      color: var(--surface);
+      background: var(--brand-strong);
+      border: 1px solid var(--brand-strong);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 650;
+    }
+    .primary-btn:hover { background: var(--brand); border-color: var(--brand); }
+    .primary-btn:active { transform: translateY(1px); }
+    .primary-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .primary-btn svg { width: 17px; height: 17px; }
+
+    .graph-shell {
+      min-height: 560px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .graph-toolbar {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--line);
+    }
+    .graph-legend { display: flex; flex-wrap: wrap; gap: var(--space-3); color: var(--text-3); font-size: 0.75rem; }
+    .legend-item { display: inline-flex; align-items: center; gap: var(--space-1); }
+    .legend-swatch { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); }
+    .legend-item:nth-child(2) .legend-swatch { background: var(--blue); }
+    .legend-item:nth-child(3) .legend-swatch { background: var(--coral); }
+    #knowledge-graph { width: 100%; min-height: 510px; display: block; background: var(--surface); }
+    .graph-edge { stroke: var(--line); stroke-width: 1.4; fill: none; }
+    .graph-node { cursor: pointer; }
+    .graph-node rect { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.2; }
+    .graph-node:hover rect, .graph-node:focus rect { stroke: var(--brand); stroke-width: 2; }
+    .graph-node text { fill: var(--text); font-family: var(--font-ui); font-size: 13px; font-weight: 650; pointer-events: none; }
+    .graph-node .node-meta { fill: var(--text-3); font-size: 11px; font-weight: 400; }
+    .graph-node.is-focus rect { fill: var(--brand-soft); stroke: var(--brand); stroke-width: 2; }
+
+    .report-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: var(--space-6); }
+    .report-list { display: flex; flex-direction: column; border-right: 1px solid var(--line); padding-right: var(--space-4); }
+    .report-btn {
+      min-height: 44px;
+      padding: var(--space-2) var(--space-3);
+      color: var(--text-2);
+      background: transparent;
+      border: 0;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+    }
+    .report-btn:hover, .report-btn.is-active { color: var(--brand-strong); background: var(--brand-soft); }
+    .report-content { min-width: 0; max-width: 72ch; }
+    .report-content h1 { font-size: 1.5rem; }
+    .report-content h2 { margin-top: var(--space-6); font-size: 1.125rem; }
+    .report-content p, .report-content li { color: var(--text-2); }
+    .report-content code { padding: 2px var(--space-1); background: var(--surface-2); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.875em; }
+
+    .detail-panel {
+      grid-area: aside;
+      position: sticky;
+      top: var(--top-height);
+      height: calc(100vh - var(--top-height));
+      padding: var(--space-5);
+      overflow-y: auto;
+      background: var(--surface);
+      border-left: 1px solid var(--line);
+    }
+    .detail-empty { display: grid; place-items: center; min-height: 70%; color: var(--text-3); text-align: center; }
+    .detail-empty svg { width: 28px; height: 28px; margin-bottom: var(--space-3); }
+    .detail-content { display: flex; flex-direction: column; gap: var(--space-5); }
+    .detail-content[hidden], .detail-empty[hidden] { display: none; }
+    .detail-head { display: flex; justify-content: space-between; gap: var(--space-3); }
+    .detail-head h2 { margin: 0; font-size: 1.125rem; line-height: 1.45; overflow-wrap: anywhere; }
+    .detail-text { margin: 0; color: var(--text-2); line-height: 1.7; }
+    .detail-section { display: flex; flex-direction: column; gap: var(--space-2); padding-top: var(--space-4); border-top: 1px solid var(--line); }
+    .detail-section h3 { margin: 0; font-size: 0.8125rem; color: var(--text-3); }
+    .keyword-list { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .source-link { display: block; color: var(--text-2); overflow-wrap: anywhere; }
+    .source-link:hover { color: var(--brand-strong); }
+
+    .empty-state {
+      min-height: 340px;
+      display: grid;
+      place-items: center;
+      padding: var(--space-7);
+      color: var(--text-2);
+      text-align: center;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+    }
+    .empty-state svg { width: 36px; height: 36px; margin-bottom: var(--space-3); color: var(--brand); }
+    .empty-state h2 { margin: 0 0 var(--space-2); color: var(--text); font-size: 1.125rem; }
+    .empty-state p { margin: 0 0 var(--space-4); }
+    .skeleton {
+      min-height: 18px;
+      background: var(--surface-3);
+      border-radius: var(--radius-sm);
+      animation: pulse 1.2s ease-in-out infinite alternate;
+    }
+    .toast {
+      position: fixed;
+      right: var(--space-5);
+      bottom: var(--space-5);
+      z-index: 50;
+      max-width: min(360px, calc(100vw - 32px));
+      padding: var(--space-3) var(--space-4);
+      color: var(--surface);
+      background: var(--text);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      transform: translateY(140%);
+      opacity: 0;
+      transition: transform 180ms ease-out, opacity 180ms ease-out;
+    }
+    .toast.is-visible { transform: translateY(0); opacity: 1; }
+    .mobile-nav { display: none; }
+
+    @keyframes pulse { from { opacity: 0.55; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+    @media (max-width: 1180px) {
+      .app {
+        grid-template-columns: var(--nav-width) minmax(0, 1fr);
+        grid-template-areas:
+          "top top"
+          "nav main";
+      }
+      .topbar { grid-template-columns: var(--nav-width) minmax(220px, 1fr) auto; }
+      .detail-panel {
+        position: fixed;
+        top: var(--top-height);
+        right: 0;
+        z-index: 25;
+        width: min(var(--aside-width), 92vw);
+        transform: translateX(102%);
+        box-shadow: var(--shadow-md);
+        transition: transform 180ms ease-out;
+      }
+      .detail-panel.is-open { transform: translateX(0); }
+    }
+    @media (max-width: 820px) {
+      .app {
+        display: block;
+        padding-bottom: calc(68px + env(safe-area-inset-bottom));
+      }
+      .topbar {
+        grid-template-columns: minmax(0, 1fr) auto;
+        min-height: 56px;
+        padding-inline: var(--space-3);
+      }
+      .topbar .brand span:last-child { display: none; }
+      .topbar .search { grid-column: 1 / -1; grid-row: 2; padding-bottom: var(--space-2); }
+      .topbar { height: auto; min-height: 104px; align-content: center; gap: var(--space-2); }
+      .sync-state { display: none; }
+      .sidebar { display: none; }
+      main { padding: var(--space-5) var(--space-4); overflow: visible; }
+      .page-heading { margin-bottom: var(--space-5); }
+      .page-heading h1, .study-title { font-size: 1.5rem; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .overview-grid, .study-layout, .report-layout, .intelligence-grid, .people-layout { grid-template-columns: 1fr; gap: var(--space-6); }
+      .editorial-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .study-controls { position: static; padding: var(--space-5) 0 0; border-left: 0; border-top: 1px solid var(--line); }
+      .report-list { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 var(--space-3); }
+      .people-list { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 var(--space-3); }
+      .person-tab { flex: 0 0 190px; }
+      .report-btn { flex: 0 0 auto; }
+      .detail-panel { top: 0; height: 100vh; width: min(380px, 94vw); z-index: 45; padding-top: max(var(--space-5), env(safe-area-inset-top)); }
+      .mobile-nav {
+        position: fixed;
+        inset: auto 0 0 0;
+        z-index: 40;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        min-height: 64px;
+        padding: var(--space-1) var(--space-2) max(var(--space-1), env(safe-area-inset-bottom));
+        background: var(--surface);
+        border-top: 1px solid var(--line);
+      }
+      .mobile-nav .nav-item {
+        width: auto;
+        min-width: 0;
+        min-height: 54px;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+        padding: var(--space-1);
+        font-size: 0.6875rem;
+        text-align: center;
+      }
+      .mobile-nav .nav-item svg { width: 19px; height: 19px; }
+      .graph-shell { min-height: 440px; }
+      #knowledge-graph { min-height: 390px; }
+    }
+    @media (max-width: 480px) {
+      .metrics { gap: var(--space-3); }
+      .metric-value { font-size: 1.25rem; }
+      .library-list { grid-template-columns: 1fr; }
+      .paper-grid { grid-template-columns: 1fr; }
+      .editorial-strip { grid-template-columns: 1fr; }
+      .paper-row { grid-template-columns: 28px minmax(0, 1fr) auto; }
+      .viewpoint-item { grid-template-columns: 1fr; }
+      .viewpoint-actions { align-items: flex-start; }
+      .learning-row { grid-template-columns: 26px minmax(0, 1fr) auto; }
+      .graph-legend { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">AI</span>
+        <span>Knowledge 学习台</span>
+      </div>
+      <div class="search">
+        <label class="sr-only" for="global-search">搜索知识、关键词或来源</label>
+        <i data-lucide="search" aria-hidden="true"></i>
+        <input id="global-search" type="search" placeholder="搜索知识、关键词或来源" autocomplete="off">
+      </div>
+      <div class="top-actions">
+        <span class="sync-state"><span class="sync-dot"></span><span id="sync-label">正在连接 Obsidian</span></span>
+        <button class="icon-btn" id="refresh-btn" type="button" title="刷新数据" aria-label="刷新数据"><i data-lucide="refresh-cw"></i></button>
+        <button class="icon-btn" id="theme-btn" type="button" title="切换主题" aria-label="切换主题"><i data-lucide="moon"></i></button>
+      </div>
+    </header>
+
+    <aside class="sidebar" aria-label="主导航">
+      <nav class="nav-group">
+        <button class="nav-item" data-view-target="overview" aria-current="page"><i data-lucide="radar"></i><span>今日雷达</span></button>
+        <button class="nav-item" data-view-target="papers"><i data-lucide="file-search-2"></i><span>论文雷达</span><span class="nav-count" id="nav-paper-count">0</span></button>
+        <button class="nav-item" data-view-target="people"><i data-lucide="users-round"></i><span>人物雷达</span><span class="nav-count" id="nav-viewpoint-count">0</span></button>
+        <button class="nav-item" data-view-target="library"><i data-lucide="library-big"></i><span>知识库</span><span class="nav-count" id="nav-chunk-count">0</span></button>
+        <button class="nav-item" data-view-target="study"><i data-lucide="book-open-check"></i><span>学习卡片</span></button>
+        <button class="nav-item" data-view-target="graph"><i data-lucide="waypoints"></i><span>知识地图</span></button>
+        <button class="nav-item" data-view-target="reports"><i data-lucide="notebook-tabs"></i><span>知识复盘</span></button>
+      </nav>
+      <div class="nav-group">
+        <div class="nav-label">知识领域</div>
+        <div class="category-list" id="category-nav"></div>
+      </div>
+      <div class="vault-path" id="vault-path">正在读取知识库…</div>
+    </aside>
+
+    <main id="main-content" tabindex="-1">
+      <section class="view is-active" id="view-overview" aria-labelledby="overview-title">
+        <div class="page-heading">
+          <div>
+            <h1 id="overview-title">今日 AI 学习台</h1>
+            <p id="overview-date"></p>
+          </div>
+          <span class="tag" id="overview-mode">正在同步</span>
+        </div>
+        <div class="metrics" aria-label="今日情报统计">
+          <div class="metric"><span class="metric-value" id="metric-papers">—</span><span class="metric-label">今日精选论文</span></div>
+          <div class="metric"><span class="metric-value" id="metric-focus">—</span><span class="metric-label">重点论文</span></div>
+          <div class="metric"><span class="metric-value" id="metric-concepts">—</span><span class="metric-label">概念候选</span></div>
+          <div class="metric"><span class="metric-value" id="metric-x">—</span><span class="metric-label">X 实时话题</span></div>
+        </div>
+        <div class="editorial-strip" id="editorial-strip"></div>
+        <div class="intelligence-grid">
+          <section>
+            <div class="section-head">
+              <div><h2>Hugging Face 今日论文</h2><p class="source-note" id="hf-date"></p></div>
+              <button class="text-btn" type="button" data-view-target="papers">查看全部 <i data-lucide="arrow-right"></i></button>
+            </div>
+            <div class="paper-feed" id="today-paper-list">
+              <div class="skeleton" style="height:72px"></div>
+              <div class="skeleton" style="height:72px"></div>
+              <div class="skeleton" style="height:72px"></div>
+            </div>
+          </section>
+          <div class="signal-stack">
+            <section>
+              <div class="section-head"><h2>X 人物雷达</h2><span class="tag" id="x-status">未接入</span></div>
+              <div class="source-radar" id="x-source-list"></div>
+              <p class="source-note" id="x-source-note"></p>
+            </section>
+            <section>
+              <div class="section-head"><h2>待入图概念</h2><span class="tag" id="concept-count">0</span></div>
+              <div class="concept-candidates" id="concept-candidates"></div>
+            </section>
+            <section>
+              <div class="section-head"><h2>下一步学习</h2><button class="text-btn" type="button" data-go-study>进入学习 <i data-lucide="arrow-right"></i></button></div>
+              <div class="learning-list" id="priority-list"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-papers" aria-labelledby="papers-title">
+        <div class="page-heading">
+          <div><h1 id="papers-title">论文雷达</h1><p id="papers-summary">Daily Papers · Scan / Focus / Deep Dive</p></div>
+        </div>
+        <div class="paper-controls" id="paper-filters" aria-label="论文层级筛选">
+          <button class="filter-btn is-active" type="button" data-paper-tier="all">全部</button>
+          <button class="filter-btn" type="button" data-paper-tier="focus">Focus 2</button>
+          <span class="nav-label">每日数量</span>
+          <button class="filter-btn" type="button" data-paper-limit="5">5 篇</button>
+          <button class="filter-btn is-active" type="button" data-paper-limit="8">8 篇</button>
+          <button class="filter-btn" type="button" data-paper-limit="10">10 篇</button>
+        </div>
+        <div class="paper-grid" id="paper-grid"></div>
+      </section>
+
+      <section class="view" id="view-people" aria-labelledby="people-title">
+        <div class="page-heading">
+          <div><h1 id="people-title">人物雷达</h1><p id="people-summary">近 7 天公开观点</p></div>
+          <span class="tag" id="people-source-status">公开时间线快照</span>
+        </div>
+        <div class="people-layout">
+          <div class="people-list" id="people-list" role="tablist" aria-label="关注人物"></div>
+          <section id="people-content"></section>
+        </div>
+      </section>
+
+      <section class="view" id="view-library" aria-labelledby="library-title">
+        <div class="page-heading">
+          <div><h1 id="library-title">知识库</h1><p id="library-summary">按优先级与掌握状态排序</p></div>
+        </div>
+        <div class="filters" id="status-filters" aria-label="学习状态筛选">
+          <button class="filter-btn is-active" type="button" data-status="all">全部</button>
+          <button class="filter-btn" type="button" data-status="unread">未学习</button>
+          <button class="filter-btn" type="button" data-status="learning">学习中</button>
+          <button class="filter-btn" type="button" data-status="mastered">已掌握</button>
+        </div>
+        <div class="library-list" id="library-list"></div>
+      </section>
+
+      <section class="view" id="view-study" aria-labelledby="study-title">
+        <div id="study-container"></div>
+      </section>
+
+      <section class="view" id="view-graph" aria-labelledby="graph-title">
+        <div class="page-heading">
+          <div><h1 id="graph-title">知识地图</h1><p>从概念关系进入学习内容</p></div>
+        </div>
+        <div class="graph-shell">
+          <div class="graph-toolbar">
+            <span id="graph-summary">0 个节点 · 0 条连接</span>
+            <div class="graph-legend" aria-label="节点颜色">
+              <span class="legend-item"><span class="legend-swatch"></span>高优先级</span>
+              <span class="legend-item"><span class="legend-swatch"></span>学习中</span>
+              <span class="legend-item"><span class="legend-swatch"></span>待补充</span>
+            </div>
+          </div>
+          <svg id="knowledge-graph" viewBox="0 0 1000 560" role="img" aria-label="AI 知识关系图"></svg>
+        </div>
+      </section>
+
+      <section class="view" id="view-reports" aria-labelledby="reports-title">
+        <div class="page-heading">
+          <div><h1 id="reports-title">知识复盘</h1><p>日报与周度知识重组</p></div>
+        </div>
+        <div class="report-layout">
+          <div class="report-list" id="report-list" role="tablist" aria-label="复盘文档"></div>
+          <article class="report-content" id="report-content"></article>
+        </div>
+      </section>
+    </main>
+
+    <aside class="detail-panel" id="detail-panel" aria-label="知识详情">
+      <div class="detail-empty" id="detail-empty"><div><i data-lucide="panel-right-open"></i><div>选择论文或知识卡</div></div></div>
+      <div class="detail-content" id="detail-content" hidden></div>
+    </aside>
+
+    <nav class="mobile-nav" aria-label="移动端导航">
+      <button class="nav-item" data-view-target="overview" aria-current="page"><i data-lucide="radar"></i><span>今日</span></button>
+      <button class="nav-item" data-view-target="papers"><i data-lucide="file-search-2"></i><span>论文</span></button>
+      <button class="nav-item" data-view-target="people"><i data-lucide="users-round"></i><span>人物</span></button>
+      <button class="nav-item" data-view-target="library"><i data-lucide="library-big"></i><span>知识库</span></button>
+      <button class="nav-item" data-view-target="study"><i data-lucide="book-open-check"></i><span>学习</span></button>
+    </nav>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    const CATEGORY_ZH = {
+      "Foundation": "基础", "Machine Learning": "机器学习", "Deep Learning": "深度学习",
+      "Transformer": "Transformer", "LLM": "大语言模型", "Agent": "智能体",
+      "AI Infra": "AI 基础设施", "Multimodal": "多模态", "AI Product": "AI 产品",
+      "AI Application": "AI 应用", "AI Business": "AI 商业", "AI Safety": "AI 安全",
+      "Robotics": "机器人", "Frontier": "前沿"
+    };
+    const STATUS_ZH = { unread: "未学习", learning: "学习中", mastered: "已掌握" };
+    const state = {
+      data: null,
+      chunks: [],
+      papers: [],
+      filtered: [],
+      currentChunkId: null,
+      currentView: "overview",
+      statusFilter: "all",
+      paperTier: "all",
+      paperLimit: 8,
+      currentPersonHandle: "",
+      categoryFilter: "all",
+      query: "",
+      demo: false
+    };
+
+    const demoChunks = [
+      {
+        id: "demo-attention",
+        title: "Self-Attention 为什么能够处理长距离依赖",
+        category: "Transformer",
+        level: "L2",
+        classification: "A",
+        concept: "Self-Attention 让序列中的每个 token 直接读取其他位置的信息。不同于 RNN 必须逐步传递状态，它用一次加权聚合建立任意位置之间的联系。",
+        problem: "循环网络中的信息需要经过多步传播，距离越远越容易衰减，也难以并行训练。",
+        mechanism: "模型将输入映射为 Query、Key 与 Value。Query 和所有 Key 计算相关性，再用归一化权重聚合对应的 Value。",
+        why_it_matters: "它同时改善了长距离建模与训练并行性，成为现代大语言模型的核心计算结构。",
+        example: "在“银行旁边的河岸”中，bank 可以直接关注 river，从上下文判断它表示河岸而不是金融机构。",
+        keywords: ["Self-Attention", "Transformer", "Long-range dependency"],
+        priority_score: 500,
+        sources_detail: [{title: "Attention Is All You Need", type: "paper", url: "https://arxiv.org/abs/1706.03762", author: "Vaswani et al."}],
+        progress: {status: "learning", confidence: 3, notes: "", reviewed_at: ""},
+        relationship_refs: [{target: "demo-kv", target_title: "KV Cache 如何减少重复计算", type: "enables", note: ""}]
+      },
+      {
+        id: "demo-kv",
+        title: "KV Cache 如何减少重复计算",
+        category: "AI Infra",
+        level: "L2",
+        classification: "C",
+        concept: "KV Cache 保存已经生成 token 的 Key 与 Value 张量。每一步解码只计算新 token 的状态，而不重新计算整个前缀。",
+        problem: "自回归生成会反复处理相同前缀，导致大量重复计算。",
+        mechanism: "每一层把新 token 的 K/V 追加到缓存，随后注意力读取完整缓存。计算量下降，但显存占用会随上下文长度增长。",
+        why_it_matters: "它把推理瓶颈从纯计算问题转化为显存容量和带宽问题，是理解 LLM Serving 的关键节点。",
+        example: "生成第 101 个 token 时，复用前 100 个 token 的 K/V，只计算新 token。",
+        keywords: ["KV Cache", "Inference", "Memory bandwidth"],
+        priority_score: 400,
+        sources_detail: [{title: "Efficient Large Language Model Inference", type: "article", url: "", author: ""}],
+        progress: {status: "unread", confidence: 0, notes: "", reviewed_at: ""},
+        relationship_refs: [{target: "demo-context", target_title: "长上下文为什么增加推理成本", type: "related_to", note: ""}]
+      },
+      {
+        id: "demo-context",
+        title: "长上下文为什么增加推理成本",
+        category: "LLM",
+        level: "L2",
+        classification: "C",
+        concept: "上下文变长会扩大注意力计算和 KV Cache。Prefill 阶段的计算增长快，Decode 阶段则持续受到缓存读取带宽影响。",
+        problem: "更长的上下文提高能力，但会降低吞吐、增加延迟并占用更多显存。",
+        mechanism: "Attention 需要处理更多 token 间关系；同时每层都要保存更长的 K/V 张量。",
+        why_it_matters: "它连接模型能力、推理优化、硬件资源与产品成本，不能只用“支持多少 token”衡量。",
+        example: "同一模型从 8K 扩展到 128K context 后，单请求可占用更多显存，批处理空间明显下降。",
+        keywords: ["Long Context", "Inference Cost", "Serving"],
+        priority_score: 320,
+        sources_detail: [],
+        progress: {status: "unread", confidence: 0, notes: "", reviewed_at: ""},
+        relationship_refs: []
+      }
+    ];
+    const demoRelationships = [
+      {source: "demo-attention", source_title: demoChunks[0].title, target: "demo-kv", target_title: demoChunks[1].title, type: "enables"},
+      {source: "demo-kv", source_title: demoChunks[1].title, target: "demo-context", target_title: demoChunks[2].title, type: "related_to"}
+    ];
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+      })[char]);
+    }
+
+    function iconRefresh() {
+      if (window.lucide) window.lucide.createIcons({attrs: {"stroke-width": 1.8}});
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("is-visible"), 2200);
+    }
+
+    function setTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem("ai-knowledge-theme", theme);
+      const icon = document.querySelector("#theme-btn i, #theme-btn svg");
+      if (icon) {
+        icon.setAttribute("data-lucide", theme === "dark" ? "sun" : "moon");
+        iconRefresh();
+      }
+    }
+
+    function categoryName(value) { return CATEGORY_ZH[value] || value || "未分类"; }
+
+    async function loadData() {
+      document.getElementById("sync-label").textContent = "正在连接 Obsidian";
+      try {
+        const response = await fetch("/api/state", {cache: "no-store"});
+        const payload = await response.json();
+        if (!response.ok || !payload.ok) throw new Error(payload.error || "数据读取失败");
+        state.data = payload.data;
+        state.demo = payload.data.chunks.length === 0;
+        state.chunks = state.demo ? structuredClone(demoChunks) : payload.data.chunks;
+        state.papers = payload.data.daily_intelligence?.huggingface?.papers || [];
+        if (state.demo) {
+          state.data.relationships = demoRelationships;
+        }
+        const dailyDate = payload.data.daily_intelligence?.huggingface?.daily_date || "暂无日期";
+        const update = payload.data.update_status || {};
+        const lastSuccess = update.last_success_at ? new Date(update.last_success_at) : null;
+        const nextRun = update.next_run_at ? new Date(update.next_run_at) : null;
+        document.getElementById("overview-mode").textContent = "每日 08:00 · HF " + dailyDate;
+        document.querySelector(".sync-dot").classList.toggle("is-warning", update.status && update.status !== "success");
+        document.getElementById("sync-label").textContent = lastSuccess
+          ? `上次 ${lastSuccess.toLocaleTimeString("zh-CN", {hour: "2-digit", minute: "2-digit"})} · 下次 ${nextRun ? nextRun.toLocaleTimeString("zh-CN", {hour: "2-digit", minute: "2-digit"}) : "08:00"}`
+          : (state.demo ? "等待首次定时更新" : "数据已载入");
+        renderAll();
+        const requestedView = new URLSearchParams(location.search).get("view");
+        if (["overview", "papers", "people", "library", "study", "graph", "reports"].includes(requestedView)) {
+          switchView(requestedView);
+        }
+      } catch (error) {
+        document.getElementById("sync-label").textContent = "连接失败";
+        renderError(error.message);
+      }
+    }
+
+    function renderAll() {
+      renderStats();
+      renderCategories();
+      renderOverview();
+      renderPapers();
+      renderPeople();
+      applyFilters();
+      if (!state.currentChunkId && state.chunks[0]) state.currentChunkId = state.chunks[0].id;
+      renderStudy();
+      renderGraph();
+      renderReports();
+      document.getElementById("vault-path").textContent = state.data.vault_root;
+      document.getElementById("nav-chunk-count").textContent = state.chunks.length;
+      document.getElementById("nav-paper-count").textContent = state.papers.length;
+      document.getElementById("nav-viewpoint-count").textContent =
+        (state.data.daily_intelligence?.x_radar?.topics || []).filter(item => !item.is_read).length;
+      iconRefresh();
+    }
+
+    function renderStats() {
+      const concepts = paperConceptCounts();
+      const xTopics = state.data.daily_intelligence?.x_radar?.topics || [];
+      const selectedPapers = state.papers.slice(0, state.paperLimit);
+      document.getElementById("metric-papers").textContent = selectedPapers.length;
+      document.getElementById("metric-focus").textContent = selectedPapers.filter(item => item.editorial_tier === "focus").length;
+      document.getElementById("metric-concepts").textContent = concepts.length;
+      document.getElementById("metric-x").textContent = xTopics.filter(item => !item.is_read).length;
+      const dateLabel = new Intl.DateTimeFormat("zh-CN", {
+        year: "numeric", month: "long", day: "numeric", weekday: "long"
+      }).format(new Date());
+      const update = state.data.update_status || {};
+      document.getElementById("overview-date").textContent =
+        dateLabel + (update.status ? ` · 更新状态：${update.status === "success" ? "成功" : update.status === "partial" ? "部分成功" : update.status}` : "");
+    }
+
+    function renderCategories() {
+      const counts = new Map();
+      state.chunks.forEach(chunk => counts.set(chunk.category, (counts.get(chunk.category) || 0) + 1));
+      const entries = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+      document.getElementById("category-nav").innerHTML = entries.map(([name, count]) => `
+        <button class="category-btn ${state.categoryFilter === name ? "is-active" : ""}" type="button" data-category="${escapeHtml(name)}">
+          <span class="category-dot"></span><span>${escapeHtml(categoryName(name))}</span><span class="nav-count">${count}</span>
+        </button>`).join("") || '<div class="nav-label">暂无分类</div>';
+
+      const max = Math.max(1, ...entries.map(([, count]) => count));
+      const bars = document.getElementById("category-bars");
+      if (bars) {
+        bars.innerHTML = entries.slice(0, 6).map(([name, count]) => `
+          <div class="bar-row">
+            <span class="bar-label">${escapeHtml(categoryName(name))}</span>
+            <span class="bar-track"><span class="bar-fill" style="width:${Math.round(count / max * 100)}%"></span></span>
+            <span class="bar-value">${count}</span>
+          </div>`).join("");
+      }
+    }
+
+    function renderOverview() {
+      const intelligence = state.data.daily_intelligence || {};
+      const hf = intelligence.huggingface || {};
+      const xRadar = intelligence.x_radar || {};
+      const editorial = intelligence.editorial_model || {};
+      const priority = [...state.chunks]
+        .filter(chunk => chunk.progress.status !== "mastered")
+        .sort((a, b) => Number(b.priority_score || 0) - Number(a.priority_score || 0))
+        .slice(0, 3);
+      document.getElementById("priority-list").innerHTML = priority.length ? priority.map((chunk, index) => `
+        <button class="learning-row" type="button" data-open-chunk="${escapeHtml(chunk.id)}">
+          <span class="row-index">${String(index + 1).padStart(2, "0")}</span>
+          <span>
+            <span class="row-title">${escapeHtml(chunk.title)}</span>
+            <span class="row-meta"><span>${escapeHtml(categoryName(chunk.category))}</span><span>${escapeHtml(chunk.level)}</span><span>优先级 ${escapeHtml(chunk.priority_score)}</span></span>
+          </span>
+          <span class="row-action"><i data-lucide="chevron-right"></i></span>
+        </button>`).join("") : emptyState("circle-check-big", "当前没有待学习知识", "已完成现有知识卡");
+
+      document.getElementById("hf-date").textContent = `${escapeHtml(hf.daily_date || "尚未同步")} · 精选 ${state.paperLimit} / Focus ${editorial.daily_focus || 2}`;
+      document.getElementById("today-paper-list").innerHTML = state.papers.length
+        ? state.papers.slice(0, state.paperLimit).map(paperRow).join("")
+        : emptyState("file-warning", "暂时没有论文数据", hf.error || "刷新后重试");
+
+      const stages = editorial.stages || ["全量扫描", "热度与相关性筛选", "教学拆解", "概念入图"];
+      const stageNotes = ["Daily Papers", `精选 ${state.paperLimit} / Focus 2`, "问题 · 方法 · 证据 · 限制", "去重后进入 Obsidian"];
+      document.getElementById("editorial-strip").innerHTML = stages.map((stage, index) => `
+        <div class="editorial-step ${index === 2 ? "is-focus" : ""}">
+          <strong>${index + 1}. ${escapeHtml(stage)}</strong>
+          <span>${escapeHtml(stageNotes[index] || "")}</span>
+        </div>`).join("");
+
+      const sources = xRadar.sources || [];
+      document.getElementById("x-status").textContent = xRadar.status === "public_snapshot" ? "近 7 天" : "待接入";
+      document.getElementById("x-source-list").innerHTML = sources.slice(0, 5).map(source => {
+        const unread = (source.viewpoints || []).filter(item => !item.is_read).length;
+        return `
+        <button class="source-person" type="button" data-open-person="${escapeHtml(source.handle)}">
+          <div><strong>${escapeHtml(source.name)} <span>@${escapeHtml(source.handle)}</span></strong><span>${escapeHtml(source.role)} · ${(source.focus || []).map(escapeHtml).join(" / ")}</span></div>
+          <span class="source-status">${unread ? `${unread} 条未读` : (source.viewpoints || []).length ? "已读完" : "近 7 天无更新"}</span>
+        </button>`;
+      }).join("") || '<p class="detail-text">尚未配置人物源</p>';
+      document.getElementById("x-source-note").textContent = xRadar.message || "";
+
+      const concepts = paperConceptCounts();
+      document.getElementById("concept-count").textContent = concepts.length;
+      document.getElementById("concept-candidates").innerHTML = concepts.slice(0, 10).map(item => `
+        <span class="concept-chip">${escapeHtml(item.name)} <span class="count">${item.count}</span></span>`).join("") || '<span class="detail-text">暂无概念候选</span>';
+    }
+
+    function paperConceptCounts() {
+      const counts = new Map();
+      state.papers.slice(0, state.paperLimit).forEach(paper => (paper.teaching?.concepts || []).forEach(concept => {
+        counts.set(concept, (counts.get(concept) || 0) + 1);
+      }));
+      return [...counts.entries()]
+        .map(([name, count]) => ({name, count}))
+        .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+    }
+
+    function paperRow(paper) {
+      const localized = paper.localized || {};
+      return `
+        <button class="paper-row" type="button" data-open-paper="${escapeHtml(paper.id)}">
+          <span class="paper-rank">${String(paper.rank).padStart(2, "0")}</span>
+          <span>
+            <span class="paper-title">${escapeHtml(localized.title_zh || paper.title)}</span>
+            ${localized.title_zh ? `<span class="paper-original">${escapeHtml(paper.title)}</span>` : ""}
+            <span class="paper-summary">${escapeHtml(localized.research_question_zh || paper.teaching?.research_question || paper.summary)}</span>
+            <span class="paper-meta"><span>${escapeHtml(paper.organization || paper.authors?.[0] || "作者信息待确认")}</span><span>${(paper.teaching?.concepts || []).map(escapeHtml).join(" · ") || "概念待提取"}</span></span>
+          </span>
+          <span class="heat"><i data-lucide="flame"></i>${escapeHtml(paper.upvotes)}</span>
+        </button>`;
+    }
+
+    function renderPapers() {
+      const selected = state.papers.slice(0, state.paperLimit);
+      let papers = state.paperTier === "all"
+        ? selected
+        : selected.filter(paper => paper.editorial_tier === state.paperTier);
+      const query = state.query.trim().toLocaleLowerCase();
+      if (query) {
+        papers = papers.filter(paper => [
+          paper.title,
+          paper.summary,
+          paper.organization,
+          ...(paper.authors || []),
+          ...(paper.teaching?.concepts || [])
+        ].join(" ").toLocaleLowerCase().includes(query));
+      }
+      const dailyDate = state.data.daily_intelligence?.huggingface?.daily_date || "";
+      document.getElementById("papers-summary").textContent = `${dailyDate || "尚未同步"} · 每日保留 ${state.paperLimit} 篇 · Focus / Deep Dive`;
+      document.getElementById("paper-grid").innerHTML = papers.length ? papers.map(paper => {
+        const localized = paper.localized || {};
+        return `
+        <button class="paper-card" type="button" data-open-paper="${escapeHtml(paper.id)}">
+          <div class="chunk-card-head"><span class="tag ${paper.editorial_tier === "focus" ? "priority" : ""}">${paper.editorial_tier === "focus" ? "Focus" : paper.editorial_tier === "scan" ? "Scan" : "候选"}</span><span class="heat"><i data-lucide="flame"></i>${escapeHtml(paper.upvotes)}</span></div>
+          <h3>${escapeHtml(localized.title_zh || paper.title)}</h3>
+          ${localized.title_zh ? `<span class="paper-original">${escapeHtml(paper.title)}</span>` : ""}
+          <p>${escapeHtml(localized.research_question_zh || paper.teaching?.research_question || paper.summary)}</p>
+          <div class="keyword-list">${(paper.teaching?.concepts || []).slice(0, 4).map(concept => `<span class="tag">${escapeHtml(concept)}</span>`).join("")}</div>
+          <footer><span>${escapeHtml(paper.organization || paper.authors?.[0] || "作者待确认")}</span><span>${localized.status === "curated" ? "中文已编辑" : "中文待编辑"} · #${escapeHtml(paper.rank)}</span></footer>
+        </button>`;
+      }).join("") : emptyState("file-search-2", "没有匹配的论文", "切换层级或刷新数据");
+    }
+
+    function renderPeople() {
+      const radar = state.data.daily_intelligence?.x_radar || {};
+      const people = radar.sources || [];
+      if (!state.currentPersonHandle && people[0]) state.currentPersonHandle = people[0].handle;
+      const current = people.find(person => person.handle === state.currentPersonHandle) || people[0];
+      document.getElementById("people-summary").textContent =
+        `${radar.window_start || "—"} 至 ${radar.window_end || "—"} · ${radar.message || ""}`;
+      document.getElementById("people-source-status").textContent =
+        radar.status === "public_snapshot" ? "公开时间线快照" : "未接入";
+      document.getElementById("people-list").innerHTML = people.map(person => {
+        const unread = (person.viewpoints || []).filter(item => !item.is_read).length;
+        return `
+          <button class="person-tab ${current?.handle === person.handle ? "is-active" : ""}" type="button" role="tab" data-person-handle="${escapeHtml(person.handle)}">
+            <span><strong>${escapeHtml(person.name)}</strong><span>@${escapeHtml(person.handle)} · ${(person.viewpoints || []).length} 条</span></span>
+            <span class="nav-count">${unread}</span>
+          </button>`;
+      }).join("");
+      const content = document.getElementById("people-content");
+      if (!current) {
+        content.innerHTML = emptyState("users-round", "没有人物数据", "接入数据源后显示");
+        return;
+      }
+      const viewpoints = current.viewpoints || [];
+      content.innerHTML = `
+        <div class="person-summary">
+          <h2>${escapeHtml(current.name)} <span class="tag">@${escapeHtml(current.handle)}</span></h2>
+          <p>${escapeHtml(current.role)} · ${(current.focus || []).map(escapeHtml).join(" / ")}</p>
+        </div>
+        <div class="viewpoint-list">
+          ${viewpoints.length ? viewpoints.map(viewpoint => `
+            <article class="viewpoint-item ${viewpoint.is_read ? "is-read" : ""}">
+              <div>
+                <div class="viewpoint-head"><span class="tag">${escapeHtml(viewpoint.type)}</span><span class="tag">${escapeHtml(viewpoint.published_at)}</span></div>
+                <h3>${escapeHtml(viewpoint.title)}</h3>
+                <p>${escapeHtml(viewpoint.summary)}</p>
+                <details><summary>查看原文摘录</summary><p>${escapeHtml(viewpoint.original_excerpt)}</p></details>
+              </div>
+              <div class="viewpoint-actions">
+                <button class="read-btn ${viewpoint.is_read ? "is-read" : ""}" type="button" data-radar-read="${escapeHtml(viewpoint.id)}" data-read-value="${viewpoint.is_read ? "false" : "true"}">
+                  <i data-lucide="${viewpoint.is_read ? "rotate-ccw" : "check"}"></i>${viewpoint.is_read ? "恢复未读" : "标记已阅"}
+                </button>
+                <a class="text-btn" href="${escapeHtml(viewpoint.url)}" target="_blank" rel="noreferrer">查看原帖 <i data-lucide="external-link"></i></a>
+              </div>
+            </article>`).join("") : emptyState("inbox", "近 7 天没有新观点", "保留人物关注，等待下一次更新")}
+        </div>`;
+      iconRefresh();
+    }
+
+    function applyFilters() {
+      const query = state.query.trim().toLocaleLowerCase();
+      state.filtered = state.chunks.filter(chunk => {
+        const statusMatch = state.statusFilter === "all" || chunk.progress.status === state.statusFilter;
+        const categoryMatch = state.categoryFilter === "all" || chunk.category === state.categoryFilter;
+        const haystack = [chunk.title, chunk.concept, chunk.category, ...(chunk.keywords || []), ...(chunk.sources_detail || []).map(source => source.title)].join(" ").toLocaleLowerCase();
+        return statusMatch && categoryMatch && (!query || haystack.includes(query));
+      });
+      renderLibrary();
+    }
+
+    function renderLibrary() {
+      document.getElementById("library-summary").textContent = `${state.filtered.length} 张知识卡 · 按优先级与掌握状态排序`;
+      document.getElementById("library-list").innerHTML = state.filtered.length ? state.filtered.map(chunk => `
+        <button class="chunk-card" type="button" data-open-chunk="${escapeHtml(chunk.id)}">
+          <span class="chunk-card-head">
+            <span class="tag level">${escapeHtml(chunk.level)}</span>
+            <span class="tag priority">P ${escapeHtml(chunk.priority_score)}</span>
+          </span>
+          <h3>${escapeHtml(chunk.title)}</h3>
+          <p>${escapeHtml(chunk.concept || "待补充概念解释。")}</p>
+          <span class="chunk-card-foot">
+            <span>${escapeHtml(categoryName(chunk.category))}</span>
+            <span class="status-mark ${escapeHtml(chunk.progress.status)}">${escapeHtml(STATUS_ZH[chunk.progress.status])}</span>
+          </span>
+        </button>`).join("") : emptyState("search-x", "没有匹配的知识卡", "调整搜索词或筛选条件");
+    }
+
+    function renderStudy() {
+      const container = document.getElementById("study-container");
+      const chunk = state.chunks.find(item => item.id === state.currentChunkId) || state.chunks[0];
+      if (!chunk) {
+        container.innerHTML = emptyState("book-dashed", "还没有可学习的知识卡", "知识入库后会出现在这里");
+        return;
+      }
+      state.currentChunkId = chunk.id;
+      const relations = relationsFor(chunk);
+      container.innerHTML = `
+        <div class="study-layout">
+          <article class="study-main">
+            <div class="study-kicker">
+              <span class="tag level">${escapeHtml(chunk.level)}</span>
+              <span class="tag">${escapeHtml(categoryName(chunk.category))}</span>
+              <span class="tag priority">优先级 ${escapeHtml(chunk.priority_score)}</span>
+              ${state.demo ? '<span class="tag">示例</span>' : ""}
+            </div>
+            <h1 class="study-title" id="study-title">${escapeHtml(chunk.title)}</h1>
+            <p class="concept-lead">${escapeHtml(chunk.concept || "待补充概念解释。")}</p>
+            ${learnSection("它解决什么问题？", chunk.problem)}
+            ${learnSection("它如何工作？", chunk.mechanism)}
+            ${learnSection("为什么重要？", chunk.why_it_matters)}
+            ${learnSection("例子", chunk.example)}
+            <section class="learn-section">
+              <h2>知识连接</h2>
+              <div class="connection-pills">
+                ${relations.length ? relations.map(rel => `<button class="connection-pill" type="button" data-related-id="${escapeHtml(rel.id || "")}"><i data-lucide="git-branch"></i><span>${escapeHtml(rel.title)}</span></button>`).join("") : '<span class="detail-text">暂无连接</span>'}
+              </div>
+            </section>
+            <section class="learn-section">
+              <h2>来源</h2>
+              ${(chunk.sources_detail || []).length ? chunk.sources_detail.map(source => source.url
+                ? `<p><a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)}</a>${source.author ? ` · ${escapeHtml(source.author)}` : ""}</p>`
+                : `<p>${escapeHtml(source.title)}${source.author ? ` · ${escapeHtml(source.author)}` : ""}</p>`).join("")
+                : '<p>暂无来源信息</p>'}
+            </section>
+          </article>
+          <aside class="study-controls" aria-label="学习进度">
+            <div class="control-block">
+              <span class="control-label">学习状态</span>
+              <div class="segment">
+                ${["unread", "learning", "mastered"].map(status => `<button class="seg-btn ${chunk.progress.status === status ? "is-active" : ""}" type="button" data-set-status="${status}">${STATUS_ZH[status]}</button>`).join("")}
+              </div>
+            </div>
+            <div class="control-block">
+              <span class="control-label">理解程度</span>
+              <div class="confidence" aria-label="理解程度 1 到 5">
+                ${[1,2,3,4,5].map(value => `<button class="${Number(chunk.progress.confidence) === value ? "is-active" : ""}" type="button" data-confidence="${value}" aria-label="理解程度 ${value}">${value}</button>`).join("")}
+              </div>
+            </div>
+            <div class="control-block">
+              <label class="control-label" for="study-notes">学习笔记</label>
+              <textarea id="study-notes" placeholder="记录自己的理解、疑问或例子">${escapeHtml(chunk.progress.notes || "")}</textarea>
+            </div>
+            <button class="primary-btn" id="save-progress" type="button" ${state.demo ? "disabled" : ""}><i data-lucide="save"></i>保存进度</button>
+            ${state.demo ? '<span class="control-label">示例模式不会写入 Obsidian</span>' : ""}
+            <button class="text-btn" id="next-chunk" type="button">下一张知识卡 <i data-lucide="arrow-right"></i></button>
+          </aside>
+        </div>`;
+      iconRefresh();
+    }
+
+    function learnSection(title, content) {
+      return `<section class="learn-section"><h2>${escapeHtml(title)}</h2><p>${escapeHtml(content || "待补充。")}</p></section>`;
+    }
+
+    function relationsFor(chunk) {
+      const relationships = state.data.relationships || [];
+      const items = [];
+      relationships.forEach(rel => {
+        if (rel.source === chunk.id) items.push({id: rel.target, title: rel.target_title, type: rel.type});
+        else if (rel.target === chunk.id) items.push({id: rel.source, title: rel.source_title, type: rel.type});
+      });
+      (chunk.relationship_refs || []).forEach(rel => {
+        if (!items.some(item => item.title === rel.target_title)) items.push({id: rel.target, title: rel.target_title, type: rel.type});
+      });
+      return items;
+    }
+
+    function renderDetail(chunkId, openPanel = true) {
+      const chunk = state.chunks.find(item => item.id === chunkId);
+      if (!chunk) return;
+      state.currentChunkId = chunk.id;
+      document.getElementById("detail-empty").hidden = true;
+      const content = document.getElementById("detail-content");
+      content.hidden = false;
+      content.innerHTML = `
+        <div class="detail-head">
+          <h2>${escapeHtml(chunk.title)}</h2>
+          <button class="icon-btn" id="close-detail" type="button" aria-label="关闭详情" title="关闭详情"><i data-lucide="x"></i></button>
+        </div>
+        <div class="study-kicker"><span class="tag level">${escapeHtml(chunk.level)}</span><span class="tag">${escapeHtml(categoryName(chunk.category))}</span></div>
+        <p class="detail-text">${escapeHtml(chunk.concept || "待补充概念解释。")}</p>
+        <div class="detail-section"><h3>为什么重要</h3><p class="detail-text">${escapeHtml(chunk.why_it_matters || "待补充。")}</p></div>
+        <div class="detail-section"><h3>关键词</h3><div class="keyword-list">${(chunk.keywords || []).map(keyword => `<span class="tag">${escapeHtml(keyword)}</span>`).join("") || '<span class="detail-text">暂无</span>'}</div></div>
+        <div class="detail-section"><h3>来源</h3>${(chunk.sources_detail || []).map(source => source.url ? `<a class="source-link" href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)}</a>` : `<span class="detail-text">${escapeHtml(source.title)}</span>`).join("") || '<span class="detail-text">暂无</span>'}</div>
+        <button class="primary-btn" type="button" data-study-chunk="${escapeHtml(chunk.id)}"><i data-lucide="book-open"></i>开始学习</button>`;
+      if (openPanel) document.getElementById("detail-panel").classList.add("is-open");
+      iconRefresh();
+    }
+
+    function renderPaperDetail(paperId) {
+      const paper = state.papers.find(item => item.id === paperId);
+      if (!paper) return;
+      const teaching = paper.teaching || {};
+      const localized = paper.localized || {};
+      document.getElementById("detail-empty").hidden = true;
+      const content = document.getElementById("detail-content");
+      content.hidden = false;
+      content.innerHTML = `
+        <div class="detail-head">
+          <h2>${escapeHtml(localized.title_zh || paper.title)}</h2>
+          <button class="icon-btn" id="close-detail" type="button" aria-label="关闭详情" title="关闭详情"><i data-lucide="x"></i></button>
+        </div>
+        <p class="paper-original">${escapeHtml(paper.title)}</p>
+        <div class="study-kicker"><span class="tag priority">HF #${escapeHtml(paper.rank)}</span><span class="tag">${escapeHtml(paper.editorial_tier)}</span><span class="heat"><i data-lucide="flame"></i>${escapeHtml(paper.upvotes)}</span></div>
+        <div class="detail-field"><h3>研究问题</h3><p>${escapeHtml(localized.research_question_zh || teaching.research_question || paper.summary)}</p></div>
+        <div class="detail-field"><h3>核心方法</h3><p>${escapeHtml(localized.new_method_zh || teaching.new_method || "待深读")}</p></div>
+        <div class="detail-field"><h3>实验结论</h3><p>${escapeHtml(localized.evidence_zh || teaching.evidence || "待深读")}</p></div>
+        <div class="detail-field"><h3>限制与核验</h3><p>${escapeHtml(teaching.limitation || "待深读")}</p></div>
+        ${localized.editor_note ? `<div class="detail-field"><h3>编辑判断</h3><p>${escapeHtml(localized.editor_note)}</p></div>` : ""}
+        <div class="detail-field"><h3>作者与机构</h3><p>${escapeHtml((paper.authors || []).join("、") || "待确认")}${paper.organization ? ` · ${escapeHtml(paper.organization)}` : ""}</p></div>
+        <div class="detail-field"><h3>概念候选</h3><div class="keyword-list">${(teaching.concepts || []).map(concept => `<span class="tag">${escapeHtml(concept)}</span>`).join("") || '<span class="detail-text">暂无</span>'}</div></div>
+        <a class="primary-btn" href="${escapeHtml(paper.url)}" target="_blank" rel="noreferrer"><i data-lucide="external-link"></i>打开原论文</a>`;
+      document.getElementById("detail-panel").classList.add("is-open");
+      iconRefresh();
+    }
+
+    function renderGraph() {
+      const svg = document.getElementById("knowledge-graph");
+      const chunks = state.chunks.slice(0, 18);
+      document.getElementById("graph-summary").textContent = `${chunks.length} 个节点 · ${state.data.relationships.length} 条连接`;
+      if (!chunks.length) {
+        svg.innerHTML = '<text x="500" y="280" text-anchor="middle" fill="currentColor">暂无知识节点</text>';
+        return;
+      }
+      const positions = new Map();
+      const columns = 3;
+      const nodeW = 230;
+      const nodeH = 62;
+      const gapX = 90;
+      const gapY = 54;
+      chunks.forEach((chunk, index) => {
+        const col = index % columns;
+        const row = Math.floor(index / columns);
+        positions.set(chunk.id, {
+          x: 60 + col * (nodeW + gapX),
+          y: 46 + row * (nodeH + gapY)
+        });
+      });
+      const edges = (state.data.relationships || []).filter(rel => positions.has(rel.source) && positions.has(rel.target)).map(rel => {
+        const a = positions.get(rel.source);
+        const b = positions.get(rel.target);
+        return `<path class="graph-edge" d="M ${a.x + nodeW / 2} ${a.y + nodeH} C ${a.x + nodeW / 2} ${(a.y + b.y) / 2}, ${b.x + nodeW / 2} ${(a.y + b.y) / 2}, ${b.x + nodeW / 2} ${b.y}"></path>`;
+      }).join("");
+      const nodes = chunks.map((chunk, index) => {
+        const pos = positions.get(chunk.id);
+        const title = chunk.title.length > 18 ? chunk.title.slice(0, 18) + "…" : chunk.title;
+        const focus = index === 0 ? "is-focus" : "";
+        return `<g class="graph-node ${focus}" tabindex="0" role="button" aria-label="${escapeHtml(chunk.title)}" data-graph-id="${escapeHtml(chunk.id)}" transform="translate(${pos.x} ${pos.y})">
+          <rect width="${nodeW}" height="${nodeH}" rx="8"></rect>
+          <text x="14" y="26">${escapeHtml(title)}</text>
+          <text class="node-meta" x="14" y="47">${escapeHtml(categoryName(chunk.category))} · ${escapeHtml(chunk.level)} · P ${escapeHtml(chunk.priority_score)}</text>
+        </g>`;
+      }).join("");
+      const rows = Math.ceil(chunks.length / columns);
+      svg.setAttribute("viewBox", `0 0 1000 ${Math.max(440, 80 + rows * (nodeH + gapY))}`);
+      svg.innerHTML = edges + nodes;
+    }
+
+    function renderReports() {
+      const reports = [
+        ...(state.data.daily_reports || []).map(report => ({...report, type: "日报"})),
+        ...(state.data.weekly_reports || []).map(report => ({...report, type: "周报"}))
+      ];
+      const list = document.getElementById("report-list");
+      const content = document.getElementById("report-content");
+      if (!reports.length) {
+        list.innerHTML = "";
+        content.innerHTML = emptyState("notebook-tabs", "还没有复盘文档", "生成日报或周报后会显示在这里");
+        return;
+      }
+      list.innerHTML = reports.map((report, index) => `<button class="report-btn ${index === 0 ? "is-active" : ""}" type="button" role="tab" data-report-index="${index}"><span class="tag">${report.type}</span><br>${escapeHtml(report.name)}</button>`).join("");
+      content.innerHTML = renderMarkdown(reports[0].content);
+      list.dataset.reports = JSON.stringify(reports);
+    }
+
+    function renderMarkdown(markdown) {
+      const lines = String(markdown).split("\n").filter(line => !line.startsWith("---") && !line.match(/^[a-z_]+:\s/));
+      let html = "";
+      let inList = false;
+      const inline = value => escapeHtml(value)
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/`(.+?)`/g, "<code>$1</code>")
+        .replace(/\[\[(.+?)\]\]/g, "<strong>$1</strong>");
+      lines.forEach(line => {
+        if (line.startsWith("# ")) { if (inList) { html += "</ul>"; inList = false; } html += `<h1>${inline(line.slice(2))}</h1>`; }
+        else if (line.startsWith("## ")) { if (inList) { html += "</ul>"; inList = false; } html += `<h2>${inline(line.slice(3))}</h2>`; }
+        else if (line.startsWith("- ")) { if (!inList) { html += "<ul>"; inList = true; } html += `<li>${inline(line.slice(2))}</li>`; }
+        else if (line.trim()) { if (inList) { html += "</ul>"; inList = false; } html += `<p>${inline(line)}</p>`; }
+      });
+      if (inList) html += "</ul>";
+      return html;
+    }
+
+    function emptyState(icon, title, detail) {
+      return `<div class="empty-state"><div><i data-lucide="${icon}"></i><h2>${escapeHtml(title)}</h2><p>${escapeHtml(detail)}</p></div></div>`;
+    }
+
+    function renderError(message) {
+      const main = document.getElementById("view-overview");
+      main.innerHTML = emptyState("circle-alert", "无法读取知识库", message);
+      iconRefresh();
+    }
+
+    function switchView(view) {
+      state.currentView = view;
+      document.querySelectorAll(".view").forEach(node => node.classList.toggle("is-active", node.id === `view-${view}`));
+      document.querySelectorAll("[data-view-target]").forEach(button => {
+        if (button.dataset.viewTarget === view) button.setAttribute("aria-current", "page");
+        else button.removeAttribute("aria-current");
+      });
+      if (view === "study") renderStudy();
+      if (view === "papers") renderPapers();
+      if (view === "people") renderPeople();
+      document.getElementById("main-content").focus({preventScroll: true});
+      window.scrollTo({top: 0, behavior: "smooth"});
+    }
+
+    async function saveCurrentProgress() {
+      if (state.demo) return;
+      const chunk = state.chunks.find(item => item.id === state.currentChunkId);
+      if (!chunk) return;
+      const button = document.getElementById("save-progress");
+      button.disabled = true;
+      button.innerHTML = '<i data-lucide="loader-circle"></i>保存中';
+      iconRefresh();
+      try {
+        const response = await fetch("/api/progress", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            chunk_id: chunk.id,
+            status: chunk.progress.status,
+            confidence: chunk.progress.confidence,
+            notes: document.getElementById("study-notes").value
+          })
+        });
+        const payload = await response.json();
+        if (!response.ok || !payload.ok) throw new Error(payload.error || "保存失败");
+        chunk.progress = payload.data;
+        showToast("学习进度已保存");
+        renderAll();
+        switchView("study");
+      } catch (error) {
+        showToast(error.message);
+        button.disabled = false;
+        button.textContent = "重新保存";
+      }
+    }
+
+    document.addEventListener("click", event => {
+      const viewButton = event.target.closest("[data-view-target]");
+      if (viewButton) { switchView(viewButton.dataset.viewTarget); return; }
+      if (event.target.closest("[data-go-study]")) { switchView("study"); return; }
+
+      const paperButton = event.target.closest("[data-open-paper]");
+      if (paperButton) { renderPaperDetail(paperButton.dataset.openPaper); return; }
+      const openPerson = event.target.closest("[data-open-person]");
+      if (openPerson) {
+        state.currentPersonHandle = openPerson.dataset.openPerson;
+        switchView("people");
+        return;
+      }
+      const personTab = event.target.closest("[data-person-handle]");
+      if (personTab) {
+        state.currentPersonHandle = personTab.dataset.personHandle;
+        renderPeople();
+        return;
+      }
+      const chunkButton = event.target.closest("[data-open-chunk]");
+      if (chunkButton) { renderDetail(chunkButton.dataset.openChunk); return; }
+      const graphNode = event.target.closest("[data-graph-id]");
+      if (graphNode) { renderDetail(graphNode.dataset.graphId); return; }
+      const studyChunk = event.target.closest("[data-study-chunk]");
+      if (studyChunk) {
+        state.currentChunkId = studyChunk.dataset.studyChunk;
+        document.getElementById("detail-panel").classList.remove("is-open");
+        switchView("study");
+        return;
+      }
+      const related = event.target.closest("[data-related-id]");
+      if (related?.dataset.relatedId && state.chunks.some(item => item.id === related.dataset.relatedId)) {
+        state.currentChunkId = related.dataset.relatedId;
+        renderStudy();
+        return;
+      }
+      if (event.target.closest("#close-detail")) {
+        document.getElementById("detail-panel").classList.remove("is-open");
+        return;
+      }
+      const statusButton = event.target.closest("[data-status]");
+      if (statusButton) {
+        state.statusFilter = statusButton.dataset.status;
+        document.querySelectorAll("[data-status]").forEach(button => button.classList.toggle("is-active", button === statusButton));
+        applyFilters();
+        iconRefresh();
+        return;
+      }
+      const paperTier = event.target.closest("[data-paper-tier]");
+      if (paperTier) {
+        state.paperTier = paperTier.dataset.paperTier;
+        document.querySelectorAll("[data-paper-tier]").forEach(button => button.classList.toggle("is-active", button === paperTier));
+        renderPapers();
+        iconRefresh();
+        return;
+      }
+      const paperLimit = event.target.closest("[data-paper-limit]");
+      if (paperLimit) {
+        state.paperLimit = Number(paperLimit.dataset.paperLimit);
+        document.querySelectorAll("[data-paper-limit]").forEach(button => button.classList.toggle("is-active", button === paperLimit));
+        renderStats();
+        renderOverview();
+        renderPapers();
+        iconRefresh();
+        return;
+      }
+      const radarRead = event.target.closest("[data-radar-read]");
+      if (radarRead) {
+        const itemId = radarRead.dataset.radarRead;
+        const isRead = radarRead.dataset.readValue === "true";
+        radarRead.disabled = true;
+        fetch("/api/radar-read", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({item_id: itemId, is_read: isRead})
+        }).then(response => response.json().then(payload => ({response, payload})))
+          .then(({response, payload}) => {
+            if (!response.ok || !payload.ok) throw new Error(payload.error || "保存失败");
+            const radar = state.data.daily_intelligence.x_radar;
+            radar.topics.forEach(item => { if (item.id === itemId) item.is_read = isRead; });
+            radar.sources.forEach(person => (person.viewpoints || []).forEach(item => {
+              if (item.id === itemId) item.is_read = isRead;
+            }));
+            renderStats();
+            renderOverview();
+            renderPeople();
+            document.getElementById("nav-viewpoint-count").textContent = radar.topics.filter(item => !item.is_read).length;
+            showToast(isRead ? "已标记为已阅" : "已恢复未读");
+          })
+          .catch(error => {
+            radarRead.disabled = false;
+            showToast(error.message);
+          });
+        return;
+      }
+      const categoryButton = event.target.closest("[data-category]");
+      if (categoryButton) {
+        state.categoryFilter = state.categoryFilter === categoryButton.dataset.category ? "all" : categoryButton.dataset.category;
+        renderCategories();
+        applyFilters();
+        switchView("library");
+        iconRefresh();
+        return;
+      }
+      const setStatus = event.target.closest("[data-set-status]");
+      if (setStatus) {
+        const chunk = state.chunks.find(item => item.id === state.currentChunkId);
+        if (chunk) { chunk.progress.status = setStatus.dataset.setStatus; renderStudy(); }
+        return;
+      }
+      const confidence = event.target.closest("[data-confidence]");
+      if (confidence) {
+        const chunk = state.chunks.find(item => item.id === state.currentChunkId);
+        if (chunk) { chunk.progress.confidence = Number(confidence.dataset.confidence); renderStudy(); }
+        return;
+      }
+      if (event.target.closest("#save-progress")) { saveCurrentProgress(); return; }
+      if (event.target.closest("#next-chunk")) {
+        const currentIndex = state.chunks.findIndex(item => item.id === state.currentChunkId);
+        state.currentChunkId = state.chunks[(currentIndex + 1) % state.chunks.length]?.id;
+        renderStudy();
+        return;
+      }
+      const reportButton = event.target.closest("[data-report-index]");
+      if (reportButton) {
+        const reports = JSON.parse(document.getElementById("report-list").dataset.reports || "[]");
+        document.querySelectorAll("[data-report-index]").forEach(button => button.classList.toggle("is-active", button === reportButton));
+        document.getElementById("report-content").innerHTML = renderMarkdown(reports[Number(reportButton.dataset.reportIndex)].content);
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      const graphNode = event.target.closest("[data-graph-id]");
+      if (graphNode && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        renderDetail(graphNode.dataset.graphId);
+      }
+    });
+
+    document.getElementById("global-search").addEventListener("input", event => {
+      state.query = event.target.value;
+      applyFilters();
+      renderPapers();
+      if (state.query) {
+        const paperMatch = state.papers.some(paper => [paper.title, paper.summary, ...(paper.teaching?.concepts || [])].join(" ").toLocaleLowerCase().includes(state.query.toLocaleLowerCase()));
+        switchView(paperMatch ? "papers" : "library");
+      }
+      iconRefresh();
+    });
+    document.getElementById("refresh-btn").addEventListener("click", async () => {
+      const button = document.getElementById("refresh-btn");
+      button.disabled = true;
+      document.getElementById("sync-label").textContent = "正在刷新实时信息";
+      try {
+        const response = await fetch("/api/refresh", {method: "POST"});
+        const payload = await response.json();
+        if (!response.ok || !payload.ok) throw new Error(payload.error || "刷新失败");
+        showToast("Hugging Face Daily Papers 已刷新");
+        await loadData();
+      } catch (error) {
+        showToast(error.message);
+      } finally {
+        button.disabled = false;
+      }
+    });
+    document.getElementById("theme-btn").addEventListener("click", () => {
+      setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+    });
+
+    setTheme(localStorage.getItem("ai-knowledge-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+    iconRefresh();
+    loadData();
+  </script>
+</body>
+</html>
