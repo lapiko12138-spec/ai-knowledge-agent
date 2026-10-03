@@ -83,6 +83,15 @@ def sync_knowledge_snapshot(store: KnowledgeStore) -> Dict[str, Any]:
     return {"path": str(KNOWLEDGE_SNAPSHOT), "file_count": len(files)}
 
 
+def _github_cli_path() -> Optional[Path]:
+    candidates = [
+        Path.home() / ".local" / "bin" / "gh",
+        Path("/opt/homebrew/bin/gh"),
+        Path("/usr/local/bin/gh"),
+    ]
+    return next((path for path in candidates if path.is_file()), None)
+
+
 def sync_github(store: KnowledgeStore) -> Dict[str, Any]:
     if not (PROJECT_ROOT / ".git").exists():
         return {"status": "not_configured", "message": "本地 Git 仓库尚未初始化"}
@@ -139,8 +148,19 @@ def sync_github(store: KnowledgeStore) -> Dict[str, Any]:
     )
     if committed.returncode != 0:
         return {"status": "failed", "message": committed.stderr.strip()}
+    gh_path = _github_cli_path()
+    if gh_path is None:
+        return {"status": "failed", "message": "未找到 GitHub CLI"}
+    credential_helper = "!" + str(gh_path) + " auth git-credential"
     pushed = subprocess.run(
-        ["/usr/bin/git", "push", "origin", "HEAD"],
+        [
+            "/usr/bin/git",
+            "-c",
+            "credential.https://github.com.helper=" + credential_helper,
+            "push",
+            "origin",
+            "HEAD",
+        ],
         cwd=str(PROJECT_ROOT),
         check=False,
         capture_output=True,
