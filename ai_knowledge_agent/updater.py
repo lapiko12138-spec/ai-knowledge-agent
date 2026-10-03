@@ -119,10 +119,20 @@ def sync_github(store: KnowledgeStore) -> Dict[str, Any]:
     if staged.returncode != 0:
         return {"status": "failed", "message": staged.stderr.strip()}
     message = "chore: sync knowledge " + date.today().isoformat() + "\n"
+    commit_environment = os.environ.copy()
+    commit_environment.setdefault("GIT_AUTHOR_NAME", "AI Knowledge Agent")
+    commit_environment.setdefault(
+        "GIT_AUTHOR_EMAIL", "ai-knowledge-agent@users.noreply.github.com"
+    )
+    commit_environment.setdefault("GIT_COMMITTER_NAME", "AI Knowledge Agent")
+    commit_environment.setdefault(
+        "GIT_COMMITTER_EMAIL", "ai-knowledge-agent@users.noreply.github.com"
+    )
     committed = subprocess.run(
         ["/usr/bin/git", "commit", "-F", "-"],
         cwd=str(PROJECT_ROOT),
         input=message,
+        env=commit_environment,
         check=False,
         capture_output=True,
         text=True,
