@@ -3,7 +3,7 @@
   "huggingface": {
     "source": "https://huggingface.co/papers",
     "daily_date": "2026-10-02",
-    "fetched_at": "2026-10-03T15:27:30+00:00",
+    "fetched_at": "2026-10-03T15:32:50+00:00",
     "papers": [
       {
         "id": "2610.01762",
@@ -136,6 +136,50 @@
         }
       },
       {
+        "id": "2609.38923",
+        "title": "GraphForge: Training Working Agents with Graph-Anchored Workspace Synthesis",
+        "summary": "Working agents need to read diverse files, coordinate tools, and produce deliverables. Training such agents requires tasks built on many real files with verifiable results, but few pipelines exist to synthesize this kind of data. Existing pipelines either generate files with models, which lack realism and diversity, or build tasks on real files without task-specific verifiers, leaving result quality unchecked. We introduce GraphForge, an evidence-graph based framework that grounds both the task and its verification in real files. Starting from occupation-grounded seeds for controlled diversity, GraphForge assembles a workspace of real files for each seed and builds an evidence graph over their relations. Since the task statement and rubrics are both derived from this graph, task requirements are backed by the workspace files and each criterion is anchored to the files needed to verify it. An initial rollout further tests executability, and a revision agent repairs the task and rubrics against the original files before trajectories are collected. Fine-tuning Qwen3.6-27B on 2,169 GraphForge trajectories brings GDPVal to 1445.7 (+65.7) under OpenHands, and Workspace-Bench-Lite and SpreadsheetBench II to 63.7 (+7.7) and 24.0 (+13.7) under Claude Code. Rejection fine-tuning on the SFT model's own rollouts, with candidates selected by the evidence-anchored rubrics, yields further improvements on all three benchmarks, suggesting that the rubrics provide a useful selection signal. The data and models are available.",
+        "authors": [
+          "Qisheng Su",
+          "Hanchen Wang",
+          "Guanru Zhu",
+          "Huicheng Jiang",
+          "Qiuyinzhe Zhang",
+          "Kou Shi",
+          "Zhen Fang",
+          "Ziao Zhang"
+        ],
+        "organization": "University of Science and Technology of China",
+        "upvotes": 78,
+        "comments": 2,
+        "daily_date": "2026-10-02",
+        "published_at": "2026-09-30T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2609.38923",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.38923.png",
+        "project_page": "",
+        "github_repo": "",
+        "teaching": {
+          "research_question": "Working agents need to read diverse files, coordinate tools, and produce deliverables. Training such agents requires tasks built on many real files with verifiable results, but few pipelines exist to synthesize this kind of data.",
+          "new_method": "We introduce GraphForge, an evidence-graph based framework that grounds both the task and its verification in real files.",
+          "evidence": "Rejection fine-tuning on the SFT model's own rollouts, with candidates selected by the evidence-anchored rubrics, yields further improvements on all three benchmarks, suggesting that the rubrics provide a useful selection signal.",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": [
+            "Agent",
+            "AI Evaluation"
+          ]
+        },
+        "rank": 4,
+        "editorial_tier": "scan",
+        "localized": {
+          "status": "curated",
+          "title_zh": "GraphForge：用证据图锚定的工作区合成训练可工作的智能体",
+          "research_question_zh": "工作型智能体需要读取多种真实文件、协调工具并交付可验证结果，但高质量训练任务很难规模化构造。",
+          "new_method_zh": "GraphForge 用 evidence graph 同时锚定任务生成与结果验证，使合成任务建立在真实文件之上。",
+          "evidence_zh": "使用证据锚定 rubric 筛选模型自身 rollout 做 rejection fine-tuning，在 3 个基准上继续提升。",
+          "editor_note": "连接 Agent Training、Synthetic Data、Evaluation Rubric 与 Workspace。"
+        }
+      },
+      {
         "id": "2610.02193",
         "title": "Hierarchical Continuous Diffusion Language Models",
         "summary": "Discrete diffusion language models offer a compelling alternative to autoregressive generation for tasks demanding bidirectional reasoning and global constraint satisfaction. Yet they share a structural bottleneck: when decoding in parallel, each token is sampled independently from its marginal, severing the statistical dependencies among the tokens decoded together. Continuous diffusion language models avoid this by denoising a shared continuous state, but their denoiser sees only that state, so nothing ties it to a valid token configuration until it is finally decoded. To address this, we propose Hierarchical Continuous Diffusion Language Models (HC-DLM), which couple discrete token generation with a continuous latent trajectory in a single, principled denoising process, whose training objective is derived from a variational bound on the token likelihood. In contrast to recent methods that attach continuous context to a self-contained discrete chain, HC-DLM makes the latent the only persistent generative state: tokens are read out from it at every step and feed back as a scaffold for the next latent update. On structured reasoning (Sudoku), mathematical planning (Countdown) and language modeling (LM1B), HC-DLM improves over discrete and continuous diffusion baselines at matched model size, in puzzle accuracy on Sudoku and Countdown and in generative perplexity on LM1B. Project page: https://hc-dlm.github.io/.",
@@ -164,7 +208,7 @@
             "Diffusion Models"
           ]
         },
-        "rank": 4,
+        "rank": 5,
         "editorial_tier": "scan",
         "localized": {
           "status": "curated",
@@ -209,7 +253,7 @@
             "AI Evaluation"
           ]
         },
-        "rank": 5,
+        "rank": 6,
         "editorial_tier": "scan",
         "localized": {
           "status": "curated",
@@ -218,50 +262,6 @@
           "new_method_zh": "PoS 在推理时持续构建和维护显式 belief state，并把它作为智能体的决策上下文。",
           "evidence_zh": "在 4 个执行与诊断基准、3 个 LLM backbone 上都取得最高总体表现。",
           "editor_note": "应挂到 Agent Memory → Belief State → Long-horizon Planning。"
-        }
-      },
-      {
-        "id": "2609.38923",
-        "title": "GraphForge: Training Working Agents with Graph-Anchored Workspace Synthesis",
-        "summary": "Working agents need to read diverse files, coordinate tools, and produce deliverables. Training such agents requires tasks built on many real files with verifiable results, but few pipelines exist to synthesize this kind of data. Existing pipelines either generate files with models, which lack realism and diversity, or build tasks on real files without task-specific verifiers, leaving result quality unchecked. We introduce GraphForge, an evidence-graph based framework that grounds both the task and its verification in real files. Starting from occupation-grounded seeds for controlled diversity, GraphForge assembles a workspace of real files for each seed and builds an evidence graph over their relations. Since the task statement and rubrics are both derived from this graph, task requirements are backed by the workspace files and each criterion is anchored to the files needed to verify it. An initial rollout further tests executability, and a revision agent repairs the task and rubrics against the original files before trajectories are collected. Fine-tuning Qwen3.6-27B on 2,169 GraphForge trajectories brings GDPVal to 1445.7 (+65.7) under OpenHands, and Workspace-Bench-Lite and SpreadsheetBench II to 63.7 (+7.7) and 24.0 (+13.7) under Claude Code. Rejection fine-tuning on the SFT model's own rollouts, with candidates selected by the evidence-anchored rubrics, yields further improvements on all three benchmarks, suggesting that the rubrics provide a useful selection signal. The data and models are available.",
-        "authors": [
-          "Qisheng Su",
-          "Hanchen Wang",
-          "Guanru Zhu",
-          "Huicheng Jiang",
-          "Qiuyinzhe Zhang",
-          "Kou Shi",
-          "Zhen Fang",
-          "Ziao Zhang"
-        ],
-        "organization": "University of Science and Technology of China",
-        "upvotes": 76,
-        "comments": 2,
-        "daily_date": "2026-10-02",
-        "published_at": "2026-09-30T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2609.38923",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.38923.png",
-        "project_page": "",
-        "github_repo": "",
-        "teaching": {
-          "research_question": "Working agents need to read diverse files, coordinate tools, and produce deliverables. Training such agents requires tasks built on many real files with verifiable results, but few pipelines exist to synthesize this kind of data.",
-          "new_method": "We introduce GraphForge, an evidence-graph based framework that grounds both the task and its verification in real files.",
-          "evidence": "Rejection fine-tuning on the SFT model's own rollouts, with candidates selected by the evidence-anchored rubrics, yields further improvements on all three benchmarks, suggesting that the rubrics provide a useful selection signal.",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Agent",
-            "AI Evaluation"
-          ]
-        },
-        "rank": 6,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "curated",
-          "title_zh": "GraphForge：用证据图锚定的工作区合成训练可工作的智能体",
-          "research_question_zh": "工作型智能体需要读取多种真实文件、协调工具并交付可验证结果，但高质量训练任务很难规模化构造。",
-          "new_method_zh": "GraphForge 用 evidence graph 同时锚定任务生成与结果验证，使合成任务建立在真实文件之上。",
-          "evidence_zh": "使用证据锚定 rubric 筛选模型自身 rollout 做 rejection fine-tuning，在 3 个基准上继续提升。",
-          "editor_note": "连接 Agent Training、Synthetic Data、Evaluation Rubric 与 Workspace。"
         }
       },
       {
@@ -828,5 +828,5 @@
       "概念入图"
     ]
   },
-  "updated_at": "2026-10-03T23:27:30+08:00"
+  "updated_at": "2026-10-03T23:32:50+08:00"
 }
