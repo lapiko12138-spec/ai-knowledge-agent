@@ -1,6 +1,7 @@
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from ai_knowledge_agent.core import KnowledgeStore
 from ai_knowledge_agent.web import (
@@ -9,6 +10,7 @@ from ai_knowledge_agent.web import (
     load_radar_progress,
     save_progress,
     save_radar_read,
+    sync_user_state,
 )
 
 
@@ -92,6 +94,23 @@ class KnowledgeWebTest(unittest.TestCase):
             "x-2105909609487872075",
             load_radar_progress(self.store)["read_items"],
         )
+
+    def test_user_state_sync_reports_github_result(self):
+        with patch(
+            "ai_knowledge_agent.web.sync_github",
+            return_value={"status": "pushed", "commit": "abc123"},
+        ):
+            result = sync_user_state(self.store)
+        self.assertEqual(result["status"], "pushed")
+
+    def test_user_state_sync_keeps_local_save_on_push_failure(self):
+        with patch(
+            "ai_knowledge_agent.web.sync_github",
+            side_effect=RuntimeError("push failed"),
+        ):
+            result = sync_user_state(self.store)
+        self.assertEqual(result["status"], "failed")
+        self.assertIn("push failed", result["message"])
 
 
 if __name__ == "__main__":

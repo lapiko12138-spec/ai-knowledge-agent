@@ -58,6 +58,9 @@ python3 -m ai_knowledge_agent schedule status
 `~/Library/Application Support/AI Knowledge Agent/Obsidian/AI Knowledge`，原 Obsidian
 路径保留符号链接，Obsidian 内的使用路径不变。
 
+知识快照会在每日更新后自动推送到 GitHub。网页中的学习进度、笔记和人物雷达已阅状态
+保存后也会立即刷新快照并推送；通知接收人、日志、锁文件和临时文件始终只保留在本机。
+
 启用每日飞书学习提醒：
 
 ```bash

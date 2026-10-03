@@ -11,12 +11,24 @@ from urllib.parse import urlparse
 
 from .core import KnowledgeStore, _atomic_json
 from .feeds import load_daily_intelligence
-from .updater import ensure_daily_update, load_update_status, update_daily
+from .updater import (
+    ensure_daily_update,
+    load_update_status,
+    sync_github,
+    update_daily,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 WEB_ROOT = PROJECT_ROOT / "web"
 PROGRESS_STATUSES = {"unread", "learning", "mastered"}
+
+
+def sync_user_state(store: KnowledgeStore) -> Dict[str, Any]:
+    try:
+        return sync_github(store)
+    except (OSError, RuntimeError, ValueError) as error:
+        return {"status": "failed", "message": str(error)}
 
 
 def _read_reports(directory: Path, limit: int = 12) -> List[Dict[str, Any]]:
@@ -244,7 +256,13 @@ def make_handler(store: KnowledgeStore):
                         str(payload.get("item_id", "")),
                         bool(payload.get("is_read", True)),
                     )
-                    self._json({"ok": True, "data": result})
+                    self._json(
+                        {
+                            "ok": True,
+                            "data": result,
+                            "github": sync_user_state(store),
+                        }
+                    )
                 except (OSError, ValueError, TypeError, json.JSONDecodeError) as error:
                     self._json({"ok": False, "error": str(error)}, 400)
                 return
@@ -263,7 +281,13 @@ def make_handler(store: KnowledgeStore):
                     int(payload.get("confidence", 0)),
                     str(payload.get("notes", "")),
                 )
-                self._json({"ok": True, "data": result})
+                self._json(
+                    {
+                        "ok": True,
+                        "data": result,
+                        "github": sync_user_state(store),
+                    }
+                )
             except (OSError, ValueError, TypeError, json.JSONDecodeError) as error:
                 self._json({"ok": False, "error": str(error)}, 400)
 

@@ -178,6 +178,14 @@ def _github_cli_path() -> Optional[Path]:
 
 
 def sync_github(store: KnowledgeStore) -> Dict[str, Any]:
+    lock_path = store.system_dir / "github-sync.lock"
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with lock_path.open("a+", encoding="utf-8") as lock_file:
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        return _sync_github_locked(store)
+
+
+def _sync_github_locked(store: KnowledgeStore) -> Dict[str, Any]:
     if not (PROJECT_ROOT / ".git").exists():
         return {"status": "not_configured", "message": "本地 Git 仓库尚未初始化"}
     remote = subprocess.run(
