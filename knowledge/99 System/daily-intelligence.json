@@ -3,7 +3,7 @@
   "huggingface": {
     "source": "https://huggingface.co/papers",
     "daily_date": "2026-10-02",
-    "fetched_at": "2026-10-03T15:32:50+00:00",
+    "fetched_at": "2026-10-04T00:00:09+00:00",
     "papers": [
       {
         "id": "2610.01762",
@@ -20,7 +20,7 @@
           "Changlian Ma"
         ],
         "organization": "Nanjing University",
-        "upvotes": 157,
+        "upvotes": 160,
         "comments": 1,
         "daily_date": "2026-10-02",
         "published_at": "2026-10-01T00:00:00.000Z",
@@ -60,7 +60,7 @@
           "Mihaela van der Schaar"
         ],
         "organization": "University of Cambridge",
-        "upvotes": 151,
+        "upvotes": 153,
         "comments": 1,
         "daily_date": "2026-10-02",
         "published_at": "2026-09-28T00:00:00.000Z",
@@ -150,7 +150,7 @@
           "Ziao Zhang"
         ],
         "organization": "University of Science and Technology of China",
-        "upvotes": 78,
+        "upvotes": 83,
         "comments": 2,
         "daily_date": "2026-10-02",
         "published_at": "2026-09-30T00:00:00.000Z",
@@ -191,7 +191,7 @@
           "Alexander Schwing"
         ],
         "organization": "University of Illinois at Urbana-Champaign",
-        "upvotes": 77,
+        "upvotes": 79,
         "comments": 2,
         "daily_date": "2026-10-02",
         "published_at": "2026-10-01T00:00:00.000Z",
@@ -234,7 +234,7 @@
           "Guiyang Liu"
         ],
         "organization": "alibaba",
-        "upvotes": 76,
+        "upvotes": 78,
         "comments": 3,
         "daily_date": "2026-10-02",
         "published_at": "2026-10-01T00:00:00.000Z",
@@ -279,7 +279,7 @@
           "Hangoo Kang"
         ],
         "organization": "Meta",
-        "upvotes": 76,
+        "upvotes": 78,
         "comments": 2,
         "daily_date": "2026-10-02",
         "published_at": "2026-10-01T00:00:00.000Z",
@@ -324,7 +324,7 @@
           "Harold Soh"
         ],
         "organization": "National University of Singapore",
-        "upvotes": 72,
+        "upvotes": 73,
         "comments": 1,
         "daily_date": "2026-10-02",
         "published_at": "2026-09-28T00:00:00.000Z",
@@ -354,49 +354,6 @@
         }
       },
       {
-        "id": "2609.39027",
-        "title": "A Missing Piece for Trustworthy AI Reviewers: From Benchmarking Rhetorical Robustness to SciCore Review",
-        "summary": "AI reviewers can assign different judgments to manuscripts that report the same science in different wording, potentially rewarding rhetorical optimization over scientific improvement. We formulate Rhetorical Robustness as the joint requirement of stability across content-preserving rewrites and discrimination across papers. We introduce RobustReview, a controlled full-manuscript benchmark with 1,260 manuscript versions, and evaluate 30 reviewer configurations. The benchmark reveals false robustness, where low rewrite sensitivity coincides with score collapse across papers, and shows that human alignment and rhetorical robustness rank reviewers differently. Moreover, the evaluated content-focused prompting protocol does not consistently improve robustness across backbones. Motivated by these findings, we introduce SciCore, a dual-branch reviewer that averages a full-manuscript judgment with a judgment based on an extracted, structured science core. This design combines manuscript-level assessment with a content-normalized view intended to reduce rhetorical sensitivity. In our primary GPT-5.5 comparison, SciCore achieves a leading joint stability-discrimination profile among the benchmarked reviewers while maintaining competitive human alignment. These results identify rhetorical robustness as a distinct evaluation target and demonstrate the potential of science-core review to improve it.",
-        "authors": [
-          "Chenguang Wang",
-          "Ming Li",
-          "Chengrui Fan",
-          "Jianpeng Chen",
-          "Han Chen",
-          "Tianyi Zhou",
-          "Dawei Zhou"
-        ],
-        "organization": "",
-        "upvotes": 69,
-        "comments": 2,
-        "daily_date": "2026-10-02",
-        "published_at": "2026-09-30T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2609.39027",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.39027.png",
-        "project_page": "",
-        "github_repo": "",
-        "teaching": {
-          "research_question": "AI reviewers can assign different judgments to manuscripts that report the same science in different wording, potentially rewarding rhetorical optimization over scientific improvement. We formulate Rhetorical Robustness as the joint requirement of stability across content-preserving rewrites and discrimination across papers.",
-          "new_method": "We introduce RobustReview, a controlled full-manuscript benchmark with 1,260 manuscript versions, and evaluate 30 reviewer configurations.",
-          "evidence": "We introduce RobustReview, a controlled full-manuscript benchmark with 1,260 manuscript versions, and evaluate 30 reviewer configurations.",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Reinforcement Learning",
-            "AI Evaluation"
-          ]
-        },
-        "rank": 9,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "curated",
-          "title_zh": "可信 AI 审稿人的缺失环节：从修辞鲁棒性到 SciCore Review",
-          "research_question_zh": "同一科学内容仅因表述方式不同就可能得到不同 AI 审稿结论，导致系统奖励修辞优化而非科学改进。",
-          "new_method_zh": "提出 Rhetorical Robustness，并构建包含 1,260 个全文版本的 RobustReview 基准，评估 30 种审稿配置。",
-          "evidence_zh": "核心证据来自对内容保持改写的一致性与跨论文区分能力联合测试；具体结果仍需回看正文。",
-          "editor_note": "应连接 AI Evaluation、Scientific Review 与 Robustness。"
-        }
-      },
-      {
         "id": "2610.02162",
         "title": "World Observer: Joint Actor-Observer Generation for Persistent World Modeling",
         "summary": "How can a world model continuously observe regions beyond the actor's current view? Video world models simulate how an environment evolves from an agent's actions, yet remain actor-centric. Once an object leaves the actor's view, they lose direct evidence of its evolution, often failing to preserve its state and dynamics upon re-entry. To address this, we introduce World Observer, which decouples observing from acting by jointly generating a perspective actor for the agent-centric view with one or more panoramic observers that watch selected world regions. This allows objects that leave the actor's view to remain visually evolving in an observer, so their updated states are reflected when they re-enter. We ground the actor and observers by warping from a shared panoramic source for explicit geometric correspondence, and introduce an Observer Sink of high-resolution perspective references to restore fine appearance upon re-entry. Since the observers are decoupled from the actor, they can be placed freely across the scene, extended to multiple locations for broader coverage, and driven by control signals to steer out-of-view evolution. To evaluate out-of-view evolution, we further introduce world-space metrics and a benchmark spanning real and synthetic scenes. World Observer substantially improves out-of-view dynamics while remaining competitive in visual fidelity, camera control, and 3D adherence.",
@@ -410,7 +367,7 @@
           "Seungryong Kim"
         ],
         "organization": "KAIST AI",
-        "upvotes": 69,
+        "upvotes": 71,
         "comments": 4,
         "daily_date": "2026-10-02",
         "published_at": "2026-10-01T00:00:00.000Z",
@@ -429,7 +386,7 @@
             "AI Evaluation"
           ]
         },
-        "rank": 10,
+        "rank": 9,
         "editorial_tier": "scan",
         "localized": {
           "status": "curated",
@@ -438,6 +395,49 @@
           "new_method_zh": "World Observer 把观察与行动解耦，同时生成行动者第一视角和一个或多个监控指定区域的全景观察者。",
           "evidence_zh": "论文增加世界空间指标和覆盖真实、合成场景的基准，用于评测视野外演化。",
           "editor_note": "连接 World Models、Object Permanence 与 Persistent Simulation。"
+        }
+      },
+      {
+        "id": "2609.39027",
+        "title": "A Missing Piece for Trustworthy AI Reviewers: From Benchmarking Rhetorical Robustness to SciCore Review",
+        "summary": "AI reviewers can assign different judgments to manuscripts that report the same science in different wording, potentially rewarding rhetorical optimization over scientific improvement. We formulate Rhetorical Robustness as the joint requirement of stability across content-preserving rewrites and discrimination across papers. We introduce RobustReview, a controlled full-manuscript benchmark with 1,260 manuscript versions, and evaluate 30 reviewer configurations. The benchmark reveals false robustness, where low rewrite sensitivity coincides with score collapse across papers, and shows that human alignment and rhetorical robustness rank reviewers differently. Moreover, the evaluated content-focused prompting protocol does not consistently improve robustness across backbones. Motivated by these findings, we introduce SciCore, a dual-branch reviewer that averages a full-manuscript judgment with a judgment based on an extracted, structured science core. This design combines manuscript-level assessment with a content-normalized view intended to reduce rhetorical sensitivity. In our primary GPT-5.5 comparison, SciCore achieves a leading joint stability-discrimination profile among the benchmarked reviewers while maintaining competitive human alignment. These results identify rhetorical robustness as a distinct evaluation target and demonstrate the potential of science-core review to improve it.",
+        "authors": [
+          "Chenguang Wang",
+          "Ming Li",
+          "Chengrui Fan",
+          "Jianpeng Chen",
+          "Han Chen",
+          "Tianyi Zhou",
+          "Dawei Zhou"
+        ],
+        "organization": "",
+        "upvotes": 70,
+        "comments": 2,
+        "daily_date": "2026-10-02",
+        "published_at": "2026-09-30T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2609.39027",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.39027.png",
+        "project_page": "",
+        "github_repo": "",
+        "teaching": {
+          "research_question": "AI reviewers can assign different judgments to manuscripts that report the same science in different wording, potentially rewarding rhetorical optimization over scientific improvement. We formulate Rhetorical Robustness as the joint requirement of stability across content-preserving rewrites and discrimination across papers.",
+          "new_method": "We introduce RobustReview, a controlled full-manuscript benchmark with 1,260 manuscript versions, and evaluate 30 reviewer configurations.",
+          "evidence": "We introduce RobustReview, a controlled full-manuscript benchmark with 1,260 manuscript versions, and evaluate 30 reviewer configurations.",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": [
+            "Reinforcement Learning",
+            "AI Evaluation"
+          ]
+        },
+        "rank": 10,
+        "editorial_tier": "scan",
+        "localized": {
+          "status": "curated",
+          "title_zh": "可信 AI 审稿人的缺失环节：从修辞鲁棒性到 SciCore Review",
+          "research_question_zh": "同一科学内容仅因表述方式不同就可能得到不同 AI 审稿结论，导致系统奖励修辞优化而非科学改进。",
+          "new_method_zh": "提出 Rhetorical Robustness，并构建包含 1,260 个全文版本的 RobustReview 基准，评估 30 种审稿配置。",
+          "evidence_zh": "核心证据来自对内容保持改写的一致性与跨论文区分能力联合测试；具体结果仍需回看正文。",
+          "editor_note": "应连接 AI Evaluation、Scientific Review 与 Robustness。"
         }
       }
     ]
@@ -828,5 +828,5 @@
       "概念入图"
     ]
   },
-  "updated_at": "2026-10-03T23:32:50+08:00"
+  "updated_at": "2026-10-04T08:00:09+08:00"
 }
