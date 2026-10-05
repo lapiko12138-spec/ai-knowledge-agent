@@ -107,7 +107,8 @@ def build_learning_reminder_card(
     if not intelligence:
         intelligence = load_daily_intelligence(store, cache_minutes=10**9)
     papers = intelligence.get("huggingface", {}).get("papers", [])
-    radar_topics = intelligence.get("x_radar", {}).get("topics", [])
+    radar = intelligence.get("x_radar", {})
+    radar_topics = radar.get("topics", [])
     read_items = _read_json(
         store.system_dir / "radar-progress.json"
     ).get("read_items", {})
@@ -196,20 +197,9 @@ def build_learning_reminder_card(
         )
     if not radar_lines:
         radar_lines.append("- 暂无未读人物观点")
-
-    next_chunk = pending_chunks[0] if pending_chunks else None
-    if next_chunk:
-        next_content = (
-            "**"
-            + _truncate(str(next_chunk.get("title", "下一张知识卡")), 90)
-            + "**\n"
-            + _truncate(
-                str(next_chunk.get("why_it_matters") or next_chunk.get("concept") or ""),
-                220,
-            )
-        )
-    else:
-        next_content = "现有知识卡已全部掌握，今天可选择一篇论文继续深挖。"
+    radar_title = "人物雷达 · 未读观点"
+    if radar.get("window_end"):
+        radar_title += "（更新至 " + str(radar["window_end"]) + "）"
 
     return {
         "schema": "2.0",
@@ -263,8 +253,7 @@ def build_learning_reminder_card(
                     ],
                 },
                 _section("今日论文", "\n".join(paper_lines)),
-                _section("人物雷达 · 未读观点", "\n".join(radar_lines)),
-                _section("下一张知识卡", next_content, background="blue-50"),
+                _section(radar_title, "\n".join(radar_lines)),
             ],
         },
     }

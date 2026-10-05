@@ -42,8 +42,11 @@ python3 -m ai_knowledge_agent serve
 
 “今日雷达”会自动读取并缓存 Hugging Face Daily Papers，将论文分为
 每日 5/8/10 篇与 `Focus 2`，并以中英双语标题、研究问题、核心方法、实验结论、限制
-与概念候选展示。人物雷达保存近 7 天公开时间线快照，支持逐条已阅；自动持续更新仍需
-X 官方 API。详细产品拆分见 [`docs/product-blueprint.md`](docs/product-blueprint.md)。
+与概念候选展示。人物雷达支持逐条已阅；配置 X 官方 API 后，每日任务会刷新关注人物
+近 7 天原帖。Bearer Token 可通过 `X_BEARER_TOKEN` 环境变量提供，或写入本机
+`~/Library/Application Support/AI Knowledge Agent/x-bearer-token`。未配置时页面会明确
+显示缓存快照及截止日期。详细产品拆分见
+[`docs/product-blueprint.md`](docs/product-blueprint.md)。
 
 安装每日自动更新（macOS，默认每天 08:00）：
 
@@ -72,7 +75,7 @@ python3 -m ai_knowledge_agent notification test --confirm-send
 python3 -m ai_knowledge_agent notification status
 ```
 
-通知卡片包含今日 Deep Dive、论文列表、未读人物观点和下一张知识卡。配置保存在本机
+通知卡片包含今日 Deep Dive、论文列表和未读人物观点。配置保存在本机
 `AI Knowledge/99 System/notification-config.json`，不会进入 GitHub 知识快照；每天使用
 日期幂等键发送，避免同一天重复提醒。使用 `notification disable` 可暂停推送。
 

@@ -37,6 +37,7 @@ class FeishuReminderTest(unittest.TestCase):
                 ]
             },
             "x_radar": {
+                "window_end": "2026-10-03",
                 "topics": [
                     {
                         "id": "topic-1",
@@ -69,6 +70,8 @@ class FeishuReminderTest(unittest.TestCase):
         self.assertIn("中文论文标题", rendered)
         self.assertIn("未读核心观点", rendered)
         self.assertNotIn("已读观点", rendered)
+        self.assertNotIn("下一张知识卡", rendered)
+        self.assertIn("更新至 2026-10-03", rendered)
         self.assertIn("https://huggingface.co/papers/paper-1", rendered)
         self.assertIn("https://x.com/researcher/status/1", rendered)
 

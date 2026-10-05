@@ -1496,7 +1496,7 @@
           <div class="metric"><span class="metric-value" id="metric-papers">—</span><span class="metric-label">今日精选论文</span></div>
           <div class="metric"><span class="metric-value" id="metric-focus">—</span><span class="metric-label">重点论文</span></div>
           <div class="metric"><span class="metric-value" id="metric-concepts">—</span><span class="metric-label">概念候选</span></div>
-          <div class="metric"><span class="metric-value" id="metric-x">—</span><span class="metric-label">X 实时话题</span></div>
+          <div class="metric"><span class="metric-value" id="metric-x">—</span><span class="metric-label">人物未读观点</span></div>
         </div>
         <div class="editorial-strip" id="editorial-strip"></div>
         <div class="intelligence-grid">
@@ -1851,7 +1851,12 @@
         </div>`).join("");
 
       const sources = xRadar.sources || [];
-      document.getElementById("x-status").textContent = xRadar.status === "public_snapshot" ? "近 7 天" : "待接入";
+      document.getElementById("x-status").textContent =
+        xRadar.status === "official_api"
+          ? "今日已刷新"
+          : xRadar.status === "stale_snapshot"
+            ? `缓存至 ${xRadar.window_end || "未知"}`
+            : xRadar.status === "public_snapshot" ? "近 7 天" : "待接入";
       document.getElementById("x-source-list").innerHTML = sources.slice(0, 5).map(source => {
         const unread = (source.viewpoints || []).filter(item => !item.is_read).length;
         return `
@@ -1932,7 +1937,11 @@
       document.getElementById("people-summary").textContent =
         `${radar.window_start || "—"} 至 ${radar.window_end || "—"} · ${radar.message || ""}`;
       document.getElementById("people-source-status").textContent =
-        radar.status === "public_snapshot" ? "公开时间线快照" : "未接入";
+        radar.status === "official_api"
+          ? "X 官方 API · 今日已刷新"
+          : radar.status === "stale_snapshot"
+            ? `缓存快照 · ${radar.window_end || "时间未知"}`
+            : radar.status === "public_snapshot" ? "公开时间线快照" : "未接入";
       document.getElementById("people-list").innerHTML = people.map(person => {
         const unread = (person.viewpoints || []).filter(item => !item.is_read).length;
         return `
@@ -2057,7 +2066,6 @@
             </div>
             <button class="primary-btn" id="save-progress" type="button" ${state.demo ? "disabled" : ""}><i data-lucide="save"></i>保存进度</button>
             ${state.demo ? '<span class="control-label">示例模式不会写入 Obsidian</span>' : ""}
-            <button class="text-btn" id="next-chunk" type="button">下一张知识卡 <i data-lucide="arrow-right"></i></button>
           </aside>
         </div>`;
       iconRefresh();
@@ -2387,12 +2395,6 @@
         return;
       }
       if (event.target.closest("#save-progress")) { saveCurrentProgress(); return; }
-      if (event.target.closest("#next-chunk")) {
-        const currentIndex = state.chunks.findIndex(item => item.id === state.currentChunkId);
-        state.currentChunkId = state.chunks[(currentIndex + 1) % state.chunks.length]?.id;
-        renderStudy();
-        return;
-      }
       const reportButton = event.target.closest("[data-report-index]");
       if (reportButton) {
         const reports = JSON.parse(document.getElementById("report-list").dataset.reports || "[]");

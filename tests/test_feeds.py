@@ -1,9 +1,11 @@
 import json
 import unittest
+from unittest.mock import patch
 
 from ai_knowledge_agent.feeds import (
     _normalize_papers,
     build_teaching_view,
+    fetch_x_radar,
     parse_huggingface_daily_html,
 )
 
@@ -47,6 +49,34 @@ class DailyFeedsTest(unittest.TestCase):
         self.assertIn("difficult", view["research_question"])
         self.assertIn("introduce", view["new_method"])
         self.assertIn("outperforms", view["evidence"])
+
+    def test_x_radar_uses_official_api_when_token_is_available(self):
+        def api_response(path, bearer_token, params=None, timeout=20):
+            if path.startswith("users/by/username/"):
+                handle = path.rsplit("/", 1)[-1]
+                return {"data": {"id": "id-" + handle, "name": handle.title()}}
+            handle = path.split("/", 2)[1].removeprefix("id-")
+            return {
+                "data": [
+                    {
+                        "id": "post-" + handle,
+                        "text": "A current public viewpoint.",
+                        "created_at": "2026-10-05T01:00:00Z",
+                        "lang": "en",
+                        "public_metrics": {"like_count": 2},
+                    }
+                ]
+            }
+
+        with patch(
+            "ai_knowledge_agent.feeds._x_api_json",
+            side_effect=api_response,
+        ):
+            radar = fetch_x_radar(bearer_token="test-token")
+
+        self.assertEqual(radar["status"], "official_api")
+        self.assertEqual(len(radar["topics"]), 6)
+        self.assertIn("x.com/karpathy/status/", radar["topics"][0]["url"])
 
 
 if __name__ == "__main__":

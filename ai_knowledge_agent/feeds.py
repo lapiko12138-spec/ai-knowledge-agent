@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from datetime import datetime, timedelta, timezone
 from html import unescape
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
+from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
 from .core import KnowledgeStore, _atomic_json
@@ -14,6 +16,13 @@ from .core import KnowledgeStore, _atomic_json
 HF_PAPERS_URL = "https://huggingface.co/papers"
 PODCAST_URL = "https://www.xiaoyuzhoufm.com/podcast/667d1ecfc13b46d76c3f64b8"
 DATA_ROOT = Path(__file__).resolve().parent.parent / "data"
+X_BEARER_TOKEN_PATH = (
+    Path.home()
+    / "Library"
+    / "Application Support"
+    / "AI Knowledge Agent"
+    / "x-bearer-token"
+)
 
 DEFAULT_X_SOURCES = [
     {
@@ -208,6 +217,124 @@ def apply_paper_localizations(papers: List[Dict[str, Any]]) -> List[Dict[str, An
     return papers
 
 
+def _x_api_json(
+    path: str,
+    bearer_token: str,
+    params: Optional[Dict[str, Any]] = None,
+    timeout: int = 20,
+) -> Dict[str, Any]:
+    url = "https://api.x.com/2/" + path.lstrip("/")
+    if params:
+        url += "?" + urlencode(params)
+    request = Request(
+        url,
+        headers={
+            "Authorization": "Bearer " + bearer_token,
+            "User-Agent": "AI-Knowledge-Agent/0.1",
+            "Accept": "application/json",
+        },
+    )
+    with urlopen(request, timeout=timeout) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("X API 返回格式无效")
+    return payload
+
+
+def fetch_x_radar(
+    bearer_token: Optional[str] = None,
+    days: int = 7,
+    posts_per_person: int = 5,
+    timeout: int = 20,
+) -> Dict[str, Any]:
+    token = (bearer_token or os.getenv("X_BEARER_TOKEN") or "").strip()
+    if not token:
+        try:
+            token = X_BEARER_TOKEN_PATH.read_text(encoding="utf-8").strip()
+        except OSError:
+            token = ""
+    if not token:
+        raise ValueError(
+            "缺少 X_BEARER_TOKEN，无法刷新人物雷达；也未找到 "
+            + str(X_BEARER_TOKEN_PATH)
+        )
+    now = datetime.now(timezone.utc)
+    window_start = now - timedelta(days=days)
+    people = []
+    for source in DEFAULT_X_SOURCES:
+        handle = source["handle"]
+        user_payload = _x_api_json(
+            "users/by/username/" + quote(handle),
+            token,
+            params={"user.fields": "name,description"},
+            timeout=timeout,
+        )
+        user = user_payload.get("data") or {}
+        user_id = str(user.get("id") or "")
+        if not user_id:
+            raise ValueError("X API 未找到用户 @" + handle)
+        tweets_payload = _x_api_json(
+            "users/" + quote(user_id) + "/tweets",
+            token,
+            params={
+                "max_results": max(5, min(100, posts_per_person)),
+                "start_time": window_start.isoformat(timespec="seconds").replace(
+                    "+00:00", "Z"
+                ),
+                "exclude": "retweets,replies",
+                "tweet.fields": "created_at,lang,public_metrics",
+            },
+            timeout=timeout,
+        )
+        viewpoints = []
+        for item in tweets_payload.get("data") or []:
+            text = " ".join(str(item.get("text") or "").split())
+            tweet_id = str(item.get("id") or "")
+            if not text or not tweet_id:
+                continue
+            sentences = _sentences(text)
+            title = sentences[0] if sentences else text
+            viewpoints.append(
+                {
+                    "id": "x-" + tweet_id,
+                    "published_at": str(item.get("created_at") or "")[:10],
+                    "type": "Source",
+                    "title": title[:120],
+                    "summary": text,
+                    "original_excerpt": text,
+                    "url": "https://x.com/" + handle + "/status/" + tweet_id,
+                    "language": item.get("lang") or "",
+                    "public_metrics": item.get("public_metrics") or {},
+                }
+            )
+        people.append(
+            {
+                **source,
+                "name": str(user.get("name") or source["name"]),
+                "connection_status": "official_api",
+                "viewpoints": viewpoints,
+            }
+        )
+    topics = [
+        {
+            **item,
+            "person_handle": person["handle"],
+            "person_name": person["name"],
+        }
+        for person in people
+        for item in person["viewpoints"]
+    ]
+    return {
+        "status": "official_api",
+        "message": "近 7 天观点已通过 X 官方 API 刷新。",
+        "window_start": window_start.date().isoformat(),
+        "window_end": now.date().isoformat(),
+        "captured_at": now.isoformat(timespec="seconds"),
+        "sources": people,
+        "topics": topics,
+    }
+
+
 def load_x_radar_snapshot() -> Dict[str, Any]:
     snapshot = _load_json_file(DATA_ROOT / "x-radar-7d.json")
     if not snapshot:
@@ -226,10 +353,20 @@ def load_x_radar_snapshot() -> Dict[str, Any]:
         for person in people
         for item in person.get("viewpoints", [])
     ]
+    captured_at = str(snapshot.get("captured_at") or "")
+    try:
+        captured = datetime.fromisoformat(captured_at).astimezone(timezone.utc)
+        stale = datetime.now(timezone.utc) - captured > timedelta(hours=24)
+    except ValueError:
+        stale = True
     return {
-        "status": "public_snapshot",
+        "status": "stale_snapshot" if stale else "public_snapshot",
         "message": (
-            "近 7 天观点来自公开 X 个人主页快照；自动持续更新仍需要 X 官方 API。"
+            "人物观点为缓存快照，截止 "
+            + str(snapshot.get("window_end") or "未知日期")
+            + "；配置 X_BEARER_TOKEN 后可每日自动刷新。"
+            if stale
+            else "近 7 天观点来自公开 X 个人主页快照。"
         ),
         "window_start": snapshot.get("window_start", ""),
         "window_end": snapshot.get("window_end", ""),
@@ -240,6 +377,15 @@ def load_x_radar_snapshot() -> Dict[str, Any]:
         ],
         "topics": viewpoints,
     }
+
+
+def refresh_x_radar() -> Dict[str, Any]:
+    try:
+        return fetch_x_radar()
+    except (OSError, TimeoutError, ValueError, json.JSONDecodeError) as error:
+        snapshot = load_x_radar_snapshot()
+        snapshot["refresh_error"] = str(error)
+        return snapshot
 
 
 def fetch_huggingface_daily(timeout: int = 20, limit: int = 10) -> Dict[str, Any]:
@@ -290,7 +436,7 @@ def load_daily_intelligence(
             cached = {
                 "version": 1,
                 "huggingface": hf,
-                "x_radar": load_x_radar_snapshot(),
+                "x_radar": refresh_x_radar(),
                 "editorial_model": {
                     "source": PODCAST_URL,
                     "daily_scan": 8,
@@ -318,9 +464,7 @@ def load_daily_intelligence(
                         "papers": [],
                         "error": str(error),
                     },
-                    "x_radar": {
-                        **load_x_radar_snapshot(),
-                    },
+                    "x_radar": {**load_x_radar_snapshot()},
                     "editorial_model": {
                         "source": PODCAST_URL,
                         "daily_scan": 8,
@@ -332,7 +476,8 @@ def load_daily_intelligence(
                     },
                 }
     if cached:
-        cached["x_radar"] = load_x_radar_snapshot()
+        if "x_radar" not in cached:
+            cached["x_radar"] = load_x_radar_snapshot()
         papers = cached.get("huggingface", {}).get("papers", [])
         del papers[10:]
         apply_paper_localizations(papers)

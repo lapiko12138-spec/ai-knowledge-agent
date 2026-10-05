@@ -15,7 +15,7 @@ from .core import KnowledgeStore, _atomic_json
 from .feeds import (
     PODCAST_URL,
     fetch_huggingface_daily,
-    load_x_radar_snapshot,
+    refresh_x_radar,
 )
 from .feishu import build_learning_reminder_card, send_card
 
@@ -349,7 +349,7 @@ def update_daily(store: KnowledgeStore) -> Dict[str, Any]:
             }
             status["errors"].append("Hugging Face: " + str(error))
 
-        x_radar = load_x_radar_snapshot()
+        x_radar = refresh_x_radar()
         status["sources"]["x_radar"] = {
             "status": x_radar.get("status", "not_configured"),
             "window_start": x_radar.get("window_start", ""),

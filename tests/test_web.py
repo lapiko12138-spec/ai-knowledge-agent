@@ -79,7 +79,10 @@ class KnowledgeWebTest(unittest.TestCase):
         cache = {
             "version": 1,
             "huggingface": {"papers": [], "daily_date": ""},
-            "x_radar": {},
+            "x_radar": {
+                "topics": [{"id": "x-2105909609487872075"}],
+                "sources": [],
+            },
             "editorial_model": {},
         }
         (self.store.system_dir / "daily-intelligence.json").write_text(
