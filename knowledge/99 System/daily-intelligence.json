@@ -3,8 +3,53 @@
   "huggingface": {
     "source": "https://huggingface.co/papers",
     "daily_date": "2026-10-05",
-    "fetched_at": "2026-10-05T06:30:10+00:00",
+    "fetched_at": "2026-10-05T07:05:47+00:00",
     "papers": [
+      {
+        "id": "2609.38078",
+        "title": "MotorMind: Scaffolding General Vision Language Models for Zero-Shot Robot Manipulation",
+        "summary": "Vision-language-action (VLA) models have advanced robotic manipulation, but their zero-shot generalization in new tasks and environments remains limited, and their reliance on specialized training keeps them from benefiting directly from rapidly advancing general-purpose vision-language models (VLMs). In parallel, recent agentic robotic systems leverage VLMs for high-level reasoning or coding agents for robot control, but often depend on extensive external models and tools, introducing additional complexity and cost. This motivates us to ask: Can a general-purpose VLM itself operate a robot more like the human teleoperator by reasoning directly from observations, issuing actions, and continuously adapting to execution feedback, without relying on external models such as learned action experts, coding agents or grounding tools like SAM3? In this work, we introduce MotorMind, a robot manipulation harness that connects VLM-proposed mid-level actions to deterministic robot control and feedback, with asynchronous monitoring and background memory updates. Without task-specific policy training, coding agents, or additional grounding tools such as SAM3, MotorMind achieves 66.7% success on the base LIBERO-PRO suites and 53.8% under perturbations, compared with at most 13.3% and 19.2%, respectively, for the prior zero-shot methods we evaluate. The same interface reaches 95% average success on a real xArm6 robot across direct manipulation and human-perturbation settings. Replacing the backbone with a stronger VLM further improves performance, while the remaining failures - primarily due to visual grounding, embodied reasoning, and action knowledge - decrease as VLM capability improves. These results show that a general-purpose VLM, when equipped with an appropriate mid-level action representation and asynchronous execution harness, can perform effective zero-shot robotic manipulation.",
+        "authors": [
+          "Bingxuan Li",
+          "Siqi Song",
+          "Yizhuo Wu",
+          "Jiarui Yao",
+          "Tong Zhang",
+          "Huan Zhang"
+        ],
+        "organization": "University of Illinois at Urbana-Champaign",
+        "upvotes": 43,
+        "comments": 1,
+        "daily_date": "2026-10-05",
+        "published_at": "2026-09-29T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2609.38078",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.38078.png",
+        "project_page": "https://motor-mind.github.io",
+        "github_repo": "",
+        "teaching": {
+          "research_question": "Vision-language-action (VLA) models have advanced robotic manipulation, but their zero-shot generalization in new tasks and environments remains limited, and their reliance on specialized training keeps them from benefiting directly from rapidly advancing general-purpose vision-language models (VLMs). In parallel, recent agentic robotic systems leverage VLMs for high-level reasoning or coding agents for robot control, but often depend on extensive external models and tools, introducing additional complexity and cost.",
+          "new_method": "In this work, we introduce MotorMind, a robot manipulation harness that connects VLM-proposed mid-level actions to deterministic robot control and feedback, with asynchronous monitoring and background memory updates.",
+          "evidence": "Without task-specific policy training, coding agents, or additional grounding tools such as SAM3, MotorMind achieves 66.7% success on the base LIBERO-PRO suites and 53.8% under perturbations, compared with at most 13.3% and 19.2%, respectively, for the prior zero-shot methods we evaluate.",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": [
+            "Agent",
+            "Memory",
+            "Multimodal",
+            "Robotics"
+          ]
+        },
+        "rank": 1,
+        "editorial_tier": "focus",
+        "localized": {
+          "status": "machine_translated",
+          "title_zh": "MotorMind：零射击机器人操作的通用视觉语言模型的脚手架",
+          "summary_zh": "视觉语言动作（VLA）模型具有先进的机器人操作，但它们在新任务和环境中的零样本泛化仍然有限，并且它们对专门训练的依赖使它们无法直接从快速发展的通用视觉语言模型（VLM）中受益。与此同时，最近的代理机器人系统利用 VLM 进行高级推理或编码代理以进行机器人控制，但通常依赖于广泛的外部模型和工具，从而引入了额外的复杂性和成本。这促使我们问：通用 VLM 本身是否可以像人类远程操作员一样操作机器人，直接根据观察进行推理、发出动作并不断适应执行反馈，而不依赖于外部模型（例如学习动作专家、编码代理或 SAM3 等基础工具）？在这项工作中，我们介绍了 MotorMind，这是一种机器人操纵工具，它将 VLM 提出的中级动作与确定性机器人控制和反馈连接起来，并具有异步监控和后台内存更新功能。在没有特定于任务的策略培训、编码代理或 SAM3 等额外基础工具的情况下，MotorMind 在基本 LIBERO-PRO 套件上取得了 66.7% 的成功率，在扰动下取得了 53.8% 的成功率，而我们评估的先前零样本方法的成功率分别为 13.3% 和 19.2%。在真实的 xArm6 机器人上，相同的界面在直接操作和人类干扰设置方面的平均成功率达到 95%。用更强大的 VLM 替换主干可以进一步提高性能，而剩余的故障（主要是由于视觉基础、具体推理和动作知识）会随着 VLM 能力的提高而减少。这些结果表明，通用 VLM 在配备适当的中级动作表示和异步执行工具时，可以执行有效的零射击机器人操作。",
+          "research_question_zh": "",
+          "new_method_zh": "",
+          "evidence_zh": "",
+          "editor_note": ""
+        }
+      },
       {
         "id": "2609.38879",
         "title": "Does Learning Protein Folding Generalize to Broader Reasoning?",
@@ -19,7 +64,7 @@
           "Shuangjia Zheng"
         ],
         "organization": "Shanghai JiaoTong University",
-        "upvotes": 24,
+        "upvotes": 32,
         "comments": 2,
         "daily_date": "2026-10-05",
         "published_at": "2026-09-30T00:00:00.000Z",
@@ -37,11 +82,12 @@
             "AI Evaluation"
           ]
         },
-        "rank": 1,
+        "rank": 2,
         "editorial_tier": "focus",
         "localized": {
-          "status": "pending",
-          "title_zh": "",
+          "status": "machine_translated",
+          "title_zh": "学习蛋白质折叠是否可以推广到更广泛的推理？",
+          "summary_zh": "大型语言模型严重依赖于人类文本，而人类文本通常传达表面答案，而不是其背后的空间和结构逻辑。蛋白质折叠是一个天然的测试平台，因为一个解决的结构会产生数千个精确可检查的空间和拓扑陈述。我们问：学习折叠蛋白质能否教会通用模型可重用的推理能力？为了回答这个问题，我们构建了 FoldingCorpus（一个蛋白质衍生的问答数据集）和 Fold2Reason（一个通过两个互补信号对其进行后训练的配方）：通过模型的母语头部预测的离散结构答案，以及从相同共享表示解码的连续 3D 几何图形。在 FoldBench 上，Fold2Reason 的结构预测分数是 Qwen3.5-9B 的 2.7 至 3.5 倍。除了蛋白质结构预测之外，它还提高了涵盖空间、图形、科学和一般推理的所有 10 个基准的性能，将宏观平均准确度从 45.09% 提高到 48.33% (+3.23 pp)，在所有 10 个基准上都取得了正收益，而从随机、合成和改组结构构建的匹配控制则产生了小得多的收益或负收益。我们的工作表明，非语言的、结构密集的科学数据可以系统地改进语言模型中的广泛推理，使已解决的科学问题成为训练后监督的实用来源。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -59,7 +105,7 @@
           "Shuicheng Yan"
         ],
         "organization": "National University of Singapore",
-        "upvotes": 19,
+        "upvotes": 20,
         "comments": 1,
         "daily_date": "2026-10-05",
         "published_at": "2026-09-30T00:00:00.000Z",
@@ -78,11 +124,12 @@
             "AI Evaluation"
           ]
         },
-        "rank": 2,
-        "editorial_tier": "focus",
+        "rank": 3,
+        "editorial_tier": "scan",
         "localized": {
-          "status": "pending",
-          "title_zh": "",
+          "status": "machine_translated",
+          "title_zh": "FrameMorrow：具有用于长视野视频生成的前瞻性代币的未来引导帧选择",
+          "summary_zh": "长视野视频生成需要模型有效地利用越来越长的生成历史。随着生成的历史记录的增长，保留所有以前的内容变得越来越昂贵和多余，因此有效的历史选择至关重要。现有方法通常根据当前内容确定历史相关性。然而，与现在相关的信息不一定对后代有用，而看似不太相关的历史可能在以后变得很重要。我们的主要见解是，应根据历史信息与未来信息需求的相关性来选择历史信息。满足这些需求并不需要创造完整的未来；相反，对接下来变得重要的事情的紧凑描述足以指导历史选择。基于这一见解，我们提出了 FrameMorrow，这是一种预期框架选择器，它可以预测一小组代表未来信息需求的预期令牌，并使用它们来识别历史中的相关信息。 FrameMorrow 选择明确的历史帧而不是特定于模型的内部状态，从而实现跨不同生成器（包括闭源模型）的即插即用集成，几乎不需要额外的推理成本。我们通过五个基准和 11 个生成模型（涵盖长视频生成、交互式生成和动作条件世界模型）对 FrameMorrow 进行评估。大量的实验表明，在不同的生成环境中，远程一致性、视觉质量和动作对齐都得到了持续改进。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -123,11 +170,12 @@
             "AI Evaluation"
           ]
         },
-        "rank": 3,
+        "rank": 4,
         "editorial_tier": "scan",
         "localized": {
-          "status": "pending",
-          "title_zh": "",
+          "status": "machine_translated",
+          "title_zh": "世界嵌入基准",
+          "summary_zh": "物理保真度在世界模型和视频生成中受到越来越多的关注，但视频表示如何编码物理信息仍然知之甚少。我们推出了 World Embedding Benchmark，其中包含来自 80 个系列的 8,000 个受控模拟案例，涵盖流体力学、固体力学、动力学以及光学和电磁学。每个案例将渲染视频与模拟衍生的物理注释配对，支持三个互补任务：文本视频检索、物理属性回归和多项选择视频描述对分类。我们使用这些任务来区分跨模式物理对齐和定量物理信息的可恢复性。评估的预训练全模态嵌入模型显示检索能力较弱，家庭内对分类的可能性很小，而轻量级探针则从冻结的视频嵌入中恢复有用的物理信息。使用特定于物理的视频文本对进行持续对比训练可以改善检索和对分类，但会降低物理属性回归，揭示了对齐和定量信息可恢复性之间的权衡。最后，我们使用嵌入来检索参考视频，以便使用 MiniMax-H3 进行检索增强生成。检索到的参考文献提高了生成视频的物理保真度，更强大的检索模型在我们的实验中产生了更大的收益。总之，这些发现强调了联合评估物理对齐和属性可恢复性的必要性，并证明了物理表示在改进视频生成方面的实用性。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -164,55 +212,12 @@
             "Reinforcement Learning"
           ]
         },
-        "rank": 4,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "pending",
-          "title_zh": "",
-          "research_question_zh": "",
-          "new_method_zh": "",
-          "evidence_zh": "",
-          "editor_note": ""
-        }
-      },
-      {
-        "id": "2609.38078",
-        "title": "MotorMind: Scaffolding General Vision Language Models for Zero-Shot Robot Manipulation",
-        "summary": "Vision-language-action (VLA) models have advanced robotic manipulation, but their zero-shot generalization in new tasks and environments remains limited, and their reliance on specialized training keeps them from benefiting directly from rapidly advancing general-purpose vision-language models (VLMs). In parallel, recent agentic robotic systems leverage VLMs for high-level reasoning or coding agents for robot control, but often depend on extensive external models and tools, introducing additional complexity and cost. This motivates us to ask: Can a general-purpose VLM itself operate a robot more like the human teleoperator by reasoning directly from observations, issuing actions, and continuously adapting to execution feedback, without relying on external models such as learned action experts, coding agents or grounding tools like SAM3? In this work, we introduce MotorMind, a robot manipulation harness that connects VLM-proposed mid-level actions to deterministic robot control and feedback, with asynchronous monitoring and background memory updates. Without task-specific policy training, coding agents, or additional grounding tools such as SAM3, MotorMind achieves 66.7% success on the base LIBERO-PRO suites and 53.8% under perturbations, compared with at most 13.3% and 19.2%, respectively, for the prior zero-shot methods we evaluate. The same interface reaches 95% average success on a real xArm6 robot across direct manipulation and human-perturbation settings. Replacing the backbone with a stronger VLM further improves performance, while the remaining failures - primarily due to visual grounding, embodied reasoning, and action knowledge - decrease as VLM capability improves. These results show that a general-purpose VLM, when equipped with an appropriate mid-level action representation and asynchronous execution harness, can perform effective zero-shot robotic manipulation.",
-        "authors": [
-          "Bingxuan Li",
-          "Siqi Song",
-          "Yizhuo Wu",
-          "Jiarui Yao",
-          "Tong Zhang",
-          "Huan Zhang"
-        ],
-        "organization": "University of Illinois at Urbana-Champaign",
-        "upvotes": 13,
-        "comments": 1,
-        "daily_date": "2026-10-05",
-        "published_at": "2026-09-29T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2609.38078",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.38078.png",
-        "project_page": "https://motor-mind.github.io",
-        "github_repo": "",
-        "teaching": {
-          "research_question": "Vision-language-action (VLA) models have advanced robotic manipulation, but their zero-shot generalization in new tasks and environments remains limited, and their reliance on specialized training keeps them from benefiting directly from rapidly advancing general-purpose vision-language models (VLMs). In parallel, recent agentic robotic systems leverage VLMs for high-level reasoning or coding agents for robot control, but often depend on extensive external models and tools, introducing additional complexity and cost.",
-          "new_method": "In this work, we introduce MotorMind, a robot manipulation harness that connects VLM-proposed mid-level actions to deterministic robot control and feedback, with asynchronous monitoring and background memory updates.",
-          "evidence": "Without task-specific policy training, coding agents, or additional grounding tools such as SAM3, MotorMind achieves 66.7% success on the base LIBERO-PRO suites and 53.8% under perturbations, compared with at most 13.3% and 19.2%, respectively, for the prior zero-shot methods we evaluate.",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Agent",
-            "Memory",
-            "Multimodal",
-            "Robotics"
-          ]
-        },
         "rank": 5,
         "editorial_tier": "scan",
         "localized": {
-          "status": "pending",
-          "title_zh": "",
+          "status": "machine_translated",
+          "title_zh": "野外来源偏好：法学硕士代理人如何按来源偏好项目，以及如何减少来源偏好",
+          "summary_zh": "当 LLM 代理代表用户决定购买哪种产品、预订哪家酒店或引用哪篇论文时，对某些来源（它们来自的网站或服务）的项目的偏好决定了用户接收的内容和选择的来源。我们使用跨三个领域的 12 个代理模型来研究端到端搜索中的源偏好。比较不同来源的在同一位置满足相同要求的项目，我们发现每个模型在每个领域都偏爱某些来源并避免其他来源，并且在很大程度上达成了一致。这种偏好可能比项目满足请求的程度更重要：当满足少一项要求的项目来自首选来源时，大约三分之二的时间会选择该项目，而更好的项目则来自非首选来源，但在相反的情况下几乎不会选择。标识项目来源的信息本身会影响选择：隐藏它会削弱偏好，而用首选来源重新标记项目会提高其选择率。我们测试了实现这种偏好的两种途径：奖励更好项目的培训可以使来源成为满足需求的捷径，而缺失信息可能会引发对来源的先入之见。提供缺失的信息或提示反驳这些先入之见会减少来源偏好。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -254,8 +259,9 @@
         "rank": 6,
         "editorial_tier": "scan",
         "localized": {
-          "status": "pending",
-          "title_zh": "",
+          "status": "machine_translated",
+          "title_zh": "通过递归自重写扩展复杂任务的轨迹",
+          "summary_zh": "困难任务的成功轨迹为模型改进提供了宝贵的监督，但专门的工具引入了部署期间可能无法使用的干预措施。我们提出了递归自重写（RSR），这是一种使用一个基本模型 Qwen-3.8-27B 的框架，可以在不同的工具下发现成功的解决方案，并将它们重建为通用工具下的训练轨迹。规划者将程序提取到运行手册中，批评者筛选验证者和解决方案泄漏并指导递归修订，执行者在新沙箱中遵循合格的运行手册。在大约 3K 个自行策划的终端任务中，三个工具共同解决了 759 项任务，比记录池中最强的个人工具多出了 34.3%。 RSR 将 2,001 个成功的源轨迹扩展为 11,094 个重写轨迹，以进行监督微调。这些轨迹的训练优于基础模型和直接轨迹 SFT。与基本模型相比，pass@3 在 Terminal-Bench 2 上从 57.0% 增加到 74.2%，在 Terminal-Bench 4 上从 1.5% 增加到 9.1%，在我们自行设计的 Terminal-Bench Hard 上从 39.0% 增加到 63.0%，在我们的 Software Terminal-Bench 上从 3.0% 增加到 6.0%。 Long-Horizo​​n Terminal-Bench 的流程奖励从 0.21 上升至 0.29。这些结果表明，如何将不同的线束辅助体验重构为在通用线束下运行的模型的可重用功能。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -298,8 +304,51 @@
         "rank": 7,
         "editorial_tier": "scan",
         "localized": {
-          "status": "pending",
-          "title_zh": "",
+          "status": "machine_translated",
+          "title_zh": "LexReward：分类驱动的法律语言模型奖励框架",
+          "summary_zh": "法律语言模型需要奖励信号，不仅要捕获答案的正确性，还要捕获法律响应的多维质量。然而，现有的奖励方法通常依赖于粗粒度的整体判断，提供有限的领域特异性和可解释性。我们引入 LexReward，一个用于法律奖励建模的分类驱动框架。 LexReward 从三个互补的维度描述法律回复质量： 风格，涵盖词汇和句法质量；要素，评估法律主体、事实、法规和决定；链，评估法律推理的顺序、完整性、正确性和非冗余性。对于每个维度，我们都制定了细则，规定了评估标准和质量水平。所得奖励用于构建直接偏好优化 (DPO) 和奖励模型训练的成对偏好数据。实验表明，基于标题的奖励能够可靠地区分不同质量的法律响应，并且基于偏好数据的 DPO 训练可以提高所有三个维度的性能。学习到的奖励模型 LexRM 还支持有效的下游优化：每个特定维度的奖励模型通过强化学习提高其相应维度的策略性能，而无需在奖励时参考答案。维度分析进一步支持了所提出的分类和奖励构建的有效性。",
+          "research_question_zh": "",
+          "new_method_zh": "",
+          "evidence_zh": "",
+          "editor_note": ""
+        }
+      },
+      {
+        "id": "2610.00531",
+        "title": "Science or Slop?: Benchmarking and Mitigating Scientific Slop in AI-Generated Papers",
+        "summary": "AI-generated content, often called AI slop, is increasingly common everywhere, particularly in academia. Slop in AI-generated scientific papers, however, has more complex patterns that cannot be easily detected by existing token-based AI detectors. Each part of such a paper looks plausible while the scientific reasoning that connects the parts breaks down, which can mislead how readers assess the work. We benchmark these failures as scientific slop through six measures across Structure, Argument, and Artifacts. We construct SciSlopBench with 390 AI-generated papers, mostly in computer science but spanning the life, social, and natural sciences, each paired with a human-written paper matched by research problem and contribution type. Our measures identify the AI paper in each pair with 85.9% accuracy, compared with 68.7% for Binoculars. Higher scientific slop accompanies lower ICLR ratings and distinguishes rejected from accepted papers above chance in every year from 2017 to 2025. Reducing these patterns, however, is not as simple as directly optimizing the measures. We therefore propose SciSlopHarness, a harness-level framework that guides a fixed LLM to revise slop only where the experiment records support the change. While standard revisions leave residual slop and direct slop-aware prompting triggers reward hacking, SciSlopHarness reduces the remaining AI-human gap by 63% over the strongest revision baseline without requiring human reference targets. Overall, we demonstrate that AI-generated scientific papers leave fundamental traces in their global reasoning, and that responsible mitigation demands strict evidentiary grounding rather than mere prose refinement.",
+        "authors": [
+          "Yerim Oh",
+          "Young-Jun Lee",
+          "Jaewoo Ahn",
+          "Gunhee Kim",
+          "Dongyeop Kang"
+        ],
+        "organization": "Seoul National University",
+        "upvotes": 9,
+        "comments": 1,
+        "daily_date": "2026-10-05",
+        "published_at": "2026-09-30T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2610.00531",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.00531.png",
+        "project_page": "https://yerimoh.github.io/scientific-slop-demo/",
+        "github_repo": "https://github.com/yerimoh/ScientificSlop",
+        "teaching": {
+          "research_question": "AI-generated content, often called AI slop, is increasingly common everywhere, particularly in academia. Slop in AI-generated scientific papers, however, has more complex patterns that cannot be easily detected by existing token-based AI detectors.",
+          "new_method": "Each part of such a paper looks plausible while the scientific reasoning that connects the parts breaks down, which can mislead how readers assess the work.",
+          "evidence": "We benchmark these failures as scientific slop through six measures across Structure, Argument, and Artifacts.",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": [
+            "Reinforcement Learning",
+            "AI Evaluation"
+          ]
+        },
+        "rank": 8,
+        "editorial_tier": "scan",
+        "localized": {
+          "status": "machine_translated",
+          "title_zh": "科学还是马虎？：对人工智能生成的论文中的科学马虎进行基准测试和缓解",
+          "summary_zh": "人工智能生成的内容（通常称为 AI slop）在各地越来越普遍，尤其是在学术界。然而，人工智能生成的科学论文中的 Slop 具有更复杂的模式，无法通过现有的基于令牌的人工智能检测器轻松检测到。此类论文的每个部分看起来似乎都有道理，但连接各部分的科学推理却支离破碎，这可能会误导读者如何评估该作品。我们通过结构、论证和文物等六项指标将这些失败视为科学失误。我们用 390 篇 AI 生成的论文构建了 SciSlopBench，这些论文主要是计算机科学领域，但涵盖生命、社会和自然科学，每篇论文都与一篇与研究问题和贡献类型相匹配的人类撰写的论文配对。我们的测量方法识别每对 AI 论文的准确率为 85.9%，而双筒望远镜的准确率为 68.7%。从 2017 年到 2025 年，每年较高的科学偏差伴随着较低的 ICLR 评级，并将被拒绝的论文与已接受的论文区分开来。然而，减少这些模式并不像直接优化措施那么简单。因此，我们提出了 SciSlopHarness，一个利用级框架，指导固定的 LLM 仅在实验记录支持更改的情况下修改 slop。虽然标准修订会留下残余的溢出，并且直接的溢出感知提示会触发奖励黑客攻击，但 SciSlopHarness 比最强的修订基线将剩余的人工智能与人类差距减少了 63%，而无需人类参考目标。总体而言，我们证明人工智能生成的科学论文在其全球推理中留下了基本痕迹，而负责任的缓解措施需要严格的证据基础，而不仅仅是散文的精炼。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -340,55 +389,12 @@
             "AI Evaluation"
           ]
         },
-        "rank": 8,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "pending",
-          "title_zh": "",
-          "research_question_zh": "",
-          "new_method_zh": "",
-          "evidence_zh": "",
-          "editor_note": ""
-        }
-      },
-      {
-        "id": "2610.01257",
-        "title": "Science Utopia? Closed-Loop LLM Simulation of Academic Research Ecosystems",
-        "summary": "Scientific progress emerges from a longitudinal ecosystem in which researchers, institutions, funding agencies, collaboration networks, and the scientific literature co-evolve. As AI becomes increasingly involved throughout the scientific research cycle, understanding these interconnected and evolving processes becomes increasingly important. We introduce SciUtopia, a persistent, closed-loop LLM-agent simulation framework for studying academic research ecosystems. SciUtopia models interconnected scientific processes such as research-direction choice, collaboration, submission, peer review, resubmission, citation, funding, and researcher attrition, while maintaining evolving states across simulated years. Its configurable institutional mechanisms and information channels provide a controlled testbed for matched counterfactual experiments and targeted interventions. Across 61 simulation worlds, SciUtopia simulates over 40,000 researchers from 8,000 institutions, producing around 400,000 publication decisions and 1.2 million LLM-generated peer reviews. Using these longitudinal simulations, we find that rejection-driven resubmission substantially amplifies reviewer burden beyond population growth alone, cautious exploration balances citation impact with career success and long-term topic diversity, and resource inequality can emerge even without detectable cumulative advantage from narrowly winning early funding. Code is available at https://github.com/Ahren09/ScienceUtopia.",
-        "authors": [
-          "Yiqiao Jin",
-          "Yiyang Wang",
-          "Lucheng Fu",
-          "Bing He",
-          "Siheng Xiong",
-          "Yijia Xiao",
-          "B. Aditya Prakash",
-          "Josiah Hester"
-        ],
-        "organization": "Georgia Institute of Technology",
-        "upvotes": 7,
-        "comments": 1,
-        "daily_date": "2026-10-05",
-        "published_at": "2026-10-01T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2610.01257",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.01257.png",
-        "project_page": "https://ahren09.github.io/ScienceUtopia/",
-        "github_repo": "https://github.com/Ahren09/ScienceUtopia",
-        "teaching": {
-          "research_question": "Scientific progress emerges from a longitudinal ecosystem in which researchers, institutions, funding agencies, collaboration networks, and the scientific literature co-evolve. As AI becomes increasingly involved throughout the scientific research cycle, understanding these interconnected and evolving processes becomes increasingly important.",
-          "new_method": "We introduce SciUtopia, a persistent, closed-loop LLM-agent simulation framework for studying academic research ecosystems.",
-          "evidence": "摘要未给出可独立核验的实验结论，需要进入实验章节确认。",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Agent",
-            "AI Evaluation"
-          ]
-        },
         "rank": 9,
         "editorial_tier": "scan",
         "localized": {
-          "status": "pending",
-          "title_zh": "",
+          "status": "machine_translated",
+          "title_zh": "HyperBrowseComp：针对网络浏览代理的多语言和多模式压力测试",
+          "summary_zh": "我们推出了 HyperBrowseComp，这是一个多语言和多模式浏览基准测试，包含 13 种语言的 423 个手动编写和人工验证的问题，由母语或高度熟练的使用者编写。问题设计得极具挑战性。每个问题都针对一个简洁的、可公开验证的答案，其发现需要找到模糊的证据，遵循多步骤线索链，或检查视频、扫描文档、图像或地图等异构来源。通过使用无法访问互联网的模型进行评估来过滤掉更简单的问题，以降低仅用参数知识来回答这些问题的可能性。我们使用提供者本机搜索和通用代理协议下的共享外部检索工具来评估多个模型。为了将模型性能和工作量结合起来，我们还对问题样本进行了人工评估。 HyperBrowseComp 为跨语言和证据模式的持续信息搜索提供了一个具有挑战性的测试平台，在开放网络上发现和连接证据会产生困难。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -407,7 +413,7 @@
           "Dorien Herremans"
         ],
         "organization": "AMAAI Lab",
-        "upvotes": 6,
+        "upvotes": 7,
         "comments": 1,
         "daily_date": "2026-10-05",
         "published_at": "2026-09-30T00:00:00.000Z",
@@ -425,8 +431,9 @@
         "rank": 10,
         "editorial_tier": "scan",
         "localized": {
-          "status": "pending",
-          "title_zh": "",
+          "status": "machine_translated",
+          "title_zh": "DEFINE：零样本 TTS 的示例引导重音控制",
+          "summary_zh": "零样本文本转语音 (TTS) 可以从简短的参考录音中再现看不见的说话者，但通常会将说话者的身份和口音纠缠在同一参考中。我们引入了 DEFINE，这是一个端到端框架，它通过在单独的音频样本上调节说话者身份和目标口音来解耦这些因素。单个推理时间指导权重可以连续控制重音强度，无需重新训练。 DEFINE 基于具有参数高效 LoRA 适配的 F5-TTS 构建，使用通过学习的口音原型进行监督的样本编码器将短口音样本映射到调节空间，无需在推理时使用口音标签，也不需要合成后波形转换。对于可见的口音，增加口音引导可将口音探测准确度从 6.5% 提高到 19.6%。更重要的是，单个 DEFINE 模型将口音控制推广到其训练口音集之外：对于可见口音和域外口音，尽管不是保留口音，它与两个模型 TTS 语音转换级联的口音传输性能相匹配，同时实现更高的说话人相似度和可比较的预测语音质量。这些结果表明，说话者身份和口音可以在单个零样本 TTS 模型中独立于音频样本进行控制，包括训练期间看不见的口音。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -822,5 +829,5 @@
       "概念入图"
     ]
   },
-  "updated_at": "2026-10-05T14:30:10+08:00"
+  "updated_at": "2026-10-05T15:05:47+08:00"
 }
