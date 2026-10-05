@@ -607,6 +607,7 @@ def load_daily_intelligence(
         papers = cached.get("huggingface", {}).get("papers", [])
         del papers[10:]
         apply_paper_localizations(papers)
+        ensure_paper_translations(store, papers)
         cached.setdefault("editorial_model", {})["daily_scan"] = 8
         cached["editorial_model"]["daily_choices"] = [5, 8, 10]
     return cached or {}
