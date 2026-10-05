@@ -329,9 +329,10 @@ def update_daily(store: KnowledgeStore) -> Dict[str, Any]:
         huggingface = previous.get("huggingface", {})
 
         try:
-            huggingface = fetch_huggingface_daily(limit=10)
+            huggingface = fetch_huggingface_daily(limit=10, store=store)
             localized_count = sum(
                 bool(item.get("localized", {}).get("title_zh"))
+                and bool(item.get("localized", {}).get("summary_zh"))
                 for item in huggingface.get("papers", [])
             )
             status["sources"]["huggingface"] = {

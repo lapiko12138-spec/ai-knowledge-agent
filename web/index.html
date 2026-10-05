@@ -1891,7 +1891,7 @@
           <span>
             <span class="paper-title">${escapeHtml(localized.title_zh || paper.title)}</span>
             ${localized.title_zh ? `<span class="paper-original">${escapeHtml(paper.title)}</span>` : ""}
-            <span class="paper-summary">${escapeHtml(localized.research_question_zh || paper.teaching?.research_question || paper.summary)}</span>
+            <span class="paper-summary">${escapeHtml(localized.summary_zh || localized.research_question_zh || paper.teaching?.research_question || paper.summary)}</span>
             <span class="paper-meta"><span>${escapeHtml(paper.organization || paper.authors?.[0] || "作者信息待确认")}</span><span>${(paper.teaching?.concepts || []).map(escapeHtml).join(" · ") || "概念待提取"}</span></span>
           </span>
           <span class="heat"><i data-lucide="flame"></i>${escapeHtml(paper.upvotes)}</span>
@@ -1922,9 +1922,9 @@
           <div class="chunk-card-head"><span class="tag ${paper.editorial_tier === "focus" ? "priority" : ""}">${paper.editorial_tier === "focus" ? "Focus" : paper.editorial_tier === "scan" ? "Scan" : "候选"}</span><span class="heat"><i data-lucide="flame"></i>${escapeHtml(paper.upvotes)}</span></div>
           <h3>${escapeHtml(localized.title_zh || paper.title)}</h3>
           ${localized.title_zh ? `<span class="paper-original">${escapeHtml(paper.title)}</span>` : ""}
-          <p>${escapeHtml(localized.research_question_zh || paper.teaching?.research_question || paper.summary)}</p>
+          <p>${escapeHtml(localized.summary_zh || localized.research_question_zh || paper.teaching?.research_question || paper.summary)}</p>
           <div class="keyword-list">${(paper.teaching?.concepts || []).slice(0, 4).map(concept => `<span class="tag">${escapeHtml(concept)}</span>`).join("")}</div>
-          <footer><span>${escapeHtml(paper.organization || paper.authors?.[0] || "作者待确认")}</span><span>${localized.status === "curated" ? "中文已编辑" : "中文待编辑"} · #${escapeHtml(paper.rank)}</span></footer>
+          <footer><span>${escapeHtml(paper.organization || paper.authors?.[0] || "作者待确认")}</span><span>${localized.status === "curated" ? "中文已编辑" : localized.status === "machine_translated" ? "中文机翻" : "中文待编辑"} · #${escapeHtml(paper.rank)}</span></footer>
         </button>`;
       }).join("") : emptyState("file-search-2", "没有匹配的论文", "切换层级或刷新数据");
     }
@@ -2125,6 +2125,7 @@
         </div>
         <p class="paper-original">${escapeHtml(paper.title)}</p>
         <div class="study-kicker"><span class="tag priority">HF #${escapeHtml(paper.rank)}</span><span class="tag">${escapeHtml(paper.editorial_tier)}</span><span class="heat"><i data-lucide="flame"></i>${escapeHtml(paper.upvotes)}</span></div>
+        <div class="detail-field"><h3>中文摘要</h3><p>${escapeHtml(localized.summary_zh || paper.summary)}</p></div>
         <div class="detail-field"><h3>研究问题</h3><p>${escapeHtml(localized.research_question_zh || teaching.research_question || paper.summary)}</p></div>
         <div class="detail-field"><h3>核心方法</h3><p>${escapeHtml(localized.new_method_zh || teaching.new_method || "待深读")}</p></div>
         <div class="detail-field"><h3>实验结论</h3><p>${escapeHtml(localized.evidence_zh || teaching.evidence || "待深读")}</p></div>

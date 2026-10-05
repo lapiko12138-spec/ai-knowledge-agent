@@ -138,6 +138,7 @@ def build_learning_reminder_card(
         focus_title = localized.get("title_zh") or focus.get("title") or "今日论文"
         focus_note = (
             localized.get("editor_note")
+            or localized.get("summary_zh")
             or localized.get("research_question_zh")
             or focus.get("summary")
             or "值得今天优先阅读。"

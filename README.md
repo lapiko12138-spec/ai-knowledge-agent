@@ -42,7 +42,8 @@ python3 -m ai_knowledge_agent serve
 
 “今日雷达”会自动读取并缓存 Hugging Face Daily Papers，将论文分为
 每日 5/8/10 篇与 `Focus 2`，并以中英双语标题、研究问题、核心方法、实验结论、限制
-与概念候选展示。人物雷达支持逐条已阅；配置 X 官方 API 后，每日任务会刷新关注人物
+与概念候选展示。每日抓取会自动补齐中文标题与中文摘要，并把翻译缓存到 Obsidian；
+翻译服务暂时不可用时保留已有中文缓存。人物雷达支持逐条已阅；配置 X 官方 API 后，每日任务会刷新关注人物
 近 7 天原帖。Bearer Token 可通过 `X_BEARER_TOKEN` 环境变量提供，或写入本机
 `~/Library/Application Support/AI Knowledge Agent/x-bearer-token`。未配置时页面会明确
 显示缓存快照及截止日期。详细产品拆分见

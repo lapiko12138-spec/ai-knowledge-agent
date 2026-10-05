@@ -14,6 +14,7 @@ from .core import KnowledgeStore, _atomic_json
 
 
 HF_PAPERS_URL = "https://huggingface.co/papers"
+TRANSLATE_URL = "https://translate.googleapis.com/translate_a/single"
 PODCAST_URL = "https://www.xiaoyuzhoufm.com/podcast/667d1ecfc13b46d76c3f64b8"
 DATA_ROOT = Path(__file__).resolve().parent.parent / "data"
 X_BEARER_TOKEN_PATH = (
@@ -209,11 +210,130 @@ def apply_paper_localizations(papers: List[Dict[str, Any]]) -> List[Dict[str, An
         paper["localized"] = {
             "status": "curated" if localized else "pending",
             "title_zh": localized.get("title_zh", ""),
+            "summary_zh": localized.get("summary_zh", ""),
             "research_question_zh": localized.get("research_question_zh", ""),
             "new_method_zh": localized.get("new_method_zh", ""),
             "evidence_zh": localized.get("evidence_zh", ""),
             "editor_note": localized.get("editor_note", ""),
         }
+    return papers
+
+
+def _normalize_zh_translation(translated: str) -> str:
+    replacements = {
+        "零射击": "零样本",
+        "少射击": "少样本",
+        "代币": "token",
+        "大型语言模型": "大语言模型",
+        "视觉语言动作": "视觉-语言-动作",
+        "长视野": "长时程",
+    }
+    for source, target in replacements.items():
+        translated = translated.replace(source, target)
+    return translated
+
+
+def _translate_to_zh(value: str, timeout: int = 20) -> str:
+    value = " ".join(value.split())
+    if not value:
+        return ""
+    request = Request(
+        TRANSLATE_URL,
+        data=urlencode(
+            {
+                "client": "gtx",
+                "sl": "en",
+                "tl": "zh-CN",
+                "dt": "t",
+                "q": value,
+            }
+        ).encode("utf-8"),
+        headers={
+            "User-Agent": "AI-Knowledge-Agent/0.1",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+        },
+        method="POST",
+    )
+    with urlopen(request, timeout=timeout) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+    if not isinstance(payload, list) or not payload or not isinstance(payload[0], list):
+        raise ValueError("翻译服务返回格式无效")
+    translated = "".join(
+        str(segment[0])
+        for segment in payload[0]
+        if isinstance(segment, list) and segment and segment[0]
+    ).strip()
+    if not translated:
+        raise ValueError("翻译服务未返回中文内容")
+    return _normalize_zh_translation(translated)
+
+
+def ensure_paper_translations(
+    store: KnowledgeStore,
+    papers: List[Dict[str, Any]],
+    timeout: int = 20,
+) -> List[Dict[str, Any]]:
+    cache_path = store.system_dir / "paper-translations.json"
+    cache = _load_json_file(cache_path)
+    changed = False
+    for paper in papers:
+        paper_id = str(paper.get("id") or "")
+        title = str(paper.get("title") or "")
+        summary = str(paper.get("summary") or "")
+        cached = cache.get(paper_id, {})
+        source_matches = (
+            cached.get("source_title") == title
+            and cached.get("source_summary") == summary
+        )
+        title_zh = str(cached.get("title_zh") or "") if source_matches else ""
+        summary_zh = str(cached.get("summary_zh") or "") if source_matches else ""
+        localized = paper.setdefault("localized", {})
+        title_zh = _normalize_zh_translation(
+            str(localized.get("title_zh") or title_zh)
+        )
+        summary_zh = _normalize_zh_translation(
+            str(localized.get("summary_zh") or summary_zh)
+        )
+        try:
+            if not title_zh:
+                title_zh = _translate_to_zh(title, timeout=timeout)
+            if not summary_zh:
+                summary_zh = _translate_to_zh(summary, timeout=timeout)
+        except (OSError, TimeoutError, ValueError, json.JSONDecodeError) as error:
+            localized["translation_error"] = str(error)
+        if title_zh:
+            localized["title_zh"] = title_zh
+        if summary_zh:
+            localized["summary_zh"] = summary_zh
+        localized["status"] = (
+            "curated"
+            if localized.get("research_question_zh")
+            else "machine_translated"
+            if title_zh and summary_zh
+            else "pending"
+        )
+        if title_zh or summary_zh:
+            translated_at = (
+                str(cached.get("translated_at") or "")
+                if source_matches
+                and cached.get("title_zh") == title_zh
+                and cached.get("summary_zh") == summary_zh
+                else datetime.now(timezone.utc).isoformat(timespec="seconds")
+            )
+            record = {
+                "source_title": title,
+                "source_summary": summary,
+                "title_zh": title_zh,
+                "summary_zh": summary_zh,
+                "provider": "google_translate",
+                "translated_at": translated_at,
+            }
+            if cache.get(paper_id) != record:
+                cache[paper_id] = record
+                changed = True
+    if changed:
+        _atomic_json(cache_path, cache)
     return papers
 
 
@@ -388,7 +508,11 @@ def refresh_x_radar() -> Dict[str, Any]:
         return snapshot
 
 
-def fetch_huggingface_daily(timeout: int = 20, limit: int = 10) -> Dict[str, Any]:
+def fetch_huggingface_daily(
+    timeout: int = 20,
+    limit: int = 10,
+    store: Optional[KnowledgeStore] = None,
+) -> Dict[str, Any]:
     request = Request(
         HF_PAPERS_URL,
         headers={
@@ -401,6 +525,8 @@ def fetch_huggingface_daily(timeout: int = 20, limit: int = 10) -> Dict[str, Any
     papers = apply_paper_localizations(
         _normalize_papers(parse_huggingface_daily_html(raw_html), limit=limit)
     )
+    if store is not None:
+        ensure_paper_translations(store, papers, timeout=timeout)
     daily_date = max((item["daily_date"] for item in papers), default="")
     return {
         "source": HF_PAPERS_URL,
@@ -432,7 +558,7 @@ def load_daily_intelligence(
 
     if refresh or not _cache_is_fresh(cache_path, cache_minutes):
         try:
-            hf = fetch_huggingface_daily()
+            hf = fetch_huggingface_daily(store=store)
             cached = {
                 "version": 1,
                 "huggingface": hf,

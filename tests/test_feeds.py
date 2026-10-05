@@ -1,10 +1,14 @@
 import json
+import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
+from ai_knowledge_agent.core import KnowledgeStore
 from ai_knowledge_agent.feeds import (
     _normalize_papers,
     build_teaching_view,
+    ensure_paper_translations,
     fetch_x_radar,
     parse_huggingface_daily_html,
 )
@@ -77,6 +81,47 @@ class DailyFeedsTest(unittest.TestCase):
         self.assertEqual(radar["status"], "official_api")
         self.assertEqual(len(radar["topics"]), 6)
         self.assertIn("x.com/karpathy/status/", radar["topics"][0]["url"])
+
+    def test_paper_translation_is_cached_with_title_and_summary(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            store = KnowledgeStore(Path(temporary))
+            store.initialize()
+            papers = [
+                {
+                    "id": "paper-1",
+                    "title": "English title",
+                    "summary": "English abstract.",
+                    "localized": {"status": "pending"},
+                }
+            ]
+            with patch(
+                "ai_knowledge_agent.feeds._translate_to_zh",
+                side_effect=["中文标题", "中文摘要。"],
+            ):
+                ensure_paper_translations(store, papers)
+
+            self.assertEqual(papers[0]["localized"]["title_zh"], "中文标题")
+            self.assertEqual(papers[0]["localized"]["summary_zh"], "中文摘要。")
+            self.assertEqual(
+                papers[0]["localized"]["status"], "machine_translated"
+            )
+
+            cached_papers = [
+                {
+                    "id": "paper-1",
+                    "title": "English title",
+                    "summary": "English abstract.",
+                    "localized": {"status": "pending"},
+                }
+            ]
+            with patch(
+                "ai_knowledge_agent.feeds._translate_to_zh"
+            ) as translate:
+                ensure_paper_translations(store, cached_papers)
+            translate.assert_not_called()
+            self.assertEqual(
+                cached_papers[0]["localized"]["summary_zh"], "中文摘要。"
+            )
 
 
 if __name__ == "__main__":
