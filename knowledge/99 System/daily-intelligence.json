@@ -3,7 +3,7 @@
   "huggingface": {
     "source": "https://huggingface.co/papers",
     "daily_date": "2026-10-06",
-    "fetched_at": "2026-10-06T09:54:17+00:00",
+    "fetched_at": "2026-10-06T16:39:14+00:00",
     "papers": [
       {
         "id": "2610.05608",
@@ -20,7 +20,7 @@
           "Vladimir Arkhipkin"
         ],
         "organization": "Kandinsky Lab",
-        "upvotes": 88,
+        "upvotes": 109,
         "comments": 2,
         "daily_date": "2026-10-06",
         "published_at": "2026-10-04T00:00:00.000Z",
@@ -68,7 +68,7 @@
           "Xuanbai Chen"
         ],
         "organization": "Amazon",
-        "upvotes": 37,
+        "upvotes": 48,
         "comments": 1,
         "daily_date": "2026-10-06",
         "published_at": "2026-10-03T00:00:00.000Z",
@@ -99,39 +99,259 @@
         }
       },
       {
-        "id": "2610.05303",
-        "title": "ASCENT: Online Test-Time Training of Long-Horizon Agents via Self-Distillation of Verified Experience",
-        "summary": "A large language model (LLM) agent solves long-horizon tasks through many reasoning-action turns, with one verification signal at termination. Deployed agents face streams of related tasks, making their trajectories a natural resource for improvement. In-context adaptation agents store reflections, memories, or skills as text, so reuse depends on retrieving the right experience and on a frozen policy executing it. We study Online Agentic Test-Time Training (OaTTT), which trains the LLM's weights on its own execution trajectories during deployment. The agent executes each task once, in one pass over the stream, and the executed trajectory with its verification result is the only learning signal for weight updates that persist across tasks. Directly imitating or reinforcing the generated tokens of this single attempt destabilizes the policy. We introduce ASCENT (Agentic Self-distillation for Cross-task EvolutioN at Test-time), which instead self-distills verified experience. A stable version of the LLM, its frozen initial copy, receives the verified trajectory as privileged information and predicts next-token distributions along it with this hindsight. Distilling them into persistent LoRA fast weights updates the agent for later tasks, without an external reference solution or stronger teacher. By further removing invalid-action turns, ASCENT distills enhanced privileged experience for more efficient execution. We characterize its population target and the limits of sparse outcome selection. Across ALFWorld, WebShop, and AppWorld at varied model scales, ASCENT improves task success and interaction efficiency as experience accumulates, outperforms online adaptation methods, and transfers to held-out scenes, showing that an agent can consolidate verified experience into its weights without a separate training phase or memory retrieval. Project page: https://artificer-ai-lab.github.io/ASCENT",
+        "id": "2610.05162",
+        "title": "Memadapter: Counterfactual Adaptation Against Memory-induced Sycophancy",
+        "summary": "Long-term memory enables LLM-based agents to retain and reuse information across tasks and sessions, supporting personalization and long-horizon interactions. However, persistent memories can also induce sycophancy, causing agents to over-align with users' historical beliefs even when they are inaccurate, outdated, or inconsistent with objective evidence. Existing mitigation methods assume that memory-induced sycophancy originates from biased or incorrect memories and attempt to reduce this risk by filtering such memories at different stages of the memory pipeline. However, in the real world, objective and correct memories can still induce sycophancy, and the same memory can warrant different influence across different contexts. To this end, we propose MemAdapter, a novel framework that adaptively integrates retrieved memories to support objective and reliable reasoning. Specifically, MemAdapter consists of three components: (i) Counterfactual Induction, which leverages counterfactual reasoning to uncover the potential risk of retrieved memories; (ii) Context-Aware Reflection, which calibrates the inferential influence of each retrieved memory in light of the current task via self-reflection; and (iii) Evidence-Based Reasoning, which grounds the final response in appropriate evidence while preserving the legitimate influence of memory. Extensive experiments on three benchmarks demonstrate that MemAdapter consistently improves memory reliability across diverse scenarios. Our code is available at https://github.com/DEEP-JLU/MemAdapter.",
         "authors": [
-          "Haodong Lu",
-          "Dong Gong"
+          "Ruqing Ning",
+          "Haibo Meng",
+          "Zhishang Xiang",
+          "Zerui Chen",
+          "Jinsong Su",
+          "Xin Wang",
+          "Qinggang Zhang"
         ],
         "organization": "",
-        "upvotes": 11,
+        "upvotes": 25,
         "comments": 1,
         "daily_date": "2026-10-06",
         "published_at": "2026-10-04T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2610.05303",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.05303.png",
-        "project_page": "https://artificer-ai-lab.github.io/ASCENT/",
-        "github_repo": "",
+        "url": "https://huggingface.co/papers/2610.05162",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.05162.png",
+        "project_page": "https://github.com/DEEP-JLU/MemAdapter.git",
+        "github_repo": "https://github.com/DEEP-JLU/MemAdapter",
         "teaching": {
-          "research_question": "A large language model (LLM) agent solves long-horizon tasks through many reasoning-action turns, with one verification signal at termination. Deployed agents face streams of related tasks, making their trajectories a natural resource for improvement.",
-          "new_method": "We introduce ASCENT (Agentic Self-distillation for Cross-task EvolutioN at Test-time), which instead self-distills verified experience.",
-          "evidence": "Across ALFWorld, WebShop, and AppWorld at varied model scales, ASCENT improves task success and interaction efficiency as experience accumulates, outperforms online adaptation methods, and transfers to held-out scenes, showing that an agent can consolidate verified experience into its weights without a separate training phase or memory retrieval.",
+          "research_question": "Long-term memory enables LLM-based agents to retain and reuse information across tasks and sessions, supporting personalization and long-horizon interactions. However, persistent memories can also induce sycophancy, causing agents to over-align with users' historical beliefs even when they are inaccurate, outdated, or inconsistent with objective evidence.",
+          "new_method": "To this end, we propose MemAdapter, a novel framework that adaptively integrates retrieved memories to support objective and reliable reasoning.",
+          "evidence": "Extensive experiments on three benchmarks demonstrate that MemAdapter consistently improves memory reliability across diverse scenarios.",
           "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
           "concepts": [
             "Agent",
             "Memory",
-            "Post-training"
+            "AI Evaluation"
           ]
         },
         "rank": 3,
         "editorial_tier": "scan",
         "localized": {
           "status": "machine_translated",
-          "title_zh": "ASCENT：通过验证经验的自我蒸馏对长时程代理进行在线测试时间培训",
-          "summary_zh": "大语言模型 (LLM) 代理通过多次推理-动作轮次来解决长期任务，并在终止时发出一个验证信号。部署的代理面临一系列相关任务，使其轨迹成为改进的自然资源。上下文适应代理将反思、记忆或技能存储为文本，因此重用取决于检索正确的经验和执行它的冻结策略。我们研究在线代理测试时间训练（OaTTT），它在部署期间根据其自己的执行轨迹训练法学硕士的权重。代理在流上一次传递中执行每个任务一次，并且执行的轨迹及其验证结果是跨任务持续的权重更新的唯一学习信号。直接模仿或强化这一单一尝试生成的token会破坏政策的稳定性。我们引入了 ASCENT（测试时跨任务进化的代理自蒸馏），它会自我蒸馏经过验证的经验。 LLM 的稳定版本（其冻结的初始副本）接收经过验证的轨迹作为特权信息，并根据事后预测预测下一个token分布。将它们提炼成持久的 LoRA 快速权重，更新代理以执行后续任务，无需外部参考解决方案或更强大的教师。通过进一步消除无效动作回合，ASCENT 提炼出增强的特权体验，以实现更高效的执行。我们描述了其人口目标和稀疏结果选择的局限性。在不同模型规模的 ALFWorld、WebShop 和 AppWorld 中，随着经验的积累，ASCENT 提高了任务成功率和交互效率，优于在线适应方法，并转移到保留的场景，这表明代理可以将经过验证的经验整合到其权重中，而无需单独的训练阶段或记忆检索。项目页面：https://artificer-ai-lab.github.io/ASCENT",
+          "title_zh": "Memadapter：针对记忆引起的阿谀奉承的反事实适应",
+          "summary_zh": "长期记忆使基于 LLM 的代理能够跨任务和会话保留和重用信息，支持个性化和长期交互。然而，持久记忆也会引起阿谀奉承，导致代理与用户的历史信念过度一致，即使这些信念不准确、过时或与客观证据不一致。现有的缓解方法假设内存引起的阿谀奉承源于有偏见或不正确的记忆，并试图通过在内存管道的不同阶段过滤此类记忆来降低这种风险。然而，在现实世界中，客观正确的记忆仍然会引起阿谀奉承，而且同一个记忆在不同的情境下也会产生不同的影响。为此，我们提出了 MemAdapter，这是一种新颖的框架，可以自适应地集成检索到的记忆以支持客观可靠的推理。具体来说，MemAdapter由三个部分组成：（i）反事实归纳，利用反事实推理来揭示检索记忆的潜在风险； (ii) 上下文感知反思，通过自我反思根据当前任务来校准每个检索到的记忆的推理影响； (iii) 循证推理，将最终反应建立在适当证据的基础上，同时保留记忆的合法影响。对三个基准测试的大量实验表明，MemAdapter 在不同场景下始终如一地提高内存可靠性。我们的代码可在 https://github.com/DEEP-JLU/MemAdapter 获取。",
+          "research_question_zh": "",
+          "new_method_zh": "",
+          "evidence_zh": "",
+          "editor_note": ""
+        }
+      },
+      {
+        "id": "2610.03120",
+        "title": "In-Distribution Forcing for Long Video Generation at Test Time",
+        "summary": "Modern autoregressive (AR) video diffusion models excel at short-horizon video generation, yet generating long videos remains challenging due to drifting, where colors and textures shift, and motion dynamics decay. Existing works primarily rely on KV conditioning, which selects or modifies cached key-value (KV) entries to mitigate drifting. However, we observe that KV conditioning alone is insufficient as it assumes cached KV entries remain in-distribution. This assumption fails beyond the training horizon: nothing constrains the construction of KV entries during rollout, giving rise to the KV-provenance problem where cached entries themselves become out-of-distribution (OOD). To address this, we propose In-Distribution Forcing (ID-Forcing), a test-time framework that aligns both KV caching and KV conditioning with training configurations. Its key mechanism, self-caching, prevents OOD KV entries at their source. Each chunk is cached without attending to prior KV entry, keeping the rolling window exactly in-distribution. Consequently, ID-Forcing seamlessly extends short-horizon models to minute-scale video generation. Extensive evaluations show that our method remains competitive on standard video generation benchmark while substantially outperforming prior work in mitigating drifting, as validated by both our drift metrics and a user study.",
+        "authors": [
+          "Jeongwoo Shin",
+          "Youngyoon Choi",
+          "Sangwoo Jo",
+          "Hyunmog Kim",
+          "Sungjoon Choi",
+          "Joonseok Lee",
+          "Jaewoong Choi",
+          "Jaemoo Choi"
+        ],
+        "organization": "Seoul National University",
+        "upvotes": 24,
+        "comments": 1,
+        "daily_date": "2026-10-06",
+        "published_at": "2026-10-02T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2610.03120",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.03120.png",
+        "project_page": "https://in-distribution-forcing.github.io/",
+        "github_repo": "https://github.com/In-Distribution-Forcing/ID-Forcing",
+        "teaching": {
+          "research_question": "Modern autoregressive (AR) video diffusion models excel at short-horizon video generation, yet generating long videos remains challenging due to drifting, where colors and textures shift, and motion dynamics decay. Existing works primarily rely on KV conditioning, which selects or modifies cached key-value (KV) entries to mitigate drifting.",
+          "new_method": "To address this, we propose In-Distribution Forcing (ID-Forcing), a test-time framework that aligns both KV caching and KV conditioning with training configurations.",
+          "evidence": "Extensive evaluations show that our method remains competitive on standard video generation benchmark while substantially outperforming prior work in mitigating drifting, as validated by both our drift metrics and a user study.",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": [
+            "Diffusion Models",
+            "Video Generation",
+            "AI Evaluation"
+          ]
+        },
+        "rank": 4,
+        "editorial_tier": "scan",
+        "localized": {
+          "status": "machine_translated",
+          "title_zh": "测试时长视频生成的分布内强制",
+          "summary_zh": "现代自回归 (AR) 视频扩散模型擅长生成短视距视频，但由于漂移（颜色和纹理发生变化以及运动动力学衰减），生成长视频仍然具有挑战性。现有的工作主要依赖于 KV 调节，它选择或修改缓存的键值 (KV) 条目以减轻漂移。然而，我们观察到单独的 KV 调节是不够的，因为它假设缓存的 KV 条目仍然处于分布状态。这种假设超出了训练范围：在推出期间没有任何东西限制 KV 条目的构造，从而导致 KV 来源问题，其中缓存的条目本身变得分布外 (OOD)。为了解决这个问题，我们提出了分布内强制（ID-Forcing），这是一个测试时框架，可以将 KV 缓存和 KV 调节与训练配置保持一致。其关键机制是自缓存，可从源头防止 OOD KV 条目。每个块都会被缓存，而无需关注先前的 KV 条目，从而保持滚动窗口完全分布。因此，ID-Forcing 将短视野模型无缝扩展到分钟级视频生成。广泛的评估表明，我们的方法在标准视频生成基准上仍然具有竞争力，同时在减轻漂移方面大大优于之前的工作，正如我们的漂移指标和用户研究所验证的那样。",
+          "research_question_zh": "",
+          "new_method_zh": "",
+          "evidence_zh": "",
+          "editor_note": ""
+        }
+      },
+      {
+        "id": "2610.04292",
+        "title": "LMBuild: Evaluating LLM Agents for Generating Buildable and Functional Structures",
+        "summary": "LLM-based agents are increasingly capable of generating complex 3D structures, with the potential to reshape how objects are designed and realized in the physical world. Yet, producing elegant geometry is fundamentally different from producing objects that can be built and perform their intended functions. Existing evaluations largely focus on geometric quality while overlooking physical realizability. We introduce LMBuild, a benchmark for evaluating LLM agents on generating buildable and functional structures. LMBuild represents generated objects as assembled structures comprising part decompositions, joints, materials, and sequences. To support reproducible evaluation, we provide a unified framework consisting of: (1) an interactive environment in which agents can use tools to retrieve, create, and place components to construct objects; (2) a curated benchmark that repurposes established CAD datasets and augments them with knowledge from Wikipedia; and (3) a evaluation framework covering structural soundness, functional affordance, design quality, and physical realization. Evaluations across 30 systems reveal several intriguing findings: (a) Soundness and alignment are no longer the primary bottlenecks for frontier closed-source models, while functional affordance and physical operability remain substantially more challenging; (b) stronger models more effectively create new components, whereas weaker models tend to rely on retrieval; and (c) providing functional specifications substantially improves part completeness, kinematics, and physical operability. These results show that generating real-world structures requires deeper reasoning about functional affordances, mechanics, and designing and creating novel components. We expect LMBuild to provide a foundation for measuring progress and incentivizing research toward agents that generate buildable and functional structures.",
+        "authors": [
+          "Jiateng Liu",
+          "Rushi Wang",
+          "Cheng Qian",
+          "Xuejun Zhang",
+          "Sun Li",
+          "Jiayu Liu",
+          "Yifan Shen",
+          "Xu Cao"
+        ],
+        "organization": "University of Illinois at Urbana-Champaign",
+        "upvotes": 20,
+        "comments": 1,
+        "daily_date": "2026-10-06",
+        "published_at": "2026-10-03T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2610.04292",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.04292.png",
+        "project_page": "https://lumos-jiateng.github.io/LMBuild/",
+        "github_repo": "https://github.com/Lumos-Jiateng/LMBuild",
+        "teaching": {
+          "research_question": "LLM-based agents are increasingly capable of generating complex 3D structures, with the potential to reshape how objects are designed and realized in the physical world. Yet, producing elegant geometry is fundamentally different from producing objects that can be built and perform their intended functions.",
+          "new_method": "We introduce LMBuild, a benchmark for evaluating LLM agents on generating buildable and functional structures.",
+          "evidence": "We introduce LMBuild, a benchmark for evaluating LLM agents on generating buildable and functional structures.",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": [
+            "Agent",
+            "AI Evaluation"
+          ]
+        },
+        "rank": 5,
+        "editorial_tier": "scan",
+        "localized": {
+          "status": "machine_translated",
+          "title_zh": "LMBuild：评估用于生成可构建和功能结构的 LLM 代理",
+          "summary_zh": "基于 LLM 的代理越来越能够生成复杂的 3D 结构，并有可能重塑物理世界中对象的设计和实现方式。然而，产生优雅的几何形状与产生可以构建并执行其预期功能的对象有着根本的不同。现有的评估主要关注几何质量，而忽视物理可实现性。我们引入了 LMBuild，这是一个评估 LLM 代理生成可构建和功能结构的基准。 LMBuild 将生成的对象表示为包含零件分解、接头、材料和序列的组装结构。为了支持可重复的评估，我们提供了一个统一的框架，包括：（1）一个交互式环境，代理可以在其中使用工具来检索、创建和放置组件来构造对象； (2) 精心策划的基准，重新利用已建立的 CAD 数据集，并利用维基百科的知识对其进行增强； (3) 涵盖结构健全性、功能可供性、设计质量和物理实现的评估框架。对 30 个系统的评估揭示了几个有趣的发现： (a) 健全性和一致性不再是前沿闭源模型的主要瓶颈，而功能可供性和物理可操作性仍然更具挑战性； (b) 较强的模型更有效地创建新组件，而较弱的模型往往依赖于检索； (c) 提供功能规格可显着提高零件的完整性、运动学和物理可操作性。这些结果表明，生成现实世界的结构需要对功能可供性、机制以及设计和创建新颖组件进行更深入的推理。我们期望 LMBuild 为衡量进展和激励对生成可构建和功能结构的代理的研究提供基础。",
+          "research_question_zh": "",
+          "new_method_zh": "",
+          "evidence_zh": "",
+          "editor_note": ""
+        }
+      },
+      {
+        "id": "2609.37267",
+        "title": "Foundations of Proactive Agents: Principles, Technical Layers, and Proactivity-Gym",
+        "summary": "Proactive LLM agents can turn idle compute into useful support before users ask. Yet even correct work can misread user context, impose review costs, or undermine trust. This work proposes foundations for designing, realizing, and evaluating proactive LLM agents around three joint principles (3T): Task Capability, anticipating relevant needs and correctly performing useful work; Temporal Allocation, allocating compute according to resource availability and when results are needed; and Trust, sustaining users' confidence and appropriate reliance on the agent. We connect these objectives to a design space organized around five dimensions: task scope, anticipation horizon, activation trigger, processing timing, and intervention depth, and specify the situation and system modeling needed to support its choices, including user and environment representations, backbone LLMs, and agent harnesses. Lastly, we propose PROACTIVITY-GYM, a simulation-based evaluation testbed including multi-day scenarios, stateful environments, and persona-conditioned simulated users that can evaluate the consequences of proactive assistance across interactions. Evaluations across 23 model-harness configurations uncover substantial performance gaps across 3T and reveal that LLM judges often conflate task capability and trust. A human study with 30 participants demonstrates the importance of the joint 3T optimization: participants show sharp trust declines after intervention misalignment despite correct outcomes, and prefer sleep-time assistance, even when imperfect, to preserve ongoing focus. Together, these findings support designing and evaluating proactive agents through the joint consideration of useful work, compute allocation, and evolving user trust.",
+        "authors": [
+          "Jio Oh",
+          "Seunghyun Do",
+          "Young-Jun Lee",
+          "Steven Euijong Whang",
+          "Dongyeop Kang"
+        ],
+        "organization": "Minnesota NLP",
+        "upvotes": 19,
+        "comments": 1,
+        "daily_date": "2026-10-06",
+        "published_at": "2026-09-29T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2609.37267",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.37267.png",
+        "project_page": "https://harryoh99.github.io/foundations_of_proactive_agents/",
+        "github_repo": "",
+        "teaching": {
+          "research_question": "Proactive LLM agents can turn idle compute into useful support before users ask. Yet even correct work can misread user context, impose review costs, or undermine trust.",
+          "new_method": "Lastly, we propose PROACTIVITY-GYM, a simulation-based evaluation testbed including multi-day scenarios, stateful environments, and persona-conditioned simulated users that can evaluate the consequences of proactive assistance across interactions.",
+          "evidence": "摘要未给出可独立核验的实验结论，需要进入实验章节确认。",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": [
+            "Agent",
+            "AI Evaluation"
+          ]
+        },
+        "rank": 6,
+        "editorial_tier": "scan",
+        "localized": {
+          "status": "machine_translated",
+          "title_zh": "主动代理的基础：原理、技术层和 Proactivity-Gym",
+          "summary_zh": "主动的 LLM 代理可以在用户提出要求之前将空闲计算转化为有用的支持。然而，即使正确的工作也可能会误读用户上下文、增加审核成本或破坏信任。这项工作为围绕三个联合原则（3T）设计、实现和评估主动的 LLM 代理奠定了基础：任务能力、预测相关需求和正确执行有用的工作；时间分配，根据资源可用性和何时需要结果来分配计算；信任，维持用户对代理商的信心和适当的依赖。我们将这些目标连接到围绕五个维度组织的设计空间：任务范围、预期范围、激活触发器、处理时间和干预深度，并指定支持其选择所需的情况和系统建模，包括用户和环境表示、骨干法学硕士和代理工具。最后，我们提出了 PROACTIVITY-GYM，一个基于模拟的评估测试平台，包括多天场景、状态环境和角色条件模拟用户，可以评估跨交互的主动协助的后果。对 23 种模型线束配置的评估揭示了 3T 之间的巨大性能差距，并表明法学硕士评委经常将任务能力和信任混为一谈。一项针对 30 名参与者的人体研究证明了联合 3T 优化的重要性：尽管结果正确，但在干预错位后，参与者表现出信任度急剧下降，并且更喜欢睡眠时间辅助，即使不完美，以保持持续的注意力。总之，这些发现支持通过共同考虑有用的工作、计算分配和不断发展的用户信任来设计和评估主动代理。",
+          "research_question_zh": "",
+          "new_method_zh": "",
+          "evidence_zh": "",
+          "editor_note": ""
+        }
+      },
+      {
+        "id": "2610.05076",
+        "title": "Self-Generated Feedback Destabilizes Test-Time Training: A Causal Decomposition of Long-Horizon Adaptation",
+        "summary": "Test-time training (TTT) lets a model store information in its weights during inference. When the model learns from its own output, however, each update also changes the model that generates the next training example. Across 128K-token streams, retaining generated-text updates worsens prediction on independent human-written text with three TTT-E2E model configurations (labeled 125M, 760M, and 3B). The same failure occurs when Adam updates Qwen3-4B's existing weights. The same update mechanisms can improve on real text, so writing itself is not the failure. Three matched comparisons trace the causal pathway. Fixed Generation removes over 98% of the damage at 125M and 760M by using a frozen model to generate training chunks. Recorded Replay separates the loss caused by reading degraded text from the additional loss stored by updating on it. A paired one-update comparison then shows the local conflict: an update predicts its source better but new real text worse. This cost grows after Closed Loop adaptation, with a few trajectories accounting for most large failures. Finally, Settlement evaluates the candidate state on independent real text before commitment. It leaves mean endpoint gaps of 0.07 and -0.02 nats at 125M and 760M while retaining real-text adaptation. These results motivate checking prediction on independent evidence before retaining an update.",
+        "authors": [
+          "Cheng Luo",
+          "Bing Li",
+          "Bernard Ghanem"
+        ],
+        "organization": "King Abdullah University of Science and Technology",
+        "upvotes": 17,
+        "comments": 1,
+        "daily_date": "2026-10-06",
+        "published_at": "2026-10-04T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2610.05076",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.05076.png",
+        "project_page": "https://ttt-ouroboros.github.io/",
+        "github_repo": "https://github.com/lingjivoo/ttt-ouroboros",
+        "teaching": {
+          "research_question": "Test-time training (TTT) lets a model store information in its weights during inference. When the model learns from its own output, however, each update also changes the model that generates the next training example.",
+          "new_method": "Across 128K-token streams, retaining generated-text updates worsens prediction on independent human-written text with three TTT-E2E model configurations (labeled 125M, 760M, and 3B).",
+          "evidence": "摘要未给出可独立核验的实验结论，需要进入实验章节确认。",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": []
+        },
+        "rank": 7,
+        "editorial_tier": "scan",
+        "localized": {
+          "status": "pending",
+          "title_zh": "自生成的反馈破坏了测试时训练的稳定性：长时程适应的因果分解",
+          "summary_zh": "",
+          "research_question_zh": "",
+          "new_method_zh": "",
+          "evidence_zh": "",
+          "editor_note": "",
+          "translation_error": "curl: (28) Operation timed out after 20099 milliseconds with 0 bytes received"
+        }
+      },
+      {
+        "id": "2610.06577",
+        "title": "Optimizing the Optimizer: Language Models Discover Faster Molecular Relaxation",
+        "summary": "Geometry optimization is a major cost in many quantum-chemical workflows: each optimization step requires one force evaluation, and at the density-functional level that evaluation dominates the wall time. Research in this area has produced a broad range of optimization methods, and we ask whether a language model can improve on the best of them through autoresearch. An agent rewrites the optimizer itself to minimize force-call counts, restrained by two admission gates that reject premature stopping and improvements that do not generalize to unseen molecules. Starting from Sella, the fastest open-source optimizer available, the search produces AutoSella, a family of two optimizers. Both of them deliver consistent force-call reductions relative to Sella across held-out molecular benchmarks and potentials not used during the search. Most notably, at the r2SCAN-3c DFT level, the best variant requires only 40.2--77.2% of Sella's force calls while achieving the same energy reduction, even though agent used no DFT gradients.",
+        "authors": [
+          "Artem Tsypin",
+          "Vladimir Deshchenya",
+          "Kuzma Khrabrov",
+          "Denis Potapov",
+          "Maxim Radchenko",
+          "Artur Kadurin",
+          "Michael G. Medvedev"
+        ],
+        "organization": "",
+        "upvotes": 15,
+        "comments": 1,
+        "daily_date": "2026-10-06",
+        "published_at": "2026-10-05T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2610.06577",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.06577.png",
+        "project_page": "",
+        "github_repo": "https://github.com/vdeshchenya/autosella",
+        "teaching": {
+          "research_question": "Geometry optimization is a major cost in many quantum-chemical workflows: each optimization step requires one force evaluation, and at the density-functional level that evaluation dominates the wall time. Research in this area has produced a broad range of optimization methods, and we ask whether a language model can improve on the best of them through autoresearch.",
+          "new_method": "An agent rewrites the optimizer itself to minimize force-call counts, restrained by two admission gates that reject premature stopping and improvements that do not generalize to unseen molecules.",
+          "evidence": "Both of them deliver consistent force-call reductions relative to Sella across held-out molecular benchmarks and potentials not used during the search.",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": [
+            "Agent",
+            "AI Evaluation"
+          ]
+        },
+        "rank": 8,
+        "editorial_tier": "scan",
+        "localized": {
+          "status": "pending",
+          "title_zh": "",
+          "summary_zh": "",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -148,7 +368,7 @@
           "Wook-Shin Han"
         ],
         "organization": "Pohang University of Science and Technology",
-        "upvotes": 11,
+        "upvotes": 14,
         "comments": 1,
         "daily_date": "2026-10-06",
         "published_at": "2026-10-01T00:00:00.000Z",
@@ -166,144 +386,12 @@
             "AI Evaluation"
           ]
         },
-        "rank": 4,
+        "rank": 9,
         "editorial_tier": "scan",
         "localized": {
           "status": "machine_translated",
           "title_zh": "CANOPY：多模态 RAG 的自适应粒度证据压缩",
           "summary_zh": "多模式 RAG 检索文本、表格、图像和视频，但选择检索粒度并不能确定每个项目中保留多少上下文。粗略的单元包括不相关的内容，而统一的精细选择可以消除解释证据所需的上下文。现有的压缩器通过特定于模态的机制解决了这种权衡问题，留下了一个共享程序，用于跨异构项目逐个区域地调整保留的范围。我们介绍 CANOPY（层次结构规范投影），这是一个自适应粒度检索后证据压缩的框架。 CANOPY 将检索到的项目表示为层次结构，并使用根据黄金证据进行微调的节点编码器来根据查询对区域进行评分。父相关细化比较这些分数以选择不同粒度的多个区域，而无需 LLM 调用节点级修剪。由于压缩无法恢复从未检索到的证据，批评家在判断积累的证据不足时要求有针对性的后续检索；新检索的项目在添加之前会被压缩。在 3300 万项异构语料库的五个 QA 基准测试中，CANOPY 实现了比评估的检索基线更高的平均答案准确性。消融表明，额外的检索推动了多跳 QA 的主要准确性提升。在未路由的 Qwen3-VL-8B-Instruct 设置中，相对于未压缩的相同迭代管道，压缩将读取器输入的证据令牌减少了 14.2-27.7%，且答案精度相当。",
-          "research_question_zh": "",
-          "new_method_zh": "",
-          "evidence_zh": "",
-          "editor_note": ""
-        }
-      },
-      {
-        "id": "2609.24890",
-        "title": "OSWorld-Pro: Process-based Evaluation for Computer Use Agents",
-        "summary": "Evaluation of Computer-Use Agents (CUAs) is often limited to the final deliverables they create (at the end of hundreds of steps) and assessed with functional verifiers, as seen in OSWorld. However, such evaluation of end-state performance lacks transparency into how and why agents fail in various tasks, obfuscating critical insight for subsequent improvement. For instance, agents that err during keyboard inputs would require a different mitigation strategy from those that fail to precisely provide click-based inputs on the graphical UI. We introduce OSWorld-Pro: a set of over 300 tasks containing over 2800 subgoals to enable the procedural evaluation of CUAs grounded in over 67,000 human annotations. We use robust human-aligned LLM-Judges to evaluate the fulfillment of OSWorld-Pro subgoals and thereby reveal the progress that models make throughout a series of sequentially dependent subgoals. Our findings reveal that OSWorld-Pro is challenging even for state-of-the-art LLMs, with top performers like Claude Opus 5 achieving only 75.7% vs. 83.4% on OSWorld. Furthermore, we identify critical process-focused failure modes of various models (e.g. subgoal-irrelevant actions and click-based mistakes) to provide insights to improve performance and efficiency of CUAs.",
-        "authors": [
-          "Zhilin Wang",
-          "Shaokun Zhang",
-          "Yifan Zhang",
-          "Hao Zhang",
-          "Jin Xu",
-          "Binfeng Xu",
-          "Jian Hu",
-          "Yunheng Zou"
-        ],
-        "organization": "NVIDIA",
-        "upvotes": 9,
-        "comments": 1,
-        "daily_date": "2026-10-06",
-        "published_at": "2026-09-21T16:55:24.000Z",
-        "url": "https://huggingface.co/papers/2609.24890",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.24890.png",
-        "project_page": "",
-        "github_repo": "",
-        "teaching": {
-          "research_question": "Evaluation of Computer-Use Agents (CUAs) is often limited to the final deliverables they create (at the end of hundreds of steps) and assessed with functional verifiers, as seen in OSWorld. However, such evaluation of end-state performance lacks transparency into how and why agents fail in various tasks, obfuscating critical insight for subsequent improvement.",
-          "new_method": "We introduce OSWorld-Pro: a set of over 300 tasks containing over 2800 subgoals to enable the procedural evaluation of CUAs grounded in over 67,000 human annotations.",
-          "evidence": "摘要未给出可独立核验的实验结论，需要进入实验章节确认。",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Agent",
-            "AI Evaluation"
-          ]
-        },
-        "rank": 5,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "machine_translated",
-          "title_zh": "OSWorld-Pro：基于过程的计算机使用代理评估",
-          "summary_zh": "计算机使用代理 (CUA) 的评估通常仅限于它们创建的最终可交付成果（在数百个步骤结束时）并由功能验证者进行评估，如 OSWorld 中所示。然而，这种对最终状态绩效的评估缺乏对智能体如何以及为何在各种任务中失败的透明度，从而混淆了后续改进的关键见解。例如，在键盘输入期间出错的代理需要与那些无法在图形 UI 上精确提供基于点击的输入的代理不同的缓解策略。我们推出了 OSWorld-Pro：一组包含超过 2800 个子目标的 300 多个任务，可对基于 67,000 多个人工注释的 CUA 进行程序评估。我们使用强大的、人性化的法学硕士法官来评估 OSWorld-Pro 子目标的实现情况，从而揭示模型在一系列顺序依赖的子目标中取得的进展。我们的研究结果表明，即使对于最先进的法学硕士来说，OSWorld-Pro 也具有挑战性，像 Claude Opus 5 这样表现最好的人只取得了 75.7% 的成绩，而 OSWorld 上的成绩为 83.4%。此外，我们还确定了各种模型的以关键流程为中心的故障模式（例如与子目标无关的操作和基于点击的错误），为提高 CUA 的性能和效率提供见解。",
-          "research_question_zh": "",
-          "new_method_zh": "",
-          "evidence_zh": "",
-          "editor_note": ""
-        }
-      },
-      {
-        "id": "2610.05894",
-        "title": "Noise Out, Bias In: Targeted Bias Injection in Diffusion Language Models via Closed-Loop Activation Steering",
-        "summary": "Masked diffusion language models (dLLMs) generate text by iteratively denoising masked positions, re-predicting each token multiple times before it is committed. An autoregressive decoder exposes an answer's distribution once, at the step that commits it; a dLLM exposes it at every denoising step before commitment, and we show that an adversary can exploit this. Since an answer remains open to revision over many denoising steps, an adversary with access to internal activations can watch how likely the model is to produce a chosen answer and adjust the intervention accordingly. Building on this observation, we study targeted bias injection, an attack that steers a frozen dLLM toward a demographic answer selected by the adversary. The attack uses a simple proportional-integral (PI) controller that tracks the target-answer probability during denoising and adapts the strength of a steering vector on the fly. On ambiguous BBQ questions where the correct answer is abstention, our attack raises LLaDA-8B-Instruct's preference for the targeted group from 1.8 to 16.7 percentage points, more than three times the strongest fixed-strength steering baseline, and on SocialStigmaQA it raises the selection of stigmatizing answers from 17.6% to 58.1%. Fitted to other demographic targets, the same attack shifts answers by up to 37 percentage points, and each attack takes about 40 minutes on one GPU. On the primary target, feedback is what makes the attack work: constant steering at the same average strength over the token-committing steps produces a far smaller shift while corrupting nearly three times as many outputs, and a constant strength set separately for each example still falls well short. Our findings identify the denoising trajectory as a new control channel in dLLMs and call for bias audits that examine the serving stack rather than the frozen model alone.",
-        "authors": [
-          "Sarim Hashmi",
-          "Mukul Ranjan",
-          "Abdelrahman Elsayed",
-          "Muhammad Umer Sheikh",
-          "Fahad Shamshad",
-          "Nils Lukas"
-        ],
-        "organization": "Mohamed Bin Zayed University of Artificial Intelligence",
-        "upvotes": 8,
-        "comments": 1,
-        "daily_date": "2026-10-06",
-        "published_at": "2026-10-05T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2610.05894",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.05894.png",
-        "project_page": "",
-        "github_repo": "https://github.com/Sarim-MBZUAI/dlm_bias",
-        "teaching": {
-          "research_question": "Masked diffusion language models (dLLMs) generate text by iteratively denoising masked positions, re-predicting each token multiple times before it is committed. An autoregressive decoder exposes an answer's distribution once, at the step that commits it; a dLLM exposes it at every denoising step before commitment, and we show that an adversary can exploit this.",
-          "new_method": "Since an answer remains open to revision over many denoising steps, an adversary with access to internal activations can watch how likely the model is to produce a chosen answer and adjust the intervention accordingly.",
-          "evidence": "摘要未给出可独立核验的实验结论，需要进入实验章节确认。",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Diffusion Models"
-          ]
-        },
-        "rank": 6,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "machine_translated",
-          "title_zh": "噪声输出，偏差输入：通过闭环激活控制在扩散语言模型中进行有针对性的偏差注入",
-          "summary_zh": "掩码扩散语言模型 (dLLM) 通过迭代对掩码位置进行去噪来生成文本，并在提交之前多次重新预测每个标记。自回归解码器在提交答案的步骤中公开一次答案的分布； dLLM 在承诺之前的每个去噪步骤中都会暴露它，并且我们表明对手可以利用它。由于答案仍然可以对许多去噪步骤进行修改，因此能够访问内部激活的对手可以观察模型产生所选答案的可能性并相应地调整干预措施。基于这一观察，我们研究了有针对性的偏见注入，这是一种将冻结的 dLLM 引向对手选择的人口统计答案的攻击。该攻击使用简单的比例积分 (PI) 控制器，该控制器在去噪期间跟踪目标答案概率，并动态调整转向向量的强度。对于正确答案是弃权的模糊烧烤问题，我们的攻击将 LLaDA-8B-Instruct 对目标群体的偏好从 1.8 个百分点提高到 16.7 个百分点，是最强固定强度转向基线的三倍多，而在 SocialStigmaQA 上，它将污名化答案的选择从 17.6% 提高到 58.1%。适合其他人口统计目标时，相同的攻击会使答案最多改变 37 个百分点，并且每次攻击在一个 GPU 上大约需要 40 分钟。在主要目标上，反馈是攻击发挥作用的原因：在令牌提交步骤上以相同的平均强度进行持续控制会产生小得多的偏移，同时破坏近三倍的输出，并且为每个示例单独设置的恒定强度仍然远远不够。我们的研究结果将去噪轨迹确定为 dLLM 中的新控制通道，并要求进行偏差审计，检查服务堆栈而不是单独检查冻结模型。",
-          "research_question_zh": "",
-          "new_method_zh": "",
-          "evidence_zh": "",
-          "editor_note": ""
-        }
-      },
-      {
-        "id": "2610.05107",
-        "title": "SearchJev: A Fast and Calibrated System-1 Model for Search Agents",
-        "summary": "Search agents repeatedly make short decisions about relevance, evidence sufficiency, and search actions. Using generative language models for these decisions introduces latency and unreliable confidence. We present SearchJev, a fast and calibrated System-1 model that separates search decisions from System-2 reasoning and generation. Given a search state and a decision schema, SearchJev directly scores legal options without autoregressive output generation. We propose Soft-Label Learning for Calibrated Decisions (SLCD) to learn decision probabilities from uncertain supervision and calibrate their confidence. In a dual-system search agent, SearchJev handles short decisions and delegates uncertain judgments to System 2, which retains planning, query generation, and answer composition. We also introduce SearchDecision-Bench, a benchmark unifying six types of search decisions for training and evaluation. On SearchDecision-Bench, SEARCHJEV improves decision quality over same-size Qwen3.5 autoregressive models, achieves 5.2-5.3 times faster decisions, and reduces average expected calibration error by 41-74%. On BrowseComp-Plus, the dual-system agents achieve a 3.7-4.7 times speedup in active search time while improving answer accuracy from 45% to up to 54%.",
-        "authors": [
-          "Congfeng Cao",
-          "Lipeng Zuo",
-          "Konstantinos Papakostas",
-          "Qiwei Xu",
-          "Songwei Xu",
-          "Lun Zhou",
-          "Zhaochun Ren",
-          "Yougang Lyu"
-        ],
-        "organization": "",
-        "upvotes": 8,
-        "comments": 1,
-        "daily_date": "2026-10-06",
-        "published_at": "2026-10-04T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2610.05107",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.05107.png",
-        "project_page": "https://huggingface.co/SearchJev/models",
-        "github_repo": "https://github.com/EvoScientist/SearchJev",
-        "teaching": {
-          "research_question": "Search agents repeatedly make short decisions about relevance, evidence sufficiency, and search actions. Using generative language models for these decisions introduces latency and unreliable confidence.",
-          "new_method": "We present SearchJev, a fast and calibrated System-1 model that separates search decisions from System-2 reasoning and generation.",
-          "evidence": "We also introduce SearchDecision-Bench, a benchmark unifying six types of search decisions for training and evaluation.",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Agent",
-            "AI Evaluation"
-          ]
-        },
-        "rank": 7,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "machine_translated",
-          "title_zh": "SearchJev：用于搜索代理的快速且经过校准的 System-1 模型",
-          "summary_zh": "搜索代理反复就相关性、证据充分性和搜索行动做出简短的决定。使用生成语言模型进行这些决策会带来延迟和不可靠的置信度。我们推出了 SearchJev，这是一种快速且经过校准的 System-1 模型，它将搜索决策与 System-2 推理和生成分开。给定搜索状态和决策模式，SearchJev 直接对合法选项进行评分，而无需生成自回归输出。我们提出了校准决策的软标签学习（SLCD），以从不确定的监督中学习决策概率并校准其置信度。在双系统搜索代理中，SearchJev 处理简短的决策并将不确定的判断委托给系统 2，系统 2 保留规划、查询生成和答案组合。我们还引入了 SearchDecision-Bench，这是一个统一了六种类型的搜索决策以进行训练和评估的基准。在 SearchDecision-Bench 上，SEARCHJEV 比相同大小的 Qwen3.5 自回归模型提高了决策质量，决策速度提高了 5.2-5.3 倍，并将平均预期校准误差降低了 41-74%。在 BrowseComp-Plus 上，双系统代理的主动搜索时间实现了 3.7-4.7 倍的加速，同时将答案准确性从 45% 提高到了 54%。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -324,7 +412,7 @@
           "Xuezhe Ma"
         ],
         "organization": "Institute of Foundation Models",
-        "upvotes": 8,
+        "upvotes": 14,
         "comments": 1,
         "daily_date": "2026-10-06",
         "published_at": "2026-10-05T00:00:00.000Z",
@@ -341,96 +429,12 @@
             "Reinforcement Learning"
           ]
         },
-        "rank": 8,
+        "rank": 10,
         "editorial_tier": "scan",
         "localized": {
           "status": "machine_translated",
           "title_zh": "走向正确的循环模型，第二部分：在固定点重新思考",
           "summary_zh": "循环语言模型的每次重复都会增加训练、解码、预填充和强化学习 (RL) 的成本。循环状态越接近固定点，到达固定点的路径越不重要。这使得训练中的反向传播能够被截断；终端键值（KV）共享解码，几乎不损失准确率；预填充速度提高 1.79 倍的蒸馏学生； RL 更新根据保存的 rollout 状态计算梯度，比通过重播轨迹反向传播快 2 倍。因此，我们改进了塑造这些固定点的训练的两个组成部分：深度先验和输入注入。固定深度训练打破了KV共享，Huginn的广泛深度先验支持共享，但稀释了目标深度的监督超过了共享的需要；我们从预测反馈中学习先验，并使用熵项来保持其广泛性。现有的注入方案让国家的组件沿着输入放大或取消注入；我们通过正交注射去除这个组件。从 100M 到 1.6B 参数，学习的先验和正交注入分别相对于 Huginn 的先验和现有注入方案降低了每个尺度的困惑度。在 1.6B 时，使用小 3 倍的 KV 缓存学习到的先验与使用完整缓存的固定深度训练的下游平均值相匹配。",
-          "research_question_zh": "",
-          "new_method_zh": "",
-          "evidence_zh": "",
-          "editor_note": ""
-        }
-      },
-      {
-        "id": "2610.05870",
-        "title": "Certification of Real Images through Calibrated Content Authentication",
-        "summary": "Generative models can synthesize high-quality inauthentic multimedia content that is already being misused at scale. We evaluate twenty deepfake detectors against ten generators released in the last four years and find accuracy decreasing over time, from near-perfect 99.5% to 76%. Adversarial perturbations further reduce every baseline detector to below 2% accuracy, effectively inverting the detector's assigned label. We argue that this unreliability reflects a fundamental ambiguity: generators can reproduce authentic content exactly (e.g., through memorization), so content alone cannot reveal the true provenance label.For this reason, content produced by a generator must admit a faithful reconstruction by that same generator, and finding such a reconstruction makes synthetic provenance plausible and authenticity plausibly deniable.We therefore propose and evaluate a detection paradigm that outputs a calibrated prediction of whether authenticity is plausibly deniable: a faithful reconstruction by any known generator establishes plausible deniability, while calibration bounds how often content from known generators fails to be reproduced. Our evaluation shows that (i) our detector can be calibrated so that at most 1% of generated content is wrongly certified, an operating point at which most baseline detectors reach near-zero recall, including the strongest with 93% accuracy; (ii) calibrating a stricter security threshold on attacked samples preserves this bound against adaptive adversaries within the evaluated bounded-perturbation attack space, whose perturbations break every baseline, but does not cover arbitrary adversarial transformations; and (iii) post-hoc verifiability is eroding, as 1,116 of 3,000 Reddit images resist reproduction by a 2022 generator, but only 55 to 79 resist reproduction by 2024 generators.",
-        "authors": [
-          "Sarim Hashmi",
-          "Abdelrahman Elsayed",
-          "Mohammed Talha Alam",
-          "Samuele Poppi",
-          "Nils Lukas"
-        ],
-        "organization": "Mohamed Bin Zayed University of Artificial Intelligence",
-        "upvotes": 7,
-        "comments": 1,
-        "daily_date": "2026-10-06",
-        "published_at": "2026-10-05T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2610.05870",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.05870.png",
-        "project_page": "",
-        "github_repo": "https://github.com/Sarim-MBZUAI/content-authentication",
-        "teaching": {
-          "research_question": "Generative models can synthesize high-quality inauthentic multimedia content that is already being misused at scale. We evaluate twenty deepfake detectors against ten generators released in the last four years and find accuracy decreasing over time, from near-perfect 99.5% to 76%.",
-          "new_method": "Adversarial perturbations further reduce every baseline detector to below 2% accuracy, effectively inverting the detector's assigned label.",
-          "evidence": "摘要未给出可独立核验的实验结论，需要进入实验章节确认。",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Memory",
-            "AI Evaluation"
-          ]
-        },
-        "rank": 9,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "machine_translated",
-          "title_zh": "通过校准内容认证来认证真实图像",
-          "summary_zh": "生成模型可以合成高质量的不真实的多媒体内容，而这些内容已经被大规模滥用。我们针对过去四年发布的 10 个生成器评估了 20 个 Deepfake 探测器，发现准确度随着时间的推移而下降，从近乎完美的 99.5% 下降到 76%。对抗性扰动进一步将每个基线检测器的准确度降低到 2% 以下，从而有效地颠倒了检测器分配的标签。我们认为，这种不可靠性反映了一种根本性的模糊性：生成器可以准确地再现真实内容（例如，通过记忆），因此仅靠内容无法揭示真实的出处标签。因此，生成器生成的内容必须承认同一生成器的忠实重建，而找到这样的重建使得合成出处合理且真实性可信可否认。因此，我们提出并评估一种检测范式，该检测范式输出真实性是否可信可否认的校准预测：任何已知生成器的忠实重建都会建立合理的否认性，而校准则限制了已知生成器的内容无法再现的频率。我们的评估表明，(i) 我们的检测器可以进行校准，以便最多 1% 的生成内容被错误认证，在这个操作点上，大多数基线检测器的召回率接近于零，其中最强的检测器具有 93% 的准确率； (ii) 对受攻击样本校准更严格的安全阈值，保留了针对评估的有界扰动攻击空间内的自适应对手的界限，这些对手的扰动打破了每个基线，但不涵盖任意的对抗性转换； (iii) 事后可验证性正在受到侵蚀，因为 3,000 张 Reddit 图像中有 1,116 张抵制 2022 年生成器的复制，但只有 55 到 79 个抵制 2024 年生成器的复制。",
-          "research_question_zh": "",
-          "new_method_zh": "",
-          "evidence_zh": "",
-          "editor_note": ""
-        }
-      },
-      {
-        "id": "2609.37267",
-        "title": "Foundations of Proactive Agents: Principles, Technical Layers, and Proactivity-Gym",
-        "summary": "Proactive LLM agents can turn idle compute into useful support before users ask. Yet even correct work can misread user context, impose review costs, or undermine trust. This work proposes foundations for designing, realizing, and evaluating proactive LLM agents around three joint principles (3T): Task Capability, anticipating relevant needs and correctly performing useful work; Temporal Allocation, allocating compute according to resource availability and when results are needed; and Trust, sustaining users' confidence and appropriate reliance on the agent. We connect these objectives to a design space organized around five dimensions: task scope, anticipation horizon, activation trigger, processing timing, and intervention depth, and specify the situation and system modeling needed to support its choices, including user and environment representations, backbone LLMs, and agent harnesses. Lastly, we propose PROACTIVITY-GYM, a simulation-based evaluation testbed including multi-day scenarios, stateful environments, and persona-conditioned simulated users that can evaluate the consequences of proactive assistance across interactions. Evaluations across 23 model-harness configurations uncover substantial performance gaps across 3T and reveal that LLM judges often conflate task capability and trust. A human study with 30 participants demonstrates the importance of the joint 3T optimization: participants show sharp trust declines after intervention misalignment despite correct outcomes, and prefer sleep-time assistance, even when imperfect, to preserve ongoing focus. Together, these findings support designing and evaluating proactive agents through the joint consideration of useful work, compute allocation, and evolving user trust.",
-        "authors": [
-          "Jio Oh",
-          "Seunghyun Do",
-          "Young-Jun Lee",
-          "Steven Euijong Whang",
-          "Dongyeop Kang"
-        ],
-        "organization": "Minnesota NLP",
-        "upvotes": 7,
-        "comments": 1,
-        "daily_date": "2026-10-06",
-        "published_at": "2026-09-29T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2609.37267",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.37267.png",
-        "project_page": "https://harryoh99.github.io/foundations_of_proactive_agents/",
-        "github_repo": "",
-        "teaching": {
-          "research_question": "Proactive LLM agents can turn idle compute into useful support before users ask. Yet even correct work can misread user context, impose review costs, or undermine trust.",
-          "new_method": "Lastly, we propose PROACTIVITY-GYM, a simulation-based evaluation testbed including multi-day scenarios, stateful environments, and persona-conditioned simulated users that can evaluate the consequences of proactive assistance across interactions.",
-          "evidence": "摘要未给出可独立核验的实验结论，需要进入实验章节确认。",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Agent",
-            "AI Evaluation"
-          ]
-        },
-        "rank": 10,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "machine_translated",
-          "title_zh": "主动代理的基础：原理、技术层和 Proactivity-Gym",
-          "summary_zh": "主动的 LLM 代理可以在用户提出要求之前将空闲计算转化为有用的支持。然而，即使正确的工作也可能会误读用户上下文、增加审核成本或破坏信任。这项工作为围绕三个联合原则（3T）设计、实现和评估主动的 LLM 代理奠定了基础：任务能力、预测相关需求和正确执行有用的工作；时间分配，根据资源可用性和何时需要结果来分配计算；信任，维持用户对代理商的信心和适当的依赖。我们将这些目标连接到围绕五个维度组织的设计空间：任务范围、预期范围、激活触发器、处理时间和干预深度，并指定支持其选择所需的情况和系统建模，包括用户和环境表示、骨干法学硕士和代理工具。最后，我们提出了 PROACTIVITY-GYM，一个基于模拟的评估测试平台，包括多天场景、状态环境和角色条件模拟用户，可以评估跨交互的主动协助的后果。对 23 种模型线束配置的评估揭示了 3T 之间的巨大性能差距，并表明法学硕士评委经常将任务能力和信任混为一谈。一项针对 30 名参与者的人体研究证明了联合 3T 优化的重要性：尽管结果正确，但在干预错位后，参与者表现出信任度急剧下降，并且更喜欢睡眠时间辅助，即使不完美，以保持持续的注意力。总之，这些发现支持通过共同考虑有用的工作、计算分配和不断发展的用户信任来设计和评估主动代理。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -826,5 +830,5 @@
       "概念入图"
     ]
   },
-  "updated_at": "2026-10-06T17:54:17+08:00"
+  "updated_at": "2026-10-07T00:39:14+08:00"
 }
