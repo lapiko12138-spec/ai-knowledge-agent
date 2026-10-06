@@ -123,6 +123,32 @@ class DailyFeedsTest(unittest.TestCase):
                 cached_papers[0]["localized"]["summary_zh"], "中文摘要。"
             )
 
+    def test_translation_provider_failure_stops_repeated_requests(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            store = KnowledgeStore(Path(temporary))
+            store.initialize()
+            papers = [
+                {
+                    "id": "paper-" + str(index),
+                    "title": "English title",
+                    "summary": "English abstract.",
+                    "localized": {"status": "pending"},
+                }
+                for index in range(3)
+            ]
+            with patch(
+                "ai_knowledge_agent.feeds._translate_to_zh",
+                side_effect=RuntimeError("offline"),
+            ) as translate:
+                ensure_paper_translations(store, papers)
+            self.assertEqual(translate.call_count, 1)
+            self.assertTrue(
+                all(
+                    paper["localized"]["status"] == "pending"
+                    for paper in papers
+                )
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

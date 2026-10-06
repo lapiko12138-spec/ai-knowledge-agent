@@ -56,7 +56,8 @@ python3 -m ai_knowledge_agent schedule install --hour 8 --minute 0
 python3 -m ai_knowledge_agent schedule status
 ```
 
-计划任务使用 `launchd`，登录或重启后自动补漏，并使用互斥锁防止重复运行。状态保存到
+计划任务使用 `launchd`，08:00 主触发后每 30 分钟检查一次补漏；当天成功后检查会快速
+退出，外部网络失败则自动重试，并使用互斥锁和飞书日期幂等键防止重复运行或重复推送。状态保存到
 `AI Knowledge/99 System/daily-update-status.json`；日志位于同目录下的 `logs/`。
 为绕过 macOS 对后台进程写入 Downloads 的限制，真实数据保存在
 `~/Library/Application Support/AI Knowledge Agent/Obsidian/AI Knowledge`，原 Obsidian

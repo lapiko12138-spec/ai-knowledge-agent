@@ -496,13 +496,17 @@ def send_card(
     if dry_run:
         command.append("--dry-run")
 
-    completed = subprocess.run(
-        command,
-        cwd=str(cwd) if cwd else None,
-        check=False,
-        text=True,
-        capture_output=True,
-    )
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=str(cwd) if cwd else None,
+            check=False,
+            text=True,
+            capture_output=True,
+            timeout=60,
+        )
+    except subprocess.TimeoutExpired as error:
+        raise RuntimeError("飞书发送超过 60 秒") from error
     output = completed.stdout.strip() or completed.stderr.strip()
     try:
         result = json.loads(output)

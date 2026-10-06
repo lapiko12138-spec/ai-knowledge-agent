@@ -245,20 +245,24 @@ def _sync_github_locked(store: KnowledgeStore) -> Dict[str, Any]:
     if gh_path is None:
         return {"status": "failed", "message": "未找到 GitHub CLI"}
     credential_helper = "!" + str(gh_path) + " auth git-credential"
-    pushed = subprocess.run(
-        [
-            "/usr/bin/git",
-            "-c",
-            "credential.https://github.com.helper=" + credential_helper,
-            "push",
-            "origin",
-            "HEAD",
-        ],
-        cwd=str(PROJECT_ROOT),
-        check=False,
-        capture_output=True,
-        text=True,
-    )
+    try:
+        pushed = subprocess.run(
+            [
+                "/usr/bin/git",
+                "-c",
+                "credential.https://github.com.helper=" + credential_helper,
+                "push",
+                "origin",
+                "HEAD",
+            ],
+            cwd=str(PROJECT_ROOT),
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=90,
+        )
+    except subprocess.TimeoutExpired:
+        return {"status": "failed", "message": "GitHub push 超过 90 秒"}
     if pushed.returncode != 0:
         return {"status": "failed", "message": pushed.stderr.strip()}
     commit = subprocess.run(
@@ -489,10 +493,11 @@ def install_schedule(
             "ai_knowledge_agent",
             "--vault",
             str(vault.expanduser().resolve()),
-            "update-daily",
+            "ensure-daily",
         ],
         "WorkingDirectory": str(PROJECT_ROOT),
         "RunAtLoad": True,
+        "StartInterval": 1800,
         "StartCalendarInterval": {"Hour": hour, "Minute": minute},
         "StandardOutPath": str(logs_dir / "daily-update.out.log"),
         "StandardErrorPath": str(logs_dir / "daily-update.err.log"),

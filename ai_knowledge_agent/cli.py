@@ -12,6 +12,7 @@ from .core import KnowledgeStore
 from .feishu import build_daily_card, send_card
 from .updater import (
     configure_notification,
+    ensure_daily_update,
     install_schedule,
     load_notification_config,
     schedule_info,
@@ -94,6 +95,9 @@ def build_parser() -> argparse.ArgumentParser:
     web.add_argument("--port", type=int, default=8765)
 
     subparsers.add_parser("update-daily", help="执行一次每日信息更新。")
+    subparsers.add_parser(
+        "ensure-daily", help="当天更新未成功时执行补漏更新。"
+    )
 
     schedule = subparsers.add_parser("schedule", help="管理每日更新计划。")
     schedule.add_argument("action", choices=("install", "status"))
@@ -165,6 +169,8 @@ def main(argv: Optional[list] = None) -> int:
             return 0
         elif args.command == "update-daily":
             result = update_daily(store)
+        elif args.command == "ensure-daily":
+            result = ensure_daily_update(store)
         elif args.command == "schedule":
             if args.action == "install":
                 result = install_schedule(

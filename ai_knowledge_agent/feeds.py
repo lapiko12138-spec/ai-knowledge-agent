@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import subprocess
 from datetime import datetime, timedelta, timezone
 from html import unescape
 from pathlib import Path
@@ -237,26 +238,39 @@ def _translate_to_zh(value: str, timeout: int = 20) -> str:
     value = " ".join(value.split())
     if not value:
         return ""
-    request = Request(
-        TRANSLATE_URL,
-        data=urlencode(
-            {
-                "client": "gtx",
-                "sl": "en",
-                "tl": "zh-CN",
-                "dt": "t",
-                "q": value,
-            }
-        ).encode("utf-8"),
-        headers={
-            "User-Agent": "AI-Knowledge-Agent/0.1",
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Accept": "application/json",
-        },
-        method="POST",
+    completed = subprocess.run(
+        [
+            "/usr/bin/curl",
+            "--ipv4",
+            "--silent",
+            "--show-error",
+            "--fail",
+            "--max-time",
+            str(timeout),
+            "--request",
+            "POST",
+            "--data-urlencode",
+            "client=gtx",
+            "--data-urlencode",
+            "sl=en",
+            "--data-urlencode",
+            "tl=zh-CN",
+            "--data-urlencode",
+            "dt=t",
+            "--data-urlencode",
+            "q=" + value,
+            TRANSLATE_URL,
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=timeout + 5,
     )
-    with urlopen(request, timeout=timeout) as response:
-        payload = json.loads(response.read().decode("utf-8"))
+    if completed.returncode != 0:
+        raise RuntimeError(
+            completed.stderr.strip() or "翻译服务请求失败"
+        )
+    payload = json.loads(completed.stdout)
     if not isinstance(payload, list) or not payload or not isinstance(payload[0], list):
         raise ValueError("翻译服务返回格式无效")
     translated = "".join(
@@ -277,6 +291,7 @@ def ensure_paper_translations(
     cache_path = store.system_dir / "paper-translations.json"
     cache = _load_json_file(cache_path)
     changed = False
+    translation_available = True
     for paper in papers:
         paper_id = str(paper.get("id") or "")
         title = str(paper.get("title") or "")
@@ -296,12 +311,20 @@ def ensure_paper_translations(
             str(localized.get("summary_zh") or summary_zh)
         )
         try:
-            if not title_zh:
+            if not title_zh and translation_available:
                 title_zh = _translate_to_zh(title, timeout=timeout)
-            if not summary_zh:
+            if not summary_zh and translation_available:
                 summary_zh = _translate_to_zh(summary, timeout=timeout)
-        except (OSError, TimeoutError, ValueError, json.JSONDecodeError) as error:
+        except (
+            OSError,
+            TimeoutError,
+            ValueError,
+            RuntimeError,
+            subprocess.TimeoutExpired,
+            json.JSONDecodeError,
+        ) as error:
             localized["translation_error"] = str(error)
+            translation_available = False
         if title_zh:
             localized["title_zh"] = title_zh
         if summary_zh:
