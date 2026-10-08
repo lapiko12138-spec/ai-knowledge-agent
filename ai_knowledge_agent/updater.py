@@ -208,39 +208,38 @@ def _sync_github_locked(store: KnowledgeStore) -> Dict[str, Any]:
     )
     if changed.returncode != 0:
         return {"status": "failed", "message": changed.stderr.strip()}
-    if not changed.stdout.strip():
-        return {"status": "unchanged", **snapshot}
-
-    staged = subprocess.run(
-        ["/usr/bin/git", "add", "--", "knowledge"],
-        cwd=str(PROJECT_ROOT),
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if staged.returncode != 0:
-        return {"status": "failed", "message": staged.stderr.strip()}
-    message = "chore: sync knowledge " + date.today().isoformat() + "\n"
-    commit_environment = os.environ.copy()
-    commit_environment.setdefault("GIT_AUTHOR_NAME", "AI Knowledge Agent")
-    commit_environment.setdefault(
-        "GIT_AUTHOR_EMAIL", "ai-knowledge-agent@users.noreply.github.com"
-    )
-    commit_environment.setdefault("GIT_COMMITTER_NAME", "AI Knowledge Agent")
-    commit_environment.setdefault(
-        "GIT_COMMITTER_EMAIL", "ai-knowledge-agent@users.noreply.github.com"
-    )
-    committed = subprocess.run(
-        ["/usr/bin/git", "commit", "-F", "-"],
-        cwd=str(PROJECT_ROOT),
-        input=message,
-        env=commit_environment,
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if committed.returncode != 0:
-        return {"status": "failed", "message": committed.stderr.strip()}
+    has_changes = bool(changed.stdout.strip())
+    if has_changes:
+        staged = subprocess.run(
+            ["/usr/bin/git", "add", "--", "knowledge"],
+            cwd=str(PROJECT_ROOT),
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        if staged.returncode != 0:
+            return {"status": "failed", "message": staged.stderr.strip()}
+        message = "chore: sync knowledge " + date.today().isoformat() + "\n"
+        commit_environment = os.environ.copy()
+        commit_environment.setdefault("GIT_AUTHOR_NAME", "AI Knowledge Agent")
+        commit_environment.setdefault(
+            "GIT_AUTHOR_EMAIL", "ai-knowledge-agent@users.noreply.github.com"
+        )
+        commit_environment.setdefault("GIT_COMMITTER_NAME", "AI Knowledge Agent")
+        commit_environment.setdefault(
+            "GIT_COMMITTER_EMAIL", "ai-knowledge-agent@users.noreply.github.com"
+        )
+        committed = subprocess.run(
+            ["/usr/bin/git", "commit", "-F", "-"],
+            cwd=str(PROJECT_ROOT),
+            input=message,
+            env=commit_environment,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        if committed.returncode != 0:
+            return {"status": "failed", "message": committed.stderr.strip()}
     gh_path = _github_cli_path()
     if gh_path is None:
         return {"status": "failed", "message": "未找到 GitHub CLI"}
@@ -273,7 +272,7 @@ def _sync_github_locked(store: KnowledgeStore) -> Dict[str, Any]:
         text=True,
     )
     return {
-        "status": "pushed",
+        "status": "pushed" if has_changes else "up_to_date",
         "commit": commit.stdout.strip(),
         "remote": remote.stdout.strip(),
         **snapshot,
@@ -339,18 +338,45 @@ def update_daily(store: KnowledgeStore) -> Dict[str, Any]:
                 and bool(item.get("localized", {}).get("summary_zh"))
                 for item in huggingface.get("papers", [])
             )
+            paper_count = len(huggingface.get("papers", []))
+            translations_complete = (
+                paper_count == 0 or localized_count == paper_count
+            )
             status["sources"]["huggingface"] = {
-                "status": "success",
+                "status": (
+                    "success" if translations_complete else "partial_translation"
+                ),
                 "paper_date": huggingface.get("daily_date", ""),
-                "paper_count": len(huggingface.get("papers", [])),
+                "paper_count": paper_count,
                 "localized_count": localized_count,
                 "fetched_at": huggingface.get("fetched_at", ""),
             }
-        except (OSError, TimeoutError, ValueError, json.JSONDecodeError) as error:
+            if not translations_complete:
+                status["errors"].append(
+                    "Translation: "
+                    + str(localized_count)
+                    + "/"
+                    + str(paper_count)
+                    + " 篇已完成中文标题与摘要"
+                )
+        except (
+            OSError,
+            TimeoutError,
+            ValueError,
+            RuntimeError,
+            subprocess.TimeoutExpired,
+            json.JSONDecodeError,
+        ) as error:
+            stale_localized_count = sum(
+                bool(item.get("localized", {}).get("title_zh"))
+                and bool(item.get("localized", {}).get("summary_zh"))
+                for item in huggingface.get("papers", [])
+            )
             status["sources"]["huggingface"] = {
                 "status": "stale_cache" if huggingface else "failed",
                 "paper_date": huggingface.get("daily_date", ""),
                 "paper_count": len(huggingface.get("papers", [])),
+                "localized_count": stale_localized_count,
             }
             status["errors"].append("Hugging Face: " + str(error))
 
@@ -398,7 +424,7 @@ def update_daily(store: KnowledgeStore) -> Dict[str, Any]:
                 "finished_at": finished.isoformat(timespec="seconds"),
                 "last_success_at": (
                     finished.isoformat(timespec="seconds")
-                    if hf_success
+                    if run_success
                     else status["last_success_at"]
                 ),
                 "duration_seconds": round(

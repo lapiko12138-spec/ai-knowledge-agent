@@ -536,15 +536,29 @@ def fetch_huggingface_daily(
     limit: int = 10,
     store: Optional[KnowledgeStore] = None,
 ) -> Dict[str, Any]:
-    request = Request(
-        HF_PAPERS_URL,
-        headers={
-            "User-Agent": "AI-Knowledge-Agent/0.1 (+local educational dashboard)",
-            "Accept": "text/html",
-        },
+    completed = subprocess.run(
+        [
+            "/usr/bin/curl",
+            "--ipv4",
+            "--silent",
+            "--show-error",
+            "--fail",
+            "--max-time",
+            str(timeout),
+            "--header",
+            "User-Agent: AI-Knowledge-Agent/0.1 (+local educational dashboard)",
+            "--header",
+            "Accept: text/html",
+            HF_PAPERS_URL,
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=timeout + 5,
     )
-    with urlopen(request, timeout=timeout) as response:
-        raw_html = response.read().decode("utf-8", "replace")
+    if completed.returncode != 0:
+        raise OSError(completed.stderr.strip() or "Hugging Face 请求失败")
+    raw_html = completed.stdout
     papers = apply_paper_localizations(
         _normalize_papers(parse_huggingface_daily_html(raw_html), limit=limit)
     )

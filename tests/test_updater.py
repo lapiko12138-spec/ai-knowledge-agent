@@ -36,7 +36,10 @@ class DailyUpdaterTest(unittest.TestCase):
             "papers": [
                 {
                     "id": "test-paper",
-                    "localized": {"title_zh": "测试论文"},
+                    "localized": {
+                        "title_zh": "测试论文",
+                        "summary_zh": "测试摘要",
+                    },
                 }
             ],
         }
@@ -58,6 +61,56 @@ class DailyUpdaterTest(unittest.TestCase):
             1,
         )
         self.assertFalse(should_catch_up(self.store))
+
+    def test_incomplete_translation_does_not_mark_run_successful(self):
+        complete = {
+            "source": "https://huggingface.co/papers",
+            "daily_date": "2026-10-03",
+            "fetched_at": "2026-10-03T08:00:00+00:00",
+            "papers": [
+                {
+                    "id": "test-paper",
+                    "localized": {
+                        "title_zh": "测试论文",
+                        "summary_zh": "测试摘要",
+                    },
+                }
+            ],
+        }
+        incomplete = {
+            **complete,
+            "papers": [
+                {
+                    "id": "test-paper",
+                    "localized": {"title_zh": "测试论文", "summary_zh": ""},
+                }
+            ],
+        }
+        with patch(
+            "ai_knowledge_agent.updater.fetch_huggingface_daily",
+            return_value=complete,
+        ), patch(
+            "ai_knowledge_agent.updater.sync_github",
+            return_value={"status": "up_to_date"},
+        ):
+            first = update_daily(self.store)
+        previous_success = first["last_success_at"]
+
+        with patch(
+            "ai_knowledge_agent.updater.fetch_huggingface_daily",
+            return_value=incomplete,
+        ), patch(
+            "ai_knowledge_agent.updater.sync_github",
+            return_value={"status": "up_to_date"},
+        ):
+            result = update_daily(self.store)
+
+        self.assertFalse(result["ok"])
+        self.assertEqual(
+            result["sources"]["huggingface"]["status"],
+            "partial_translation",
+        )
+        self.assertEqual(result["last_success_at"], previous_success)
 
     def test_configured_update_sends_learning_reminder(self):
         payload = {
