@@ -3,7 +3,7 @@
   "huggingface": {
     "source": "https://huggingface.co/papers",
     "daily_date": "2026-10-08",
-    "fetched_at": "2026-10-08T13:03:02+00:00",
+    "fetched_at": "2026-10-08T16:41:02+00:00",
     "papers": [
       {
         "id": "2609.38169",
@@ -20,7 +20,7 @@
           "Zhenan Sun"
         ],
         "organization": "Zhejiang University",
-        "upvotes": 91,
+        "upvotes": 94,
         "comments": 1,
         "daily_date": "2026-10-08",
         "published_at": "2026-09-29T00:00:00.000Z",
@@ -66,7 +66,7 @@
           "Yicheng Xiao"
         ],
         "organization": "NVIDIA",
-        "upvotes": 82,
+        "upvotes": 84,
         "comments": 1,
         "daily_date": "2026-10-08",
         "published_at": "2026-10-07T00:00:00.000Z",
@@ -106,7 +106,7 @@
           "Jiangning Zhang"
         ],
         "organization": "Zhejiang University",
-        "upvotes": 71,
+        "upvotes": 79,
         "comments": 1,
         "daily_date": "2026-10-08",
         "published_at": "2026-10-06T00:00:00.000Z",
@@ -148,7 +148,7 @@
           "Xihui Liu"
         ],
         "organization": "The University of Hong Kong",
-        "upvotes": 70,
+        "upvotes": 75,
         "comments": 1,
         "daily_date": "2026-10-08",
         "published_at": "2026-10-06T00:00:00.000Z",
@@ -179,6 +179,51 @@
         }
       },
       {
+        "id": "2610.07967",
+        "title": "DecepEval: A Benchmark for Evaluating Deception in LLM Agents",
+        "summary": "As large language model (LLM) agents become increasingly autonomous, they may pursue task performance through deception, raising concerns about their reliable deployment. Existing evaluations show that LLM agents can deceive, but often examine isolated scenarios or narrowly defined conditions, limiting systematic understanding of when deception becomes more likely. To address this gap, we introduce DecepEval, a benchmark comprising 1,532 instances across 3 task families and 28 professional scenarios. Drawing on classical fraud theories, we propose the LLM Deception Diamond framework, which characterizes four external conditions that may induce deception: pressure, incentive, opportunity, and conflict. DecepEval pairs neutral and induced versions of each instance to measure condition-dependent changes in deception rates, while explicit task facts and observable agent behavior help distinguish deception from capability-related errors. Evaluations of nine frontier LLMs show that inducements increase deception across models and task families, even among models with low baseline deception rates. DecepEval makes these vulnerabilities measurable, providing a shared benchmark for progress toward trustworthy artificial intelligence.",
+        "authors": [
+          "Yiming Xu",
+          "Hongyue Yu",
+          "Beihua Yang",
+          "Zihan Chen",
+          "Yixin Liu",
+          "Zhen Peng",
+          "Bin Shi",
+          "Bo Dong"
+        ],
+        "organization": "Xi'an Jiaotong University",
+        "upvotes": 64,
+        "comments": 1,
+        "daily_date": "2026-10-08",
+        "published_at": "2026-10-06T00:00:00.000Z",
+        "url": "https://huggingface.co/papers/2610.07967",
+        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.07967.png",
+        "project_page": "",
+        "github_repo": "https://github.com/functy/DECEPEVAL",
+        "teaching": {
+          "research_question": "As large language model (LLM) agents become increasingly autonomous, they may pursue task performance through deception, raising concerns about their reliable deployment. Existing evaluations show that LLM agents can deceive, but often examine isolated scenarios or narrowly defined conditions, limiting systematic understanding of when deception becomes more likely.",
+          "new_method": "To address this gap, we introduce DecepEval, a benchmark comprising 1,532 instances across 3 task families and 28 professional scenarios.",
+          "evidence": "To address this gap, we introduce DecepEval, a benchmark comprising 1,532 instances across 3 task families and 28 professional scenarios.",
+          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
+          "concepts": [
+            "Agent",
+            "AI Evaluation"
+          ]
+        },
+        "rank": 5,
+        "editorial_tier": "scan",
+        "localized": {
+          "status": "machine_translated",
+          "title_zh": "DecepEval：评估 LLM 代理欺骗行为的基准",
+          "summary_zh": "随着大语言模型（LLM）代理变得越来越自主，它们可能会通过欺骗来追求任务性能，从而引起人们对其可靠部署的担忧。现有的评估表明，法学硕士代理人可以欺骗，但经常检查孤立的场景或狭隘定义的条件，限制了对欺骗何时更有可能发生的系统性理解。为了解决这一差距，我们引入了 DecepEval，这是一个包含 3 个任务系列和 28 个专业场景的 1,532 个实例的基准测试。借鉴经典欺诈理论，我们提出了法学硕士欺骗钻石框架，该框架描述了可能诱发欺骗的四种外部条件：压力、激励、机会和冲突。 DecepEval 将每个实例的中性版本和诱导版本配对，以测量欺骗率的条件相关变化，而明确的任务事实和可观察的代理行为有助于区分欺骗与能力相关的错误。对九个前沿法学硕士的评估表明，诱因增加了模型和任务系列中的欺骗行为，甚至在基线欺骗率较低的模型中也是如此。 DecepEval 使这些漏洞变得可测量，为可信赖的人工智能的进展提供了一个共享基准。",
+          "research_question_zh": "",
+          "new_method_zh": "",
+          "evidence_zh": "",
+          "editor_note": ""
+        }
+      },
+      {
         "id": "2610.04299",
         "title": "Questioning the Questions: Sustaining Self-Evolution in Reasoning Models",
         "summary": "Self-evolving reasoning models learn from their own generated questions, yet repeated self-training can lead to performance collapse. In this paper, we investigate why performance deteriorates over successive rounds and how to sustain self-evolution. Our analysis identifies two recurring quality problems in self-generated questions: invalid questions and repeated variants of the same mathematical questions. First, invalid questions become more prevalent across rounds, and answer-consistency filtering further increases their proportion in training data. Second, existing question diversity controls based on lexical similarity can miss mathematically equivalent questions expressed in different ways, which leads to question diversity collapse in later training rounds. Building on these findings, we introduce R-Quest, which uses question validity and novelty feedback to guide self-evolution. We first train the solver to recognize and reject invalid questions, then use its judgments to guide questioner rewards and filter solver training data. To avoid question repetition, we use a frozen base model to compare sampled question pairs and provide novelty feedback. Empirically, our method consistently achieves the highest average performance on 12 benchmarks in mathematical reasoning, general-domain reasoning, and code generation across two model families. Additionally, R-Quest maintains stable performance gains over ten rounds of self-evolution, peaking in the final round and outperforming R-Zero by 17.32 points.",
@@ -192,7 +237,7 @@
           "Jiaxin Huang"
         ],
         "organization": "Huang's INTelligence lab",
-        "upvotes": 58,
+        "upvotes": 61,
         "comments": 1,
         "daily_date": "2026-10-08",
         "published_at": "2026-10-03T00:00:00.000Z",
@@ -210,7 +255,7 @@
             "AI Evaluation"
           ]
         },
-        "rank": 5,
+        "rank": 6,
         "editorial_tier": "scan",
         "localized": {
           "status": "machine_translated",
@@ -237,7 +282,7 @@
           "Seungryong Kim"
         ],
         "organization": "KAIST AI",
-        "upvotes": 57,
+        "upvotes": 60,
         "comments": 1,
         "daily_date": "2026-10-08",
         "published_at": "2026-10-07T00:00:00.000Z",
@@ -255,57 +300,12 @@
             "Video Generation"
           ]
         },
-        "rank": 6,
+        "rank": 7,
         "editorial_tier": "scan",
         "localized": {
           "status": "machine_translated",
           "title_zh": "GRACE：用于高效视频生成的生成感知潜在压缩",
           "summary_zh": "高度压缩的视频自动编码器提供了一种加速视频扩散模型的有效方法，因为扩散变压器 (DiT) 在更少的令牌上运行。然而，这种自动编码器的训练具有挑战性，因为较高的压缩比会降低重建质量，并且恢复重建质量需要更多的通道，而这会减慢 DiT 的收敛速度。压缩的潜在变量也不同于 DiT 训练的潜在变量，因此预训练的 DiT 必须从头开始重新训练或以相当大的成本进行调整。压缩 DiT 训练的自动编码器似乎可以保持兼容性，但单独优化它以进行重建仍然会使潜在的数据偏离 DiT 所学到的分布。为了解决这个问题，我们提出了用于高效视频生成的世代感知潜在压缩（GRACE），这是一个两阶段框架，可压缩预训练的视频自动编码器，同时保持其与预训练的 DiT 兼容。具体来说，我们从预训练的编码器中保留一个冻结的基本潜在变量，并学习在更强的压缩下丢失的信息的剩余潜在变量，同时将压缩的潜在变量与冻结 DiT 的特征空间中的预训练的潜在变量对齐，以便自动编码器针对生成进行优化。然后，我们通过轻量级微调和非对称去噪来调整 DiT，其中基值在残差之前被去噪。 GRACE 将 Wan2.1-I2V-14B 的令牌数量减少了 8 倍，在 480x832x81 下的延迟减少了 11.1 倍，同时与 VBench 上压缩前预训练管道的生成质量相匹配。",
-          "research_question_zh": "",
-          "new_method_zh": "",
-          "evidence_zh": "",
-          "editor_note": ""
-        }
-      },
-      {
-        "id": "2610.07967",
-        "title": "DecepEval: A Benchmark for Evaluating Deception in LLM Agents",
-        "summary": "As large language model (LLM) agents become increasingly autonomous, they may pursue task performance through deception, raising concerns about their reliable deployment. Existing evaluations show that LLM agents can deceive, but often examine isolated scenarios or narrowly defined conditions, limiting systematic understanding of when deception becomes more likely. To address this gap, we introduce DecepEval, a benchmark comprising 1,532 instances across 3 task families and 28 professional scenarios. Drawing on classical fraud theories, we propose the LLM Deception Diamond framework, which characterizes four external conditions that may induce deception: pressure, incentive, opportunity, and conflict. DecepEval pairs neutral and induced versions of each instance to measure condition-dependent changes in deception rates, while explicit task facts and observable agent behavior help distinguish deception from capability-related errors. Evaluations of nine frontier LLMs show that inducements increase deception across models and task families, even among models with low baseline deception rates. DecepEval makes these vulnerabilities measurable, providing a shared benchmark for progress toward trustworthy artificial intelligence.",
-        "authors": [
-          "Yiming Xu",
-          "Hongyue Yu",
-          "Beihua Yang",
-          "Zihan Chen",
-          "Yixin Liu",
-          "Zhen Peng",
-          "Bin Shi",
-          "Bo Dong"
-        ],
-        "organization": "Xi'an Jiaotong University",
-        "upvotes": 56,
-        "comments": 1,
-        "daily_date": "2026-10-08",
-        "published_at": "2026-10-06T00:00:00.000Z",
-        "url": "https://huggingface.co/papers/2610.07967",
-        "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.07967.png",
-        "project_page": "",
-        "github_repo": "https://github.com/functy/DECEPEVAL",
-        "teaching": {
-          "research_question": "As large language model (LLM) agents become increasingly autonomous, they may pursue task performance through deception, raising concerns about their reliable deployment. Existing evaluations show that LLM agents can deceive, but often examine isolated scenarios or narrowly defined conditions, limiting systematic understanding of when deception becomes more likely.",
-          "new_method": "To address this gap, we introduce DecepEval, a benchmark comprising 1,532 instances across 3 task families and 28 professional scenarios.",
-          "evidence": "To address this gap, we introduce DecepEval, a benchmark comprising 1,532 instances across 3 task families and 28 professional scenarios.",
-          "limitation": "Daily Papers 摘要不等于完整评审；限制条件、数据边界与失败案例需回看正文。",
-          "concepts": [
-            "Agent",
-            "AI Evaluation"
-          ]
-        },
-        "rank": 7,
-        "editorial_tier": "scan",
-        "localized": {
-          "status": "machine_translated",
-          "title_zh": "DecepEval：评估 LLM 代理欺骗行为的基准",
-          "summary_zh": "随着大语言模型（LLM）代理变得越来越自主，它们可能会通过欺骗来追求任务性能，从而引起人们对其可靠部署的担忧。现有的评估表明，法学硕士代理人可以欺骗，但经常检查孤立的场景或狭隘定义的条件，限制了对欺骗何时更有可能发生的系统性理解。为了解决这一差距，我们引入了 DecepEval，这是一个包含 3 个任务系列和 28 个专业场景的 1,532 个实例的基准测试。借鉴经典欺诈理论，我们提出了法学硕士欺骗钻石框架，该框架描述了可能诱发欺骗的四种外部条件：压力、激励、机会和冲突。 DecepEval 将每个实例的中性版本和诱导版本配对，以测量欺骗率的条件相关变化，而明确的任务事实和可观察的代理行为有助于区分欺骗与能力相关的错误。对九个前沿法学硕士的评估表明，诱因增加了模型和任务系列中的欺骗行为，甚至在基线欺骗率较低的模型中也是如此。 DecepEval 使这些漏洞变得可测量，为可信赖的人工智能的进展提供了一个共享基准。",
           "research_question_zh": "",
           "new_method_zh": "",
           "evidence_zh": "",
@@ -327,7 +327,7 @@
           "Zijian Song"
         ],
         "organization": "UCSC-VLAA",
-        "upvotes": 51,
+        "upvotes": 52,
         "comments": 1,
         "daily_date": "2026-10-08",
         "published_at": "2026-10-05T00:00:00.000Z",
@@ -374,7 +374,7 @@
           "Weiyang Jin"
         ],
         "organization": "",
-        "upvotes": 46,
+        "upvotes": 47,
         "comments": 1,
         "daily_date": "2026-10-08",
         "published_at": "2026-10-07T00:00:00.000Z",
@@ -418,7 +418,7 @@
           "Junwu E"
         ],
         "organization": "HKUSTGZ",
-        "upvotes": 44,
+        "upvotes": 45,
         "comments": 2,
         "daily_date": "2026-10-08",
         "published_at": "2026-10-01T00:00:00.000Z",
@@ -840,5 +840,5 @@
       "概念入图"
     ]
   },
-  "updated_at": "2026-10-08T21:03:02+08:00"
+  "updated_at": "2026-10-09T00:41:02+08:00"
 }
